@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>문의함 — 모듈앱 마켓</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--night:#17120f;--surface:#221b16;--line:#3b312a;--ink:#f4eee8;--muted:#ab9e92;--accent:#f08a4b;--accent-ink:#1d1410}
+  *{margin:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.55;word-break:keep-all}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 60px}
+  h1{font-size:24px;margin-bottom:18px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  input{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 12px;font:inherit}
+  button{background:var(--accent);color:var(--accent-ink);border:0;border-radius:999px;padding:9px 16px;font:inherit;font-weight:700;cursor:pointer}
+  button.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .tabs{margin:20px 0 14px}
+  .tabs button{background:var(--surface);color:var(--muted);border:1px solid var(--line)}
+  .tabs button[aria-pressed="true"]{background:var(--ink);color:var(--night)}
+  .msg{color:var(--muted);margin:14px 0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:10px}
+  .card.done{opacity:.55}
+  .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+  .who{font-size:16px;color:var(--ink);font-weight:700}
+  .prod{display:inline-block;font-size:12px;border:1px solid var(--accent);color:var(--accent);border-radius:999px;padding:1px 9px;margin-left:6px}
+  .text{white-space:pre-wrap;margin:10px 0}
+  .actions{display:flex;gap:8px;flex-wrap:wrap}
+  .actions button{padding:6px 12px;font-size:13px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>문의함</h1>
+  <form class="row" id="login">
+    <input type="password" id="key" placeholder="관리자 비밀번호 (ADMIN_KEY)" autocomplete="current-password" style="min-width:260px">
+    <button>열기</button>
+    <button type="button" class="ghost" id="logout">잠그기</button>
+  </form>
+  <div class="row tabs">
+    <button data-v="open" aria-pressed="true">처리 전</button>
+    <button data-v="done" aria-pressed="false">처리함</button>
+    <button data-v="all" aria-pressed="false">전체</button>
+  </div>
+  <p class="msg" id="msg"></p>
+  <div id="list"></div>
+</div>
+<script>
+const keyInput = document.getElementById("key"), list = document.getElementById("list"), msg = document.getElementById("msg");
+let items = [], view = "open";
+const getKey = () => { try { return sessionStorage.getItem("market-admin") || ""; } catch { return ""; } };
+const setKey = k => { try { k ? sessionStorage.setItem("market-admin", k) : sessionStorage.removeItem("market-admin"); } catch {} };
+
+async function load(){
+  const key = getKey(); if (!key) { msg.textContent = "비밀번호를 넣고 열기를 누르세요."; list.innerHTML = ""; return; }
+  msg.textContent = "불러오는 중…";
+  const res = await fetch("/api/inquiry", { headers: { "x-admin-key": key } });
+  if (res.status === 401) { setKey(""); msg.textContent = "비밀번호가 맞지 않아요."; return; }
+  if (!res.ok) { msg.textContent = "불러오지 못했어요 (" + res.status + ")."; return; }
+  items = (await res.json()).items || []; draw();
+}
+function esc(s){ return String(s||"").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+function draw(){
+  const shown = items.filter(i => view === "all" || (view === "done" ? i.done : !i.done));
+  msg.textContent = `처리 전 ${items.filter(i=>!i.done).length}건 · 전체 ${items.length}건`;
+  list.innerHTML = shown.map(i => `
+    <div class="card ${i.done ? "done" : ""}">
+      <div class="top"><div><span class="who">${esc(i.name) || "이름 없음"}</span>${i.product ? `<span class="prod">${esc(i.product)}</span>` : ""}</div>
+      <div>${new Date(i.at).toLocaleString("ko-KR")}</div></div>
+      <div class="top" style="margin-top:4px"><div>연락처: <b style="color:var(--ink)">${esc(i.contact)}</b></div><div>${i.budget ? "일정·예산: " + esc(i.budget) : ""}</div></div>
+      <div class="text">${esc(i.message)}</div>
+      <div class="actions">
+        <button data-copy="${esc(i.contact)}" class="ghost">연락처 복사</button>
+        <button data-done="${i.id}" data-to="${i.done ? 0 : 1}">${i.done ? "처리 전으로" : "처리함"}</button>
+      </div>
+    </div>`).join("") || '<p class="msg">문의가 없어요.</p>';
+}
+list.addEventListener("click", async e => {
+  const c = e.target.closest("[data-copy]");
+  if (c) { try { await navigator.clipboard.writeText(c.dataset.copy); c.textContent = "복사함"; } catch { c.textContent = "복사 안 됨"; } return; }
+  const d = e.target.closest("[data-done]"); if (!d) return;
+  const res = await fetch("/api/inquiry?action=done", { method:"POST", headers:{ "Content-Type":"application/json", "x-admin-key": getKey() }, body: JSON.stringify({ id: d.dataset.done, done: d.dataset.to === "1" }) });
+  if (res.ok) { const it = items.find(x => x.id === d.dataset.done); it.done = d.dataset.to === "1"; draw(); }
+});
+document.getElementById("login").addEventListener("submit", e => { e.preventDefault(); setKey(keyInput.value.trim()); keyInput.value = ""; load(); });
+document.getElementById("logout").onclick = () => { setKey(""); items = []; load(); };
+document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); draw(); });
+load();
+</script>
+</body>
+</html>
