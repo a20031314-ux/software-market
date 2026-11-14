@@ -497,7 +497,7 @@ const SYSTEM = {
   basics: ["가게 소개(사진·위치·영업시간)", "가격표", "공지", "문의 받기", "관리자 화면", "가게 이름·색 바꾸기", "휴대폰 홈 화면 앱"],
   industries: [
     { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"soon", feat:["회원권·정기권", "출석(QR 체크인)", "혼잡도·기구 현황", "PT·수업 예약"] },
-    { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 레벨 테스트·성장 리포트 모듈"] },
+    { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", demo:"/demo/academy", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 단원·개념별 취약 진단", "+ 학생별 문제 자동 조합", "+ 힌트·해설 단계 공개"] },
     { id:"sys-youth", icon:"🥋", title:"유소년 스포츠 · 태권도 · 체육관", status:"soon", feat:["반·출석", "보호자 공지", "+ 체력 측정·성장 프로필", "+ 대회·승급 심사"] },
     { id:"sys-salon", icon:"💇", title:"미용실 · 네일 · 피부관리", status:"soon", feat:["시간 예약", "담당자 선택", "시술 기록"] },
     { id:"sys-cafe", icon:"☕", title:"식당 · 카페", status:"soon", feat:["메뉴판", "포장 주문", "대기 등록", "쿠폰"] },
@@ -507,7 +507,7 @@ const SYSTEM = {
     { title:"대회 운영", parts:[["참가 신청·참가비",1],["공지·단체 채팅",1],["조 편성·대진표·순위표",0],["경기 결과 입력",0]] },
     { title:"신체 능력 측정", parts:[["기록 추세 계산",1],["측정 항목·등급표 직접 설정",0],["단체 일괄 입력",0]] },
     { title:"개인 성장 프로필", parts:[["그래프·리포트",1],["회차별 기록 저장·비교",0],["보호자·본인 리포트 공유",0]] },
-    { title:"레벨 테스트 · 학습 기록", parts:[["레벨 측정·적응형 퀴즈",1],["AI 말하기·문장 교정",1],["문제별 기록 저장·반 리포트",0]] },
+    { title:"취약 진단 · 맞춤 시험지", demo:"/demo/academy", parts:[["레벨 측정·적응형 퀴즈",1],["단원·개념별 숙달도 히트맵·추이",0],["학생별 비율로 문제 자동 조합",0],["힌트 단계·해설 일부 공개",0]] },
     { title:"상황 요청 · 재실", parts:[["1:1·단체 메시지",1],["상황 요청 → 담당자 → 처리 확인",0],["지금 자리에 있음/외출 표시",0]] },
     { title:"내부 안내", parts:[["공지·게시판",1],["\"이거 어디 있어요\" 안내 모음",0],["AI 안내 답변",0]] },
   ],
@@ -533,7 +533,7 @@ const IDEAS = [
   { title:"원데이 클래스 마켓", parts:[["강사 프로필",1],["수업 일정·참가 신청",1],["결제",1],["수강생 단체 채팅",1]] },
 ];
 const DOMAINS = [
-  { title:"학습 · 교육", price:"150만 원부터", parts:[["AI 튜터 대화·음성 통화",1],["문장 자동 교정·문장 분석",1],["레벨 측정·적응형 퀴즈·단어장",1],["학습 그래프·리포트",1],["학습 워크스페이스(반·조별, 과제 제출·피드백)",0],["학습 기록 서버 저장·데이터 내보내기",0]] },
+  { title:"학습 · 교육", price:"150만 원부터", demo:"/demo/academy", parts:[["단원·개념별 취약 진단·문제 자동 조합·힌트 단계",0],["AI 튜터 대화·음성 통화",1],["문장 자동 교정·문장 분석",1],["레벨 측정·적응형 퀴즈·단어장",1],["학습 그래프·리포트",1],["학습 워크스페이스(반·조별, 과제 제출·피드백)",0],["학습 기록 서버 저장·데이터 내보내기",0]] },
   { title:"운동 · 건강", price:"150만 원부터", parts:[["GPS 기록·인터벌 음성 안내",1],["회복도 기반 운동 추천·세트 기록",1],["칼로리·단백질 계산·대체 식단",1],["체중·기록 추세 그래프",1]] },
   { title:"연결 · 커뮤니티", price:"기본 템플릿 포함", parts:[["조건 추천·서로 좋아요하면 연결",1],["1:1 대화·단체 채팅",1],["모임 일정·참가 신청",1],["신고·차단·운영자 정지",1],["음성 채팅방·영상통화",1]] },
   { title:"판매 · 거래", price:"200만 원부터", parts:[["카드 결제·정기 구독",1],["상품·주문·배송 상태",0],["회원 간 사고팔기·교환",0],["판매자 화면",0]] },
@@ -544,7 +544,10 @@ document.getElementById("domainList").innerHTML = DOMAINS.map(d => `
     <h4>${d.title}</h4>
     <ul>${d.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
     <div class="price" style="font-size:15px">${d.price}</div>
-    <button class="btn sm ghost" data-ask="전문 기능 · ${d.title}">이 기능 문의</button>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn sm ghost" data-ask="전문 기능 · ${d.title}">이 기능 문의</button>
+      ${d.demo ? `<a class="btn sm" href="${d.demo}" target="_blank" rel="noopener">데모 ↗</a>` : ""}
+    </div>
   </div>`).join("") + `
   <div class="idea">
     <h4>필요한 기능이 따로 있어요</h4>
@@ -570,7 +573,7 @@ function renderSystem(){
     <div class="item ind" style="cursor:default">
       <div class="thumb mod" aria-hidden="true">${i.icon}</div>
       <div class="body">
-        <div class="meta">${i.status === "ready" ? '<span class="pill ready">바로 가능</span><span class="pill demo">데모</span>' : '<span class="pill soon">준비 중 · 사전 상담</span>'}</div>
+        <div class="meta">${i.status === "ready" ? '<span class="pill ready">바로 가능</span>' : '<span class="pill soon">준비 중 · 사전 상담</span>'}${i.demo ? '<span class="pill demo">데모</span>' : ''}</div>
         <h3>${i.title}</h3>
         <ul>${i.feat.map(f => `<li>${f}</li>`).join("")}</ul>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
@@ -583,7 +586,10 @@ function renderSystem(){
     <div class="idea">
       <h4>${m.title}</h4>
       <ul>${m.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
-      <button class="btn sm ghost" data-ask="시스템 · 전용 모듈 · ${m.title}">이 모듈 문의</button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
+        <button class="btn sm ghost" data-ask="시스템 · 전용 모듈 · ${m.title}">이 모듈 문의</button>
+        ${m.demo ? `<a class="btn sm" href="${m.demo}" target="_blank" rel="noopener">데모 써 보기 ↗</a>` : ""}
+      </div>
     </div>`).join("");
   document.getElementById("addons").innerHTML = SYSTEM.addons.map(a => `
     <div class="addon"><h4>${a.title}</h4><p>${a.desc}</p><div class="price">${a.price}</div></div>`).join("");
