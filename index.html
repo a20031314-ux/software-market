@@ -214,6 +214,13 @@
       <p class="legend">✓ 지금 있는 부품 · ○ 준비 중(사전 상담)</p>
     </div>
   </section>
+  <section id="domains" style="padding-top:40px;padding-bottom:0">
+    <div class="wrap">
+      <div class="sec-head"><h2>분야별 전문 기능</h2><p>회원 관리·대화만으로는 안 되는 서비스라면, 실제 서비스에서 쓰는 분야별 기능 묶음을 그대로 붙입니다.</p></div>
+      <div class="ideas" id="domainList"></div>
+      <p class="legend">✓ 지금 있는 기능 · ○ 준비 중(사전 상담) · 가격은 기본 템플릿에 더하는 금액</p>
+    </div>
+  </section>
   <section id="market" style="padding-top:8px">
     <div class="wrap"><div class="sec-head" style="margin-bottom:0"><h2>앱 판매</h2><p>앱 템플릿을 고르고 필요한 기능 모듈을 더하세요. 구매자 명의 서버·스토어 계정으로 납품하고 소스코드를 드립니다.</p></div></div>
     <div class="wrap">
@@ -391,6 +398,8 @@ const PRODUCTS = [
   { id:"m-shop", kind:"module", status:"soon", icon:"🛍️", title:"상품 · 주문 모듈", short:"상품·옵션·재고, 장바구니, 주문·결제, 배송 상태 알림, 판매자 화면.", from:"200만 원", tags:"쇼핑 상품 주문 배송 굿즈 커머스 판매" },
   { id:"m-trade", kind:"module", status:"soon", icon:"🔁", title:"회원 간 거래", short:"회원끼리 사고팔기·교환·양도 게시판, 거래 상태, 신고 연동.", from:"150만 원", tags:"중고 교환 양도 거래 중개 굿즈" },
   { id:"m-i18n", kind:"module", status:"soon", icon:"🌏", title:"다국어 · 번역 채팅", short:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", from:"80만 원", tags:"다국어 번역 해외 일본 영어 글로벌" },
+  { id:"m-workspace", kind:"module", status:"soon", icon:"🗂️", title:"학습 워크스페이스", short:"반·조별 공간, 과제 내기·제출·피드백, 자료 공유, 선생님 화면.", from:"150만 원", tags:"학습 워크스페이스 과제 제출 피드백 조별 반 선생님 학원 교육 LMS" },
+  { id:"m-learndata", kind:"module", status:"soon", icon:"🧾", title:"학습 기록 · 데이터", short:"문제별 정답·오답·소요 시간 서버 저장, 학생·반 리포트, CSV 내보내기.", from:"100만 원", tags:"학습 데이터 기록 분석 리포트 내보내기 CSV 교육" },
   { id:"m-admin", kind:"module", status:"ready", icon:"🛠️", title:"관리자 화면", short:"회원 관리, 기간 정지, 신고 확인, 사용량, 앱 꾸미기.", from:"템플릿 포함", tags:"관리자 운영 신고 정지 회원" },
   { id:"m-map", kind:"module", status:"ready", icon:"🗺️", title:"지도 · GPS 기록", short:"경로 기록, 구간 기록, 고도 정보.", from:"30만 원", tags:"지도 GPS 위치 경로 러닝" },
   { id:"m-chart", kind:"module", status:"ready", icon:"📈", title:"그래프 · 리포트", short:"기록 그래프, 추세, 주간·월간 리포트.", from:"30만 원", tags:"그래프 통계 리포트 차트" },
@@ -510,6 +519,25 @@ const IDEAS = [
   { title:"언어 교환", parts:[["관심 언어로 연결",1],["1:1 대화·영상통화",1],["AI 문장 교정",1],["구독 결제",1]] },
   { title:"원데이 클래스 마켓", parts:[["강사 프로필",1],["수업 일정·참가 신청",1],["결제",1],["수강생 단체 채팅",1]] },
 ];
+const DOMAINS = [
+  { title:"학습 · 교육", price:"150만 원부터", parts:[["AI 튜터 대화·음성 통화",1],["문장 자동 교정·문장 분석",1],["레벨 측정·적응형 퀴즈·단어장",1],["학습 그래프·리포트",1],["학습 워크스페이스(반·조별, 과제 제출·피드백)",0],["학습 기록 서버 저장·데이터 내보내기",0]] },
+  { title:"운동 · 건강", price:"150만 원부터", parts:[["GPS 기록·인터벌 음성 안내",1],["회복도 기반 운동 추천·세트 기록",1],["칼로리·단백질 계산·대체 식단",1],["체중·기록 추세 그래프",1]] },
+  { title:"연결 · 커뮤니티", price:"기본 템플릿 포함", parts:[["조건 추천·서로 좋아요하면 연결",1],["1:1 대화·단체 채팅",1],["모임 일정·참가 신청",1],["신고·차단·운영자 정지",1],["음성 채팅방·영상통화",1]] },
+  { title:"판매 · 거래", price:"200만 원부터", parts:[["카드 결제·정기 구독",1],["상품·주문·배송 상태",0],["회원 간 사고팔기·교환",0],["판매자 화면",0]] },
+  { title:"데이터 · 운영", price:"30만 원부터", parts:[["관리자 화면·사용량",1],["그래프·주간/월간 리포트",1],["다지점·본사 한 화면",1],["데이터 내보내기·외부 연동(API)",0]] },
+];
+document.getElementById("domainList").innerHTML = DOMAINS.map(d => `
+  <div class="idea">
+    <h4>${d.title}</h4>
+    <ul>${d.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
+    <div class="price" style="font-size:15px">${d.price}</div>
+    <button class="btn sm ghost" data-ask="전문 기능 · ${d.title}">이 기능 문의</button>
+  </div>`).join("") + `
+  <div class="idea">
+    <h4>필요한 기능이 따로 있어요</h4>
+    <ul><li>어떤 화면에서</li><li>누가 무엇을 하는지</li><li>어떤 데이터가 남아야 하는지</li></ul>
+    <button class="btn sm" data-ask="전문 기능 · 기타">기능 적어 보내기</button>
+  </div>`;
 document.getElementById("ideaList").innerHTML = IDEAS.map(i => `
   <div class="idea">
     <h4>${i.title}</h4>
@@ -521,7 +549,7 @@ document.getElementById("ideaList").innerHTML = IDEAS.map(i => `
     <ul><li>무엇을 파는지</li><li>누구와 누구를 잇는지</li><li>언제 시작하고 싶은지</li></ul>
     <button class="btn sm" data-ask="아이디어 · 내 아이디어">아이디어 보내기</button>
   </div>`;
-const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
+const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...DOMAINS.map(d => "전문 기능 · " + d.title), "전문 기능 · 기타", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
 
 function renderSystem(){
   document.getElementById("basics").innerHTML = SYSTEM.basics.map(b => `<span>✓ ${b}</span>`).join("");
