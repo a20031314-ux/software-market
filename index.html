@@ -62,6 +62,14 @@
   .addon h4{font-size:16px;margin-bottom:4px}
   .addon p{color:var(--muted);font-size:14px}
   .addon .price{font-size:16px;margin-top:8px}
+  .ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .idea{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+  .idea h4{font-size:16px}
+  .idea ul{list-style:none;padding:0;margin:0;display:grid;gap:4px;font-size:14px}
+  .idea li.no{color:var(--muted)}
+  .idea .btn{align-self:flex-start;margin-top:auto}
+  .legend{color:var(--muted);font-size:13px;margin-top:10px}
+  @media (max-width:860px){.ideas{grid-template-columns:1fr}}
   @media(max-width:900px){.addons{grid-template-columns:1fr 1fr}}
   @media(max-width:560px){.addons{grid-template-columns:1fr}}
   .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -187,7 +195,7 @@
         <a class="mode" role="tab" href="#apps" data-mode="apps">
           <span class="mode-tag">앱 판매</span>
           <b>내 앱으로 사기</b>
-          <span>앱 템플릿 + 기능 모듈을 조합해 내 이름·내 서버로 납품. 소스코드 포함.</span>
+          <span>사업 아이디어나 앱 템플릿에 기능 모듈을 조합해 내 이름·내 서버로 납품. 소스코드 포함.</span>
         </a>
         <a class="mode" role="tab" href="#system" data-mode="system">
           <span class="mode-tag">시스템 서비스</span>
@@ -199,6 +207,13 @@
   </section>
 
   <div id="view-apps" class="view">
+  <section id="ideas" style="padding-top:8px;padding-bottom:0">
+    <div class="wrap">
+      <div class="sec-head"><h2>사업 아이디어를 서비스로</h2><p>팔 것이 있고 사용자끼리 이어져야 하는데 개발이 막혀 있다면, 이미 돌아가는 회원·대화·커뮤니티·결제 부품을 조합해 4~8주 안에 시작합니다.</p></div>
+      <div class="ideas" id="ideaList"></div>
+      <p class="legend">✓ 지금 있는 부품 · ○ 준비 중(사전 상담)</p>
+    </div>
+  </section>
   <section id="market" style="padding-top:8px">
     <div class="wrap"><div class="sec-head" style="margin-bottom:0"><h2>앱 판매</h2><p>앱 템플릿을 고르고 필요한 기능 모듈을 더하세요. 구매자 명의 서버·스토어 계정으로 납품하고 소스코드를 드립니다.</p></div></div>
     <div class="wrap">
@@ -262,6 +277,7 @@
       <div class="sec-head"><span class="eyebrow">자주 묻는 질문</span><h2>궁금한 점</h2></div>
       <details><summary>템플릿을 사면 다른 사람도 같은 앱을 쓰나요?</summary><p>같은 템플릿을 다른 구매자도 쓸 수 있지만, 앱 이름·색·문구·기능 구성이 각자 다르고 서버와 회원 데이터도 완전히 따로입니다. 지역이나 업종 독점이 필요하면 문의해 주세요.</p></details>
       <details><summary>개발을 몰라도 쓸 수 있나요?</summary><p>네. 설치와 배포는 저희가 하고, 운영은 관리자 화면에서 합니다. 계정 만드는 방법도 안내해 드립니다.</p></details>
+      <details><summary>아이디어만 있고 기획서는 없어요.</summary><p>괜찮습니다. 무엇을 팔고 누구와 누구를 이어 주고 싶은지만 적어 주세요. 질문지 한 장으로 필요한 부품과 금액·기간을 정리해 드립니다. 업종에 따라 신고·등록이 필요한 사업(결혼중개, 해외 매칭, 회원 간 거래 등)은 확인할 곳도 함께 알려드립니다.</p></details>
       <details><summary>목록에 없는 기능이 필요해요.</summary><p>문의창에 적어 주세요. 기존 모듈로 가능한지, 새로 만들면 얼마인지 알려드립니다.</p></details>
       <details><summary>여러 지점이나 기업에서도 쓸 수 있나요?</summary><p>네. 지점마다 별도 공간을 두고 본사에서 한 화면으로 관리하는 구조를 갖추고 있습니다.</p></details>
     </div>
@@ -326,6 +342,12 @@
 <script>
 const DEMO = "https://dating-amber-nine.vercel.app/?t=";
 const PRODUCTS = [
+  { id:"idea", kind:"template", status:"ready",
+    title:"커뮤니티 + 거래 서비스", short:"팔 것이 있고 사용자끼리 이어져야 하는 서비스. 회원·대화·커뮤니티·결제를 조합해 내 브랜드로.",
+    img:["community-members","match-chat"], from:"390만 원",
+    feat:["회원·프로필·로그인","추천·연결, 1:1 대화, 단체 채팅","커뮤니티 게시판·모임 일정","결제·정기 구독","신고·차단·관리자 화면","상품·주문, 회원 간 거래, 다국어는 준비 중(사전 상담)"],
+    tiers:[["연결형","회원·대화·커뮤니티 · 4주","390만 원"],["연결 + 판매","상품·주문·결제 · 6주","590만 원"],["해외형","다국어·번역 채팅·해외 결제 · 8주","890만 원"]],
+    tags:"사업 아이디어 창업 MVP 커뮤니티 거래 마켓 굿즈 팬 매칭 해외 한일" },
   { id:"club", kind:"template", status:"ready", demo:DEMO+"demo-club",
     title:"동호회 · 크루 운영 앱", short:"가입 승인, 공지, 게시판, 정기 모임 일정, 참가자 단체 채팅, 관리자 화면.",
     img:["community-members","community-schedule","admin"], from:"90만 원",
@@ -366,6 +388,9 @@ const PRODUCTS = [
   { id:"m-call", kind:"module", status:"ready", icon:"📞", title:"영상 · 음성 통화 모듈", short:"1:1 영상·음성 통화.", from:"문의", tags:"영상통화 음성 통화" },
   { id:"m-voice", kind:"module", status:"ready", icon:"🎙️", title:"음성 채팅방", short:"여러 명이 함께 말하는 방. 방장 권한·신고 포함, 음성 서버 사용료 별도.", from:"150만 원", tags:"보이스룸 음성 채팅방 온라인 모임" },
   { id:"m-auth", kind:"module", status:"ready", icon:"🪪", title:"본인인증 모듈", short:"휴대폰 본인인증으로 실명·성인 확인, 1인 1계정.", from:"20만 원", tags:"본인인증 성인 실명 인증" },
+  { id:"m-shop", kind:"module", status:"soon", icon:"🛍️", title:"상품 · 주문 모듈", short:"상품·옵션·재고, 장바구니, 주문·결제, 배송 상태 알림, 판매자 화면.", from:"200만 원", tags:"쇼핑 상품 주문 배송 굿즈 커머스 판매" },
+  { id:"m-trade", kind:"module", status:"soon", icon:"🔁", title:"회원 간 거래", short:"회원끼리 사고팔기·교환·양도 게시판, 거래 상태, 신고 연동.", from:"150만 원", tags:"중고 교환 양도 거래 중개 굿즈" },
+  { id:"m-i18n", kind:"module", status:"soon", icon:"🌏", title:"다국어 · 번역 채팅", short:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", from:"80만 원", tags:"다국어 번역 해외 일본 영어 글로벌" },
   { id:"m-admin", kind:"module", status:"ready", icon:"🛠️", title:"관리자 화면", short:"회원 관리, 기간 정지, 신고 확인, 사용량, 앱 꾸미기.", from:"템플릿 포함", tags:"관리자 운영 신고 정지 회원" },
   { id:"m-map", kind:"module", status:"ready", icon:"🗺️", title:"지도 · GPS 기록", short:"경로 기록, 구간 기록, 고도 정보.", from:"30만 원", tags:"지도 GPS 위치 경로 러닝" },
   { id:"m-chart", kind:"module", status:"ready", icon:"📈", title:"그래프 · 리포트", short:"기록 그래프, 추세, 주간·월간 리포트.", from:"30만 원", tags:"그래프 통계 리포트 차트" },
@@ -478,7 +503,25 @@ const SYSTEM = {
     { id:"sys-p-care", title:"유지보수", price:"월 10만 원부터", feat:["오류 대응", "작은 수정", "설치형 고객용"] },
   ],
 };
-const ALL_ASK = [...PRODUCTS.map(p => p.title), ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
+const IDEAS = [
+  { title:"한일 커플 매칭", parts:[["회원·프로필·사진",1],["추천·서로 좋아요하면 연결",1],["1:1 대화",1],["본인·나이 확인",1],["한·일 다국어·번역 채팅",0]] },
+  { title:"K팝 굿즈 · 팬 마켓", parts:[["아티스트별 커뮤니티",1],["공연 동행 모집·단체 채팅",1],["1:1 대화",1],["상품·주문·배송",0],["회원 간 교환·양도",0]] },
+  { title:"반려견 산책 메이트", parts:[["동네 회원 추천",1],["산책 모임 일정·참가",1],["단체 채팅",1],["산책 경로 기록",1]] },
+  { title:"언어 교환", parts:[["관심 언어로 연결",1],["1:1 대화·영상통화",1],["AI 문장 교정",1],["구독 결제",1]] },
+  { title:"원데이 클래스 마켓", parts:[["강사 프로필",1],["수업 일정·참가 신청",1],["결제",1],["수강생 단체 채팅",1]] },
+];
+document.getElementById("ideaList").innerHTML = IDEAS.map(i => `
+  <div class="idea">
+    <h4>${i.title}</h4>
+    <ul>${i.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
+    <button class="btn sm ghost" data-ask="아이디어 · ${i.title}">이런 서비스 문의</button>
+  </div>`).join("") + `
+  <div class="idea">
+    <h4>내 아이디어</h4>
+    <ul><li>무엇을 파는지</li><li>누구와 누구를 잇는지</li><li>언제 시작하고 싶은지</li></ul>
+    <button class="btn sm" data-ask="아이디어 · 내 아이디어">아이디어 보내기</button>
+  </div>`;
+const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
 
 function renderSystem(){
   document.getElementById("basics").innerHTML = SYSTEM.basics.map(b => `<span>✓ ${b}</span>`).join("");
