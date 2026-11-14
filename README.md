@@ -11,3 +11,5 @@
 2. Storage → Upstash Redis 연결 (환경 변수 `KV_REST_API_URL`·`KV_REST_API_TOKEN` 자동)
 3. Settings → Environment Variables → `ADMIN_KEY` (8자 이상, 직접 정함)
 4. Redeploy
+
+프로젝트 기준 문서(작업 총정리·결정·다음 할 일): `docs/main.md`
