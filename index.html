@@ -200,7 +200,7 @@
         <a class="mode" role="tab" href="#system" data-mode="system">
           <span class="mode-tag">시스템 서비스</span>
           <b>가게 운영 시스템 빌려 쓰기</b>
-          <span>헬스장·학원·미용실·식당 등 소규모 사업장용. 설치 없이 월 구독으로.</span>
+          <span>학원·체육관·클럽·기숙사 등 조직용. 기본 운영 기능에 우리 조직만의 모듈을 붙여 월 구독으로.</span>
         </a>
       </div>
     </div>
@@ -253,7 +253,11 @@
       <h3 class="sub-h">3. 추가 기능 — 필요한 것만 더하기</h3>
       <div class="addons" id="addons"></div>
 
-      <h3 class="sub-h">4. 이용 방식</h3>
+      <h3 class="sub-h">4. 우리 조직 전용 모듈 — 다른 프로그램에 없는, 그 조직이 실제로 하는 일</h3>
+      <div class="ideas" id="special"></div>
+      <p class="legend">✓ 지금 있는 부품으로 바로 · ○ 준비 중(사전 상담) · 조직마다 항목·순서·이름을 설정으로 바꿉니다</p>
+
+      <h3 class="sub-h">5. 이용 방식</h3>
       <div class="plans" id="plans"></div>
       <p class="fine">가격은 VAT 포함 기준입니다. 결제·알림톡 등 외부 서비스 수수료는 실제 사용량만큼 별도입니다. 의료·약국 업종은 받지 않습니다.</p>
     </div>
@@ -493,10 +497,19 @@ const SYSTEM = {
   basics: ["가게 소개(사진·위치·영업시간)", "가격표", "공지", "문의 받기", "관리자 화면", "가게 이름·색 바꾸기", "휴대폰 홈 화면 앱"],
   industries: [
     { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"soon", feat:["회원권·정기권", "출석(QR 체크인)", "혼잡도·기구 현황", "PT·수업 예약"] },
-    { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", feat:["반·학생 관리", "출결", "숙제", "학부모 공지"] },
+    { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 레벨 테스트·성장 리포트 모듈"] },
+    { id:"sys-youth", icon:"🥋", title:"유소년 스포츠 · 태권도 · 체육관", status:"soon", feat:["반·출석", "보호자 공지", "+ 체력 측정·성장 프로필", "+ 대회·승급 심사"] },
     { id:"sys-salon", icon:"💇", title:"미용실 · 네일 · 피부관리", status:"soon", feat:["시간 예약", "담당자 선택", "시술 기록"] },
     { id:"sys-cafe", icon:"☕", title:"식당 · 카페", status:"soon", feat:["메뉴판", "포장 주문", "대기 등록", "쿠폰"] },
     { id:"sys-club", icon:"🧗", title:"동호회 · 모임 · 스터디", status:"ready", demo: DEMO + "demo-club", feat:["가입 승인", "모임 일정·참가 신청", "단체 채팅", "회비(준비 중)"] },
+  ],
+  special: [
+    { title:"대회 운영", parts:[["참가 신청·참가비",1],["공지·단체 채팅",1],["조 편성·대진표·순위표",0],["경기 결과 입력",0]] },
+    { title:"신체 능력 측정", parts:[["기록 추세 계산",1],["측정 항목·등급표 직접 설정",0],["단체 일괄 입력",0]] },
+    { title:"개인 성장 프로필", parts:[["그래프·리포트",1],["회차별 기록 저장·비교",0],["보호자·본인 리포트 공유",0]] },
+    { title:"레벨 테스트 · 학습 기록", parts:[["레벨 측정·적응형 퀴즈",1],["AI 말하기·문장 교정",1],["문제별 기록 저장·반 리포트",0]] },
+    { title:"상황 요청 · 재실", parts:[["1:1·단체 메시지",1],["상황 요청 → 담당자 → 처리 확인",0],["지금 자리에 있음/외출 표시",0]] },
+    { title:"내부 안내", parts:[["공지·게시판",1],["\"이거 어디 있어요\" 안내 모음",0],["AI 안내 답변",0]] },
   ],
   addons: [
     { id:"sys-a-grow", title:"손님 모으기", desc:"쿠폰, 첫 방문 혜택, 친구 초대", price:"30만 원" },
@@ -549,7 +562,7 @@ document.getElementById("ideaList").innerHTML = IDEAS.map(i => `
     <ul><li>무엇을 파는지</li><li>누구와 누구를 잇는지</li><li>언제 시작하고 싶은지</li></ul>
     <button class="btn sm" data-ask="아이디어 · 내 아이디어">아이디어 보내기</button>
   </div>`;
-const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...DOMAINS.map(d => "전문 기능 · " + d.title), "전문 기능 · 기타", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
+const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...DOMAINS.map(d => "전문 기능 · " + d.title), "전문 기능 · 기타", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.special.map(m => "시스템 · 전용 모듈 · " + m.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
 
 function renderSystem(){
   document.getElementById("basics").innerHTML = SYSTEM.basics.map(b => `<span>✓ ${b}</span>`).join("");
@@ -565,6 +578,12 @@ function renderSystem(){
           ${i.demo ? `<a class="btn sm ghost" href="${i.demo}" target="_blank" rel="noopener">데모 ↗</a>` : ""}
         </div>
       </div>
+    </div>`).join("");
+  document.getElementById("special").innerHTML = SYSTEM.special.map(m => `
+    <div class="idea">
+      <h4>${m.title}</h4>
+      <ul>${m.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
+      <button class="btn sm ghost" data-ask="시스템 · 전용 모듈 · ${m.title}">이 모듈 문의</button>
     </div>`).join("");
   document.getElementById("addons").innerHTML = SYSTEM.addons.map(a => `
     <div class="addon"><h4>${a.title}</h4><p>${a.desc}</p><div class="price">${a.price}</div></div>`).join("");
