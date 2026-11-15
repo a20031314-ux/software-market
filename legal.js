@@ -32,9 +32,9 @@ window.BIZ = {
   function render() {
     document.querySelectorAll("[data-biz-footer]").forEach((el) => {
       el.innerHTML =
-        '<nav class="biz-links">' +
+        '<div class="biz-links">' +
         '<a href="/terms">이용약관</a><a href="/refund">환불 정책</a><a href="/privacy"><b>개인정보처리방침</b></a>' +
-        "</nav>" +
+        "</div>" +
         '<p class="biz-info">' +
         lines.map(([k, v]) => "<span>" + esc(k) + " " + esc(v) + "</span>").join("") +
         "</p>" +
