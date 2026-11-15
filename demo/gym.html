@@ -60,6 +60,22 @@
   dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
   dialog .close{position:fixed;top:14px;right:14px}
   @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+  /* ── 첫 화면: 무엇인지 한눈에(실제 화면 두 장 겹쳐서) ── */
+  .hero2{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;padding:56px 0 32px;border-bottom:1px solid var(--line)}
+  .hero2 h1{font-size:42px;letter-spacing:-1.4px;line-height:1.25;margin:10px 0 14px}
+  .hero2 .lead{color:var(--muted);font-size:17px;max-width:30em}
+  .points{list-style:none;padding:0;display:grid;gap:12px;margin:26px 0 0}
+  .points li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:16px}
+  .points li i{font-style:normal;width:28px;height:28px;border-radius:9px;background:var(--surface2);color:var(--accent);display:grid;place-items:center;font-size:14px;font-weight:800}
+  .points li span{color:var(--muted)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .shots{position:relative;padding:18px 0 0}
+  .shots .pc{width:86%;margin-left:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .shots .mobile{position:absolute;left:0;bottom:-24px;width:34%;border-radius:24px;border:6px solid #0b0d0d;box-shadow:0 24px 60px rgba(0,0,0,.6);background:#0b0d0d}
+  .shots .label{position:absolute;font-size:13px;font-weight:700;background:var(--night);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink)}
+  .shots .label.l2{right:3%;top:0}
+  .shots .label.l1{left:4%;bottom:-40px}
+  @media (max-width:900px){.hero2{grid-template-columns:1fr;gap:28px;padding:32px 0 56px}.hero2 h1{font-size:30px}}
 </style>
 </head>
 <body>
@@ -69,15 +85,31 @@
 </div></header>
 
 <main class="wrap">
-  <section class="hero">
-    <p class="eyebrow">시스템 서비스 · 헬스장 · PT · 필라테스 · 요가 · 클래스</p>
-    <h1>예약 · 이용권 · QR 출석 · 결제 모듈</h1>
-    <div class="pills">
-      <span class="pill">가상 데이터로 찍은 실제 화면</span>
-      <span class="pill">회원이 앱에서 예약·대기·취소</span>
-      <span class="pill">카운터 대신 매장 QR로 출석</span>
-      <span class="pill">결제되면 이용권 자동 발급</span>
+  <section class="hero2">
+    <div>
+      <p class="eyebrow">헬스장 · PT · 필라테스 · 요가 · 클래스</p>
+      <h1>헬스장 예약 · 출석 · 결제를<br>우리 이름의 앱 하나로</h1>
+      <p class="lead">회원은 휴대폰으로 예약하고 매장 QR로 출석해요. 사장님은 PC에서 오늘 명단과 결제를 봅니다. 앱 이름·색·아이콘은 우리 가게 것으로.</p>
+      <ul class="points">
+        <li><i>1</i><div>앱에서 수업 예약 <span>— 자리가 차면 대기, 취소가 나면 자동 예약</span></div></li>
+        <li><i>2</i><div>매장 QR로 출석 <span>— 카메라로 찍으면 끝, 남은 횟수 차감</span></div></li>
+        <li><i>3</i><div>이용권 결제 · 청구 <span>— 결제되면 이용권 자동 발급, 미납 알림</span></div></li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="/#contact">문의하기</a>
+        <a class="btn ghost" href="#scenes">화면 보기</a>
+      </div>
     </div>
+    <div class="shots" aria-label="실제 화면(가상 데이터)">
+      <img class="pc" src="/img/gym/book-3.jpg" alt="사장님 PC: 오늘 수업 명단과 출석">
+      <img class="mobile" src="/img/gym/book-1.jpg" alt="회원 앱: 이용권과 수업 예약">
+      <span class="label l2">사장님 PC</span>
+      <span class="label l1">회원 앱</span>
+    </div>
+  </section>
+
+  <section class="hero" id="scenes">
+    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
     <nav class="jump" aria-label="모듈" id="jump"></nav>
   </section>
   <div id="groups"></div>
