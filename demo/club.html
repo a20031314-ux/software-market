@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>동호회·크루 운영 모듈 — 모듈앱 마켓</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#17120f; --surface:#221b16; --surface2:#2b221c; --line:#3b312a;
+    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line);background:rgba(23,18,15,.92);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+  .logo{font-weight:800;text-decoration:none}.logo b{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:var(--accent-ink);font-weight:700;border:0;border-radius:999px;padding:10px 20px;cursor:pointer;text-decoration:none;font-size:15px;min-height:44px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .hero{padding:44px 0 8px}
+  .eyebrow{color:var(--muted);font-size:14px}
+  h1{font-size:34px;letter-spacing:-1px;line-height:1.3;margin:6px 0 12px}
+  .pills{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 12px;font-size:13px}
+  nav.jump{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 4px}
+  nav.jump a{text-decoration:none;font-size:14px;padding:7px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+  nav.jump a.rec{border-color:var(--accent);color:var(--accent)}
+  .group{margin-top:56px}
+  .group > h2{font-size:15px;color:var(--muted);font-weight:500;margin-bottom:6px}
+  .module{padding:28px 0 36px;border-top:1px solid var(--line)}
+  .mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .mhead h3{font-size:26px;letter-spacing:-.6px;line-height:1.3}
+  .mhead p{color:var(--muted);font-size:15px;margin-top:4px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .tag{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface2);color:var(--muted)}
+  .tag.rec{background:var(--accent);color:var(--accent-ink)}
+  .scenes{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,320px)),1fr))}
+  .scenes.phone{--min:200px}
+  .scene{margin:0;display:flex;flex-direction:column;gap:10px}
+  .scene button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+  .scene button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .scene img{display:block;width:100%;height:auto}
+  .scenes.phone img{aspect-ratio:390/700;object-fit:contain;object-position:top;background:var(--surface)}
+  .scene figcaption{font-size:14px;line-height:1.5}
+  .scene figcaption b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--accent);font-size:12px;margin-right:6px}
+  .scene figcaption span{color:var(--muted)}
+  .soon{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);font-size:15px}
+  .soon ol{margin:8px 0 0 18px;color:var(--ink)}
+  .tag.soon-tag{background:transparent;border:1px dashed var(--line)}
+  .cta{margin:64px 0 40px;padding:28px;border-radius:18px;background:var(--surface2);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .cta h2{font-size:22px}.cta p{color:var(--muted);font-size:15px}
+  footer{color:var(--muted);font-size:13px;padding:0 0 40px}
+  dialog{border:0;padding:0;background:transparent;max-width:min(96vw,1440px);max-height:94vh}
+  dialog::backdrop{background:rgba(10,8,6,.88)}
+  dialog img{display:block;max-width:100%;max-height:88vh;border-radius:12px}
+  dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
+  dialog .close{position:fixed;top:14px;right:14px}
+  @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/#system">모듈앱<b>마켓</b></a>
+  <a class="btn" href="/#contact">문의하기</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">시스템 서비스 · 동호회</p>
+    <h1>동호회 · 크루 운영 모듈</h1>
+    <div class="pills">
+      <span class="pill">가상 데이터로 찍은 실제 화면</span>
+      <span class="pill">밴드·단톡방 대신 우리 동호회 이름의 앱</span>
+      <span class="pill">회원은 설치 없이 주소로</span>
+    </div>
+    <nav class="jump" aria-label="모듈" id="jump"></nav>
+  </section>
+  <div id="groups"></div>
+
+  <section class="cta">
+    <div>
+      <h2>우리 동호회 이름으로 보고 싶다면</h2>
+      <p>동호회 이름·종목·정모 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
+    </div>
+    <span style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn ghost" href="https://dating-amber-nine.vercel.app/?t=demo-club" target="_blank" rel="noopener">체험 동호회 직접 써 보기</a>
+      <a class="btn" href="/#contact">문의하기</a>
+    </span>
+  </section>
+</main>
+<footer class="wrap">화면의 동호회·회원·글은 모두 가상 데이터예요. 실제 납품 시 동호회 이름·색·공지로 바뀌고, 사진은 회원이 직접 올립니다.</footer>
+
+<dialog id="zoom" aria-label="크게 보기">
+  <button class="btn ghost close" type="button" id="zoomClose">닫기</button>
+  <img id="zoomImg" alt="">
+  <p id="zoomCap"></p>
+</dialog>
+
+<script>
+// 모듈별 장면 — 그룹 순서 = 보여 주는 순서(추천 모듈부터). 이미지는 img/club/<id>.jpg
+// 장면 다시 찍기: dating 저장소 scripts/club-demo-seed.py → scripts/club-demo-shots.py (장면 이름이 같다)
+// soon: 아직 없는 모듈 — 화면 대신 흐름만 적는다.
+const GROUPS = [
+  { title: "추천 모듈 — 운영진이 매일 하던 일", modules: [
+    { id: "join", rec: true, plan: "베이직부터", title: "가입 · 회원 관리", line: "가입 신청을 운영진이 수락하고, 회원 목록에서 관리", wide: false, scenes: [
+      ["join-1", "처음 온 사람", "공지만 보이고 \"가입 신청\". 글·회원 목록은 회원에게만"],
+      ["join-2", "운영진 화면", "가입 신청이 맨 위에 모임, 수락·거절 한 번"],
+      ["join-3", "회원 목록", "승인제 / 바로 가입 전환, 운영진 표시, 내보내기"],
+    ]},
+    { id: "meet", rec: true, plan: "베이직부터", title: "정모 일정 · 참가 신청", line: "일정을 올리면 회원이 신청하고, 수락된 사람끼리 단체방이 열림", wide: false, scenes: [
+      ["meet-1", "다가오는 정모", "날짜·장소·남은 자리·비용 방식"],
+      ["meet-2", "회원이 신청", "정확한 장소는 참가자에게만 보임"],
+      ["meet-3", "운영진이 수락", "신청자 수락·거절, 자리가 차면 \"자리 없음\""],
+      ["meet-4", "참가자 단체방", "수락하면 그 정모 단체방에 자동으로 들어감"],
+    ]},
+    { id: "board", rec: true, plan: "베이직부터", title: "공지 · 게시판", line: "공지는 위에 고정, 회원 이야기는 아래에. 단톡방에 묻히지 않게", wide: false, scenes: [
+      ["board-1", "공지 고정", "운영진 공지가 늘 맨 위"],
+      ["board-2", "게시판", "회원 글, 최근 것부터"],
+      ["board-3", "공지 올리기", "운영진은 \"공지\"를 켜고 올리면 끝"],
+    ]},
+  ]},
+  { title: "다음 단계 — 돈과 출석까지", modules: [
+    { id: "fee", plan: "스탠다드", soon: true, title: "회비 · 참가비", line: "입금 확인을 통장·엑셀로 하지 않게", steps: ["운영진이 회비·참가비 안내", "회원이 앱에서 카드·계좌로 결제(동호회 명의 PG)", "납부 현황표 — 누가 냈는지 자동으로"] },
+    { id: "attend", plan: "옵션", soon: true, title: "출석 · 활동 기록", line: "정모 출석이 쌓여 우수 회원·장기 미참석 회원이 보이게", steps: ["정모 장소에서 QR 출석", "회원별 참석 횟수", "우수 회원 · 오래 안 나온 회원 목록"] },
+  ]},
+  { title: "기본 포함", modules: [
+    { id: "admin", plan: "모든 패키지", title: "운영진 화면 · 동호회 꾸미기", line: "PC에서 이름·색·회원·신고·사용량을 한 곳에서", wide: true, scenes: [
+      ["admin-1", "동호회 꾸미기", "이름·소개·첫 화면 문구·색"],
+      ["admin-2", "회원 관리", "회원 목록, 문제 회원은 기간 정해 정지"],
+      ["admin-3", "사용량", "달마다 활동 회원·정모·신청·게시글 수"],
+    ]},
+  ]},
+];
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+document.getElementById("jump").innerHTML = GROUPS.flatMap((g) => g.modules).map((m) => `<a href="#${m.id}"${m.rec ? ' class="rec"' : ""}>${esc(m.title)}</a>`).join("");
+document.getElementById("groups").innerHTML = GROUPS.map((g) => `
+  <section class="group">
+    <h2>${esc(g.title)}</h2>
+    ${g.modules.map((m) => `
+      <article class="module" id="${m.id}">
+        <div class="mhead">
+          <div>
+            <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span>${m.soon ? '<span class="tag soon-tag">준비 중</span>' : ""}</div>
+            <h3>${esc(m.title)}</h3>
+            <p>${esc(m.line)}</p>
+          </div>
+          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
+        </div>
+        ${m.soon ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>` : `<div class="scenes${m.wide ? "" : " phone"}">
+          ${m.scenes.map(([img, cap, sub], i) => `
+            <figure class="scene">
+              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/club/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
+              <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
+            </figure>`).join("")}
+        </div>`}
+      </article>`).join("")}
+  </section>`).join("");
+
+const zoom = document.getElementById("zoom");
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-img]");
+  if (!b) return;
+  document.getElementById("zoomImg").src = `/img/club/${b.dataset.img}.jpg`;
+  document.getElementById("zoomImg").alt = b.dataset.cap;
+  document.getElementById("zoomCap").textContent = b.dataset.cap;
+  zoom.showModal();
+});
+document.getElementById("zoomClose").onclick = () => zoom.close();
+zoom.addEventListener("click", (e) => { if (e.target === zoom) zoom.close(); });
+</script>
+</body>
+</html>
