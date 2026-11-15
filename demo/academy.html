@@ -57,6 +57,22 @@
   dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
   dialog .close{position:fixed;top:14px;right:14px}
   @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+  /* ── 첫 화면: 무엇인지 한눈에(실제 화면 두 장 겹쳐서) ── */
+  .hero2{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;padding:56px 0 32px;border-bottom:1px solid var(--line)}
+  .hero2 h1{font-size:42px;letter-spacing:-1.4px;line-height:1.25;margin:10px 0 14px}
+  .hero2 .lead{color:var(--muted);font-size:17px;max-width:30em}
+  .points{list-style:none;padding:0;display:grid;gap:12px;margin:26px 0 0}
+  .points li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:16px}
+  .points li i{font-style:normal;width:28px;height:28px;border-radius:9px;background:var(--surface2);color:var(--accent);display:grid;place-items:center;font-size:14px;font-weight:800}
+  .points li span{color:var(--muted)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .shots{position:relative;padding:18px 0 0}
+  .shots .pc{width:86%;margin-right:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .shots .mobile{position:absolute;right:0;bottom:-24px;width:34%;border-radius:24px;border:6px solid #0b0d0d;box-shadow:0 24px 60px rgba(0,0,0,.6);background:#0b0d0d}
+  .shots .label{position:absolute;font-size:13px;font-weight:700;background:var(--night);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink)}
+  .shots .label.l2{left:3%;bottom:-40px}
+  .shots .label.l1{right:4%;bottom:-40px}
+  @media (max-width:900px){.hero2{grid-template-columns:1fr;gap:28px;padding:32px 0 56px}.hero2 h1{font-size:30px}}
 </style>
 </head>
 <body>
@@ -66,14 +82,31 @@
 </div></header>
 
 <main class="wrap">
-  <section class="hero">
-    <p class="eyebrow">시스템 서비스 · 학원</p>
-    <h1>학원 학습 모듈</h1>
-    <div class="pills">
-      <span class="pill">가상 데이터로 찍은 실제 화면</span>
-      <span class="pill">필요한 모듈만 골라서</span>
-      <span class="pill">학생은 설치 없이 주소 + 입장 코드</span>
+  <section class="hero2">
+    <div>
+      <p class="eyebrow">학원 · 공부방 · 교습소</p>
+      <h1>약점 진단 · 맞춤 시험지를<br>우리 학원 이름의 앱 하나로</h1>
+      <p class="lead">채점만 하면 학생마다 약한 개념이 보이고, 그 개념을 더 넣은 시험지가 나와요. 학생은 설치 없이 주소와 입장 코드로 풀어요. 앱 이름·색·로고는 우리 학원 것으로.</p>
+      <ul class="points">
+        <li><i>1</i><div>채점하면 진단 리포트 <span>— 개념별 숙달도·추이, 상담에 쓸 문장까지</span></div></li>
+        <li><i>2</i><div>학생별 맞춤 시험지 <span>— 약한 개념을 더 넣어 반 전체를 한 번에, 인쇄·PDF</span></div></li>
+        <li><i>3</i><div>앱에서 풀고 힌트·해설 <span>— 공개 방식은 원장님이 정하고, 결과는 학부모 링크로</span></div></li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="/#contact">문의하기</a>
+        <a class="btn ghost" href="#scenes">화면 보기</a>
+      </div>
     </div>
+    <div class="shots" aria-label="실제 화면(가상 데이터)">
+      <img class="pc" src="/img/academy/diag-3.jpg" alt="원장님 PC: 학생 리포트와 개념별 숙달도">
+      <img class="mobile" src="/img/academy/solve-2.jpg" alt="학생 앱: 맞춤 숙제 풀이와 힌트">
+      <span class="label l2">원장님 PC</span>
+      <span class="label l1">학생 앱</span>
+    </div>
+  </section>
+
+  <section class="hero" id="scenes">
+    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
     <nav class="jump" aria-label="모듈" id="jump"></nav>
   </section>
   <div id="groups"></div>
