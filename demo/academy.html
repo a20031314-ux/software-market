@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>학원 학습 모듈 — 모듈앱 마켓</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#17120f; --surface:#221b16; --surface2:#2b221c; --line:#3b312a;
+    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line);background:rgba(23,18,15,.92);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+  .logo{font-weight:800;text-decoration:none}.logo b{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:var(--accent-ink);font-weight:700;border:0;border-radius:999px;padding:10px 20px;cursor:pointer;text-decoration:none;font-size:15px;min-height:44px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .hero{padding:44px 0 8px}
+  .eyebrow{color:var(--muted);font-size:14px}
+  h1{font-size:34px;letter-spacing:-1px;line-height:1.3;margin:6px 0 12px}
+  .pills{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 12px;font-size:13px}
+  nav.jump{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 4px}
+  nav.jump a{text-decoration:none;font-size:14px;padding:7px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+  nav.jump a.rec{border-color:var(--accent);color:var(--accent)}
+  .group{margin-top:56px}
+  .group > h2{font-size:15px;color:var(--muted);font-weight:500;margin-bottom:6px}
+  .module{padding:28px 0 36px;border-top:1px solid var(--line)}
+  .mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .mhead h3{font-size:26px;letter-spacing:-.6px;line-height:1.3}
+  .mhead p{color:var(--muted);font-size:15px;margin-top:4px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .tag{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface2);color:var(--muted)}
+  .tag.rec{background:var(--accent);color:var(--accent-ink)}
+  .scenes{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,var(--min,320px)),1fr))}
+  .scenes.phone{--min:200px}
+  .scene{margin:0;display:flex;flex-direction:column;gap:10px}
+  .scene button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+  .scene button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .scene img{display:block;width:100%;height:auto}
+  .scenes.phone img{aspect-ratio:390/700;object-fit:contain;object-position:top;background:var(--surface)}
+  .scene figcaption{font-size:14px;line-height:1.5}
+  .scene figcaption b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--accent);font-size:12px;margin-right:6px}
+  .scene figcaption span{color:var(--muted)}
+  .cta{margin:64px 0 40px;padding:28px;border-radius:18px;background:var(--surface2);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .cta h2{font-size:22px}.cta p{color:var(--muted);font-size:15px}
+  footer{color:var(--muted);font-size:13px;padding:0 0 40px}
+  dialog{border:0;padding:0;background:transparent;max-width:min(96vw,1440px);max-height:94vh}
+  dialog::backdrop{background:rgba(10,8,6,.88)}
+  dialog img{display:block;max-width:100%;max-height:88vh;border-radius:12px}
+  dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
+  dialog .close{position:fixed;top:14px;right:14px}
+  @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/#system">모듈앱<b>마켓</b></a>
+  <a class="btn" href="/#contact">문의하기</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">시스템 서비스 · 학원</p>
+    <h1>학원 학습 모듈</h1>
+    <div class="pills">
+      <span class="pill">가상 데이터로 찍은 실제 화면</span>
+      <span class="pill">필요한 모듈만 골라서</span>
+      <span class="pill">학생은 설치 없이 주소 + 입장 코드</span>
+    </div>
+    <nav class="jump" aria-label="모듈" id="jump"></nav>
+  </section>
+  <div id="groups"></div>
+
+  <section class="cta">
+    <div>
+      <h2>우리 학원 과목으로 보고 싶다면</h2>
+      <p>과목·학년·반 구성을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
+    </div>
+    <span style="display:flex;gap:8px;flex-wrap:wrap">
+      <a class="btn ghost" href="/demo/academy-try">샘플로 직접 눌러 보기</a>
+      <a class="btn" href="/#contact">문의하기</a>
+    </span>
+  </section>
+</main>
+<footer class="wrap">화면의 학원·학생·점수는 모두 가상 데이터예요. 실제 납품 시 학원 이름·색·문제·명단으로 바뀝니다.</footer>
+
+<dialog id="zoom" aria-label="크게 보기">
+  <button class="btn ghost close" type="button" id="zoomClose">닫기</button>
+  <img id="zoomImg" alt="">
+  <p id="zoomCap"></p>
+</dialog>
+
+<script>
+// 모듈별 장면 — 그룹 순서 = 보여 주는 순서(추천 모듈부터). 이미지는 img/academy/<id>.jpg
+const GROUPS = [
+  { title: "추천 모듈 — 학원이 가장 먼저 쓰는 것", modules: [
+    { id: "diag", rec: true, plan: "라이트부터", title: "진단 · 리포트", line: "채점만 하면 개념별 숙달도·추이·상담 문장이 자동으로", wide: true, scenes: [
+      ["diag-1", "반 카드", "반 평균과 반에서 가장 약한 개념"],
+      ["diag-2", "숙달도 표", "학생 × 개념, 부족할수록 진하게. 맨 아래는 개념별 반 평균"],
+      ["diag-3", "학생 리포트", "상담에 그대로 쓰는 문장, 회차 추이, 개념 × 회차, 반 평균보다 낮은 개념"],
+    ]},
+    { id: "sheet", rec: true, plan: "라이트부터", title: "학생별 맞춤 시험지", line: "약한 개념을 더 넣은 시험지를 학생마다 한 번에", wide: true, scenes: [
+      ["sheet-1", "유형·비율 고르기", "보충형·내신 대비형·상위권형 또는 취약·복습·진도·도전 비율 직접"],
+      ["sheet-2", "반 전체 한 번에", "같은 반이라도 학생마다 다른 시험지"],
+      ["sheet-3", "고른 이유", "문항마다 취약 보충·복습·진도·도전, 난이도, 정답"],
+      ["sheet-4", "인쇄 · PDF", "A4, 학생마다 쪽 나눔, 정답지 포함 선택"],
+    ]},
+    { id: "solve", rec: true, plan: "라이트부터", title: "풀이 · 힌트 · 해설", line: "학생은 앱에서 풀고, 힌트를 본 만큼 숙달도에 덜 반영", wide: false, scenes: [
+      ["solve-1", "입장", "학원이 준 주소 + 6자리 코드. 내 시험지·반 공통 숙제"],
+      ["solve-2", "힌트 한 단계씩", "원장님이 공개 방식을 정함(바로·한 번 틀린 뒤·강사 허용)"],
+      ["solve-3", "틀리면 한 번 더", "남은 기회 표시"],
+      ["solve-4", "해설 단계", "다 푼 뒤 단계별로, 숫자는 눌러야 보임"],
+    ]},
+  ]},
+  { title: "다음 단계 — 수업과 학부모까지", modules: [
+    { id: "ask", plan: "스탠다드", title: "질문 · 피드백", line: "학생이 문제에 단 질문을 강사가 모아 보고 수업에 반영", wide: false, scenes: [
+      ["ask-1", "학생이 질문", "문제나 해설 단계를 골라 한 줄로"],
+      ["ask-2", "강사 화면에 모임", "문제별로, 같은 걸 묻는 학생 수까지"],
+      ["ask-3", "수업에서 다룸 · 답장", "묶음째 처리, 수업 메모를 남김"],
+      ["ask-4", "학생에게 돌아감", "문제 옆에 '수업에서 다룸'과 메모"],
+    ]},
+    { id: "parent", plan: "스탠다드", title: "학부모 리포트", line: "로그인 없이 링크 하나로. 문제 본문은 보이지 않음", wide: false, scenes: [
+      ["parent-2", "리포트 첫 화면", "상담 문장, 회차 추이, 보충할 개념과 반 평균"],
+      ["parent-3", "개념별 · 회차별", "개념별 숙달도와 회차마다 맞힌 수"],
+    ]},
+  ]},
+  { title: "기본 포함", modules: [
+    { id: "manage", plan: "모든 요금제", title: "반 · 학생 관리 · 설정", line: "명단은 붙여넣기 한 번, 학생 계정·전화번호 받지 않음", wide: true, scenes: [
+      ["manage-1", "명단 · 입장 코드", "\"이름, 반\" 붙여넣기 → 반 생성, 학생마다 코드"],
+      ["manage-2", "반 → 학생 프로필", "평균 숙달도·변화·가장 약한 개념·질문 수"],
+      ["manage-3", "힌트 · 해설 공개 설정", "학원마다 다르게"],
+    ]},
+  ]},
+];
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+document.getElementById("jump").innerHTML = GROUPS.flatMap((g) => g.modules).map((m) => `<a href="#${m.id}"${m.rec ? ' class="rec"' : ""}>${esc(m.title)}</a>`).join("");
+document.getElementById("groups").innerHTML = GROUPS.map((g) => `
+  <section class="group">
+    <h2>${esc(g.title)}</h2>
+    ${g.modules.map((m) => `
+      <article class="module" id="${m.id}">
+        <div class="mhead">
+          <div>
+            <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span></div>
+            <h3>${esc(m.title)}</h3>
+            <p>${esc(m.line)}</p>
+          </div>
+          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
+        </div>
+        <div class="scenes${m.wide ? "" : " phone"}">
+          ${m.scenes.map(([img, cap, sub], i) => `
+            <figure class="scene">
+              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/academy/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
+              <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
+            </figure>`).join("")}
+        </div>
+      </article>`).join("")}
+  </section>`).join("");
+
+const zoom = document.getElementById("zoom");
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-img]");
+  if (!b) return;
+  document.getElementById("zoomImg").src = `/img/academy/${b.dataset.img}.jpg`;
+  document.getElementById("zoomImg").alt = b.dataset.cap;
+  document.getElementById("zoomCap").textContent = b.dataset.cap;
+  zoom.showModal();
+});
+document.getElementById("zoomClose").onclick = () => zoom.close();
+zoom.addEventListener("click", (e) => { if (e.target === zoom) zoom.close(); });
+</script>
+</body>
+</html>

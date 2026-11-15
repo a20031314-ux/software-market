@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>학원 학습 진단 직접 눌러 보기 — 모듈앱 마켓</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#17120f; --surface:#221b16; --surface2:#2b221c; --line:#3b312a;
+    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410; --blue:#6f86ff; --ok:#5fc48a;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:inherit}
+  button,select,input{font-family:inherit;font-size:15px}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line);background:rgba(23,18,15,.92);position:sticky;top:0;z-index:5}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+  .logo{font-weight:800;text-decoration:none}.logo b{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--accent-ink);font-weight:700;border:0;border-radius:999px;padding:9px 18px;cursor:pointer;text-decoration:none;font-size:14px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn:disabled{opacity:.45;cursor:default}
+  h1{font-size:28px;letter-spacing:-.8px;margin:28px 0 4px}
+  .sub{color:var(--muted);font-size:14px}
+  .top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+  .who{display:flex;gap:8px;align-items:center}
+  select,input[type=number],input[type=text]{background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+  .tabs{display:flex;gap:6px;margin:22px 0 18px;flex-wrap:wrap}
+  .tab{background:var(--surface);border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:9px 18px;cursor:pointer;font-weight:700}
+  .tab[aria-selected=true]{background:var(--ink);color:var(--night);border-color:var(--ink)}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:20px}
+  .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:16px}
+  @media(max-width:860px){.grid2{grid-template-columns:1fr}}
+  h2{font-size:17px;margin-bottom:12px}
+  h3{font-size:15px;margin:14px 0 8px}
+
+  /* 히트맵 */
+  table.heat{width:100%;border-collapse:separate;border-spacing:4px;font-size:14px}
+  .heat th{color:var(--muted);font-weight:500;text-align:left;padding:2px 6px;white-space:nowrap}
+  .heat th.c{text-align:center}
+  .heat td{text-align:center;border-radius:8px;padding:8px 0;font-weight:700;min-width:44px}
+  .heat td.na{background:transparent;color:var(--line)}
+  .heat .unit{color:var(--muted);font-size:12px}
+  .legend{display:flex;gap:10px;align-items:center;color:var(--muted);font-size:12px;margin-top:10px}
+  .legend i{display:inline-block;width:46px;height:10px;border-radius:5px;background:linear-gradient(90deg,#e0675a,#c9a24a,#5f9de0)}
+  .weak{display:grid;gap:8px}
+  .weak div{display:flex;justify-content:space-between;background:var(--surface2);border-radius:10px;padding:10px 12px;font-size:14px}
+  .weak b{color:#ef8a7c}
+  .note{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14px;margin-top:12px}
+
+  /* 자동 출제 */
+  .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .ratio{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  @media(max-width:700px){.ratio{grid-template-columns:repeat(2,1fr)}}
+  .ratio label{background:var(--surface2);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted);display:grid;gap:4px}
+  .ratio label b{color:var(--ink);font-size:20px}
+  .ratio input{width:100%;accent-color:var(--accent)}
+  .bar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:14px 0 4px}
+  .k-weak{background:#e0675a}.k-review{background:#c9a24a}.k-now{background:#5f9de0}.k-chal{background:#a77be0}
+  .chip{display:inline-block;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;color:#140f0c}
+  .sheet{display:grid;gap:8px;margin-top:12px}
+  .q{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:start;background:var(--surface2);border-radius:12px;padding:12px 14px}
+  .q .n{font-weight:800;color:var(--muted)}
+  .q .why{color:var(--muted);font-size:12px;margin-top:2px}
+  .q .lv{font-size:12px;color:var(--muted);white-space:nowrap}
+
+  /* 풀기 */
+  .solve{display:grid;grid-template-columns:1fr 300px;gap:16px}
+  @media(max-width:860px){.solve{grid-template-columns:1fr}}
+  .prob{font-size:19px;font-weight:500;margin:6px 0 16px}
+  .answer{display:flex;gap:8px;flex-wrap:wrap}
+  .answer input{width:140px}
+  .result{margin-top:12px;font-weight:700}
+  .result.ok{color:var(--ok)}.result.no{color:#ef8a7c}
+  .ladder{display:grid;gap:8px}
+  .step{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;font-size:14px;color:var(--muted)}
+  .step.open{border-style:solid;color:var(--ink);background:var(--surface2)}
+  .step .t{font-size:12px;font-weight:700;color:var(--accent);display:block;margin-bottom:2px}
+  .mask{background:var(--ink);color:var(--ink);border-radius:4px;padding:0 4px;cursor:pointer}
+  .mask.show{background:transparent;color:var(--accent)}
+  .lock{font-size:13px;color:var(--muted);margin-top:6px}
+  .log{display:grid;gap:6px;font-size:13px}
+  .log div{background:var(--surface2);border-radius:10px;padding:8px 10px}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px;flex-wrap:wrap}
+  .dots{display:flex;gap:4px;flex-wrap:wrap}
+  .dots span{width:22px;height:22px;border-radius:6px;background:var(--surface2);font-size:11px;display:grid;place-items:center;cursor:pointer}
+  .dots span.cur{outline:2px solid var(--accent)}
+  .dots span.ok{background:var(--ok);color:#0f1a13}.dots span.no{background:#e0675a;color:#1a0f0d}
+
+  /* 설정 */
+  .set{display:grid;gap:14px;max-width:620px}
+  .set label{display:grid;gap:6px;font-size:14px}
+  .set .row{display:flex;gap:8px;flex-wrap:wrap}
+  .opt{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+  .opt[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+  footer{color:var(--muted);font-size:13px;padding:40px 0}
+
+  @media print{
+    header,.tabs,.top,.controls,.ratio,.bar,#barLegend,.view:not(#v-compose),#printBtn,footer,.k-hide{display:none!important}
+    body{background:#fff;color:#000}
+    .card{border:0;padding:0;background:#fff}
+    .q{background:#fff;border-bottom:1px solid #ccc;border-radius:0;grid-template-columns:28px 1fr}
+    .q .lv,.q .why,.chip{display:none}
+    .print-head{display:block!important}
+  }
+  .print-head{display:none;margin-bottom:12px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/#system">모듈앱<b>마켓</b></a>
+  <span style="display:flex;gap:8px"><a class="btn ghost" href="/demo/academy">← 모듈 화면 보기</a><a class="btn" href="/#contact">이 기능 문의하기</a></span>
+</div></header>
+
+<main class="wrap">
+  <div class="top">
+    <div>
+      <h1>학원 학습 진단 데모</h1>
+      <p class="sub">샘플 데이터 · 중2 수학 · 1단원 일차방정식, 2단원 일차함수</p>
+    </div>
+    <label class="who">학생
+      <select id="student"></select>
+    </label>
+  </div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-v="diag" aria-selected="true">① 진단</button>
+    <button class="tab" role="tab" data-v="compose" aria-selected="false">② 문제 자동 조합</button>
+    <button class="tab" role="tab" data-v="solve" aria-selected="false">③ 풀기 · 힌트 · 해설</button>
+    <button class="tab" role="tab" data-v="set" aria-selected="false">학원 설정</button>
+  </div>
+
+  <!-- ① 진단 -->
+  <section class="view" id="v-diag">
+    <div class="grid2">
+      <div class="card">
+        <h2>개념별 숙달도 (회차별)</h2>
+        <div style="overflow-x:auto"><table class="heat" id="heat"></table></div>
+        <div class="legend">부족 <i></i> 충분 · 빈칸 = 아직 안 배움</div>
+      </div>
+      <div class="card">
+        <h2>전체 추이</h2>
+        <svg id="trend" viewBox="0 0 320 170" width="100%" role="img" aria-label="회차별 평균 숙달도"></svg>
+        <h3>지금 부족한 개념</h3>
+        <div class="weak" id="weak"></div>
+        <div class="note" id="sentence"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ② 자동 조합 -->
+  <section class="view" id="v-compose" hidden>
+    <div class="card">
+      <div class="controls">
+        <label>유형
+          <select id="preset">
+            <option value="fill">보충형</option>
+            <option value="exam">내신 대비형</option>
+            <option value="top">상위권형</option>
+          </select>
+        </label>
+        <label>문항 수 <input type="number" id="count" min="5" max="20" value="10" style="width:70px"></label>
+        <button class="btn" id="make">이 학생 시험지 만들기</button>
+        <button class="btn ghost" id="printBtn">인쇄 · PDF</button>
+      </div>
+      <div class="ratio" id="ratio"></div>
+      <div class="bar" id="bar"></div>
+      <div class="legend" id="barLegend">
+        <span class="chip k-weak">취약 보충</span><span class="chip k-review">복습</span><span class="chip k-now">이번 진도</span><span class="chip k-chal">도전</span>
+      </div>
+      <div class="print-head"><b id="phTitle"></b><div id="phSub"></div></div>
+      <div class="sheet" id="sheet"></div>
+    </div>
+  </section>
+
+  <!-- ③ 풀기 -->
+  <section class="view" id="v-solve" hidden>
+    <div class="solve">
+      <div class="card">
+        <div class="nav">
+          <div class="dots" id="dots"></div>
+          <div>
+            <button class="btn ghost" id="prev">이전</button>
+            <button class="btn ghost" id="next">다음</button>
+          </div>
+        </div>
+        <div id="qMeta" class="sub"></div>
+        <p class="prob" id="qText"></p>
+        <div class="answer">
+          <input type="text" id="ans" inputmode="numeric" placeholder="답" aria-label="답">
+          <button class="btn" id="check">채점</button>
+        </div>
+        <div class="result" id="result" role="status"></div>
+        <h3>힌트 · 해설</h3>
+        <div class="ladder" id="ladder"></div>
+        <div class="lock" id="lock"></div>
+      </div>
+      <div class="card">
+        <h2>기록</h2>
+        <div class="log" id="log"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 설정 -->
+  <section class="view" id="v-set" hidden>
+    <div class="card set">
+      <label>해설 공개 조건
+        <div class="row" data-group="reveal">
+          <button class="opt" data-val="now">바로</button>
+          <button class="opt" data-val="try">1회 시도 후</button>
+          <button class="opt" data-val="teacher">강사 허용</button>
+        </div>
+      </label>
+      <label>힌트 공개
+        <div class="row" data-group="hint">
+          <button class="opt" data-val="step">한 단계씩</button>
+          <button class="opt" data-val="off">힌트 없음</button>
+        </div>
+      </label>
+      <label>해설 숫자 가리기
+        <div class="row" data-group="mask">
+          <button class="opt" data-val="on">가리기 (눌러서 보기)</button>
+          <button class="opt" data-val="off">모두 보이기</button>
+        </div>
+      </label>
+      <label>숙달도 반영 (정답 시 올라가는 양)
+        <div class="sub">힌트 없이 +8 · 힌트 1단계 +6 · 2단계 +4 · 3단계 +2 · 해설 보고 0 · 오답 −4</div>
+      </label>
+    </div>
+  </section>
+</main>
+<footer class="wrap">샘플 데이터로 움직이는 화면입니다. 실제 납품 시 학원 문제·단원 체계·학생 기록으로 바뀝니다.</footer>
+
+<script>
+// ── 샘플 데이터 ─────────────────────────────
+const CONCEPTS = [
+  { id:"eq",    name:"일차방정식 풀이",     unit:"1단원" },
+  { id:"slope", name:"기울기",             unit:"2단원" },
+  { id:"yint",  name:"y절편",              unit:"2단원" },
+  { id:"xint",  name:"x절편·그래프",        unit:"2단원" },
+  { id:"apply", name:"일차함수 활용",       unit:"2단원" },
+  { id:"line2", name:"두 점을 지나는 직선",  unit:"2단원" },
+];
+const NOW = "line2";                 // 이번 진도
+const PREV_UNIT = ["eq"];            // 지난 단원
+const STUDENTS = {
+  kim: { name:"김민준", hist:{ eq:[46,64,70,76,82,88], slope:[null,30,34,31,36,38], yint:[null,55,64,72,78,81], xint:[null,null,48,55,60,63], apply:[null,null,null,44,52,57], line2:[null,null,null,null,42,50] } },
+  lee: { name:"이서연", hist:{ eq:[60,64,66,70,73,75], slope:[null,70,76,80,83,85], yint:[null,48,52,55,58,60], xint:[null,null,78,84,88,90], apply:[null,null,null,30,36,40], line2:[null,null,null,null,66,72] } },
+};
+const PRESETS = { fill:{weak:50,review:20,now:20,chal:10}, exam:{weak:25,review:15,now:50,chal:10}, top:{weak:20,review:10,now:40,chal:30} };
+const KIND = { weak:["취약 보충","k-weak"], review:["복습","k-review"], now:["이번 진도","k-now"], chal:["도전","k-chal"] };
+const LV = ["","기본","중간","심화"];
+
+let sid = "kim", mastery = {}, sheet = [], cur = 0, ratio = {...PRESETS.fill};
+const settings = { reveal:"try", hint:"step", mask:"on" };
+const cname = id => CONCEPTS.find(c => c.id === id).name;
+
+// ── 문제 생성(같은 개념·난이도로 숫자만 바꾼 문제) ─────
+let seed = 7;
+const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const ri = (a, b) => a + Math.floor(rnd() * (b - a + 1));
+const nz = (a, b) => { let v; do v = ri(a, b); while (v === 0); return v; };
+const p = v => v < 0 ? `(${v})` : `${v}`;
+const lin = (a, b) => `${a === 1 ? "" : a === -1 ? "−" : a}x${b === 0 ? "" : b > 0 ? ` + ${b}` : ` − ${-b}`}`.replace(/^(-)(\d)/, "−$2");
+const M = v => `[[${v}]]`;  // 가릴 수 있는 숫자
+
+const MAKE = {
+  slope(d){
+    const m = d === 3 ? nz(-6, 6) : nz(-4, 4), x1 = ri(-4, 3), dx = d === 1 ? ri(1, 2) : ri(2, 5), y1 = ri(-6, 6);
+    const x2 = x1 + dx, y2 = y1 + m * dx;
+    return { text:`두 점 (${x1}, ${y1}), (${x2}, ${y2})를 지나는 직선의 기울기를 구하시오.`, ans:m,
+      hints:["기울기 = (y의 증가량) ÷ (x의 증가량)", `x의 증가량: ${x2} − ${p(x1)} = ${M(dx)}`, `y의 증가량: ${y2} − ${p(y1)} = ${M(y2 - y1)}`],
+      sol:[`기울기 = (${y2} − ${p(y1)}) ÷ (${x2} − ${p(x1)})`, `= ${M(y2 - y1)} ÷ ${M(dx)}`, `= ${M(m)}`] };
+  },
+  yint(d){
+    const a = nz(-3, 3), x = d === 1 ? ri(1, 3) : nz(-4, 4), b = ri(-7, 7), y = a * x + b;
+    return { text:`기울기가 ${a}이고 점 (${x}, ${y})를 지나는 직선의 y절편을 구하시오.`, ans:b,
+      hints:[`직선의 식을 y = ${a}x + b로 놓아요.`, `x = ${x}, y = ${y}를 대입해요.`, `${y} = ${a} × ${p(x)} + b`],
+      sol:[`${y} = ${M(a * x)} + b`, `b = ${y} − ${p(a * x)}`, `b = ${M(b)}`] };
+  },
+  xint(d){
+    const a = d === 1 ? ri(1, 3) : nz(-4, 4), r = nz(-5, 5), b = -a * r;
+    return { text:`일차함수 y = ${lin(a, b)}의 그래프의 x절편을 구하시오.`, ans:r,
+      hints:["x절편은 y = 0일 때의 x 값이에요.", `0 = ${lin(a, b)}`, `${a}x = ${M(-b)}`],
+      sol:[`0 = ${lin(a, b)}`, `${a}x = ${M(-b)}`, `x = ${M(r)}`] };
+  },
+  apply(d){
+    const L = ri(6, 15) * 20, r = d === 3 ? ri(6, 12) : ri(2, 6), t = ri(5, Math.floor((L - 10) / r)), left = L - r * t;
+    return { text:`물 ${L}L가 든 물통에서 1분에 ${r}L씩 물이 빠진다. ${t}분 후 남은 물의 양은 몇 L인가?`, ans:left,
+      hints:["처음 양과 1분마다 줄어드는 양을 찾아요.", `x분 후 남은 양: y = ${L} − ${r}x`, `x = ${t}를 대입해요.`],
+      sol:[`y = ${L} − ${r} × ${t}`, `= ${L} − ${M(r * t)}`, `= ${M(left)}`] };
+  },
+  line2(d){
+    const m = d === 3 ? nz(-5, 5) : nz(-3, 3), b = ri(-6, 6), x1 = ri(-3, 2), x2 = x1 + (d === 1 ? 1 : ri(2, 3));
+    const y1 = m * x1 + b, y2 = m * x2 + b;
+    return { text:`두 점 (${x1}, ${y1}), (${x2}, ${y2})를 지나는 직선을 y = ax + b라 할 때, a + b의 값을 구하시오.`, ans:m + b,
+      hints:["먼저 기울기 a를 구해요.", `a = (${y2} − ${p(y1)}) ÷ (${x2} − ${p(x1)}) = ${M(m)}`, `y = ${m}x + b에 (${x1}, ${y1})을 대입해 b를 구해요.`],
+      sol:[`a = ${M(m)}`, `${y1} = ${m} × ${p(x1)} + b → b = ${M(b)}`, `a + b = ${M(m + b)}`] };
+  },
+  eq(d){
+    const a = ri(2, d === 3 ? 9 : 6), x = nz(-6, 6), b = nz(-9, 9), c = a * x + b;
+    return { text:`방정식 ${a}x ${b > 0 ? "+ " + b : "− " + -b} = ${c}를 푸시오. x = ?`, ans:x,
+      hints:["상수항을 오른쪽으로 옮겨요.", `${a}x = ${c} − ${p(b)} = ${M(c - b)}`, `양변을 ${a}로 나눠요.`],
+      sol:[`${a}x = ${M(c - b)}`, `x = ${M(c - b)} ÷ ${a}`, `x = ${M(x)}`] };
+  },
+};
+
+// ── 진단 ─────────────────────────────
+function loadStudent(){
+  const h = STUDENTS[sid].hist;
+  mastery = Object.fromEntries(CONCEPTS.map(c => [c.id, h[c.id].at(-1)]));
+  sheet = []; cur = 0;
+}
+const STOPS = [[224,103,90],[201,162,74],[95,157,224]];
+const color = v => {
+  const t = Math.max(0, Math.min(1, (v - 30) / 60)) * 2, i = Math.min(1, Math.floor(t)), f = t - i;
+  const c = STOPS[i].map((x, k) => Math.round(x + (STOPS[i + 1][k] - x) * f));
+  return `rgb(${c.join(",")})`;
+};
+function renderDiag(){
+  const h = STUDENTS[sid].hist, rounds = 6;
+  let html = `<tr><th></th>${Array.from({length:rounds}, (_, i) => `<th class="c">${i + 1}회</th>`).join("")}<th class="c">지금</th></tr>`;
+  for (const c of CONCEPTS) {
+    html += `<tr><th>${c.name} <span class="unit">${c.unit}</span></th>` +
+      h[c.id].map(v => v == null ? `<td class="na">·</td>` : `<td style="background:${color(v)};color:#140f0c">${v}</td>`).join("") +
+      `<td style="background:${color(mastery[c.id])};color:#140f0c;outline:2px solid var(--ink)">${mastery[c.id]}</td></tr>`;
+  }
+  document.getElementById("heat").innerHTML = html;
+
+  // 추이(배운 개념 평균)
+  const avg = Array.from({length:rounds}, (_, i) => { const v = CONCEPTS.map(c => h[c.id][i]).filter(x => x != null); return Math.round(v.reduce((a, b) => a + b, 0) / v.length); });
+  avg.push(Math.round(Object.values(mastery).reduce((a, b) => a + b, 0) / CONCEPTS.length));
+  const X = i => 30 + i * 46, Y = v => 150 - (v - 30) * 2;
+  document.getElementById("trend").innerHTML =
+    [40, 60, 80].map(v => `<line x1="30" x2="310" y1="${Y(v)}" y2="${Y(v)}" stroke="#3b312a"/><text x="4" y="${Y(v) + 4}" fill="#ab9e92" font-size="10">${v}</text>`).join("") +
+    `<polyline fill="none" stroke="#f08a4b" stroke-width="3" points="${avg.map((v, i) => `${X(i)},${Y(v)}`).join(" ")}"/>` +
+    avg.map((v, i) => `<circle cx="${X(i)}" cy="${Y(v)}" r="4" fill="#f08a4b"/><text x="${X(i)}" y="${Y(v) - 9}" text-anchor="middle" fill="#f4eee8" font-size="10">${v}</text><text x="${X(i)}" y="166" text-anchor="middle" fill="#ab9e92" font-size="10">${i < rounds ? i + 1 + "회" : "지금"}</text>`).join("");
+
+  const weak = CONCEPTS.filter(c => mastery[c.id] < 70).sort((a, b) => mastery[a.id] - mastery[b.id]);
+  const classAvg = { eq:79, slope:66, yint:70, xint:72, apply:61, line2:60 };
+  document.getElementById("weak").innerHTML = weak.map(c => `<div><span>${c.name}</span><span><b>${mastery[c.id]}</b> · 반 평균 ${classAvg[c.id]}</span></div>`).join("") || "<div>부족한 개념이 없어요</div>";
+  const w = weak[0];
+  document.getElementById("sentence").textContent = w
+    ? `${STUDENTS[sid].name} 학생은 ${w.unit} '${w.name}' 숙달도가 ${mastery[w.id]}로 반 평균(${classAvg[w.id]})보다 ${classAvg[w.id] - mastery[w.id]}점 낮습니다. 다음 시험지에 이 개념을 가장 많이 넣습니다.`
+    : `${STUDENTS[sid].name} 학생은 모든 개념이 70 이상입니다.`;
+}
+
+// ── 문제 자동 조합 ─────────────────────────
+function split(n, weights){                 // 최대 잔여법으로 정수 배분
+  const tot = Object.values(weights).reduce((a, b) => a + b, 0) || 1;
+  const raw = Object.entries(weights).map(([k, w]) => [k, n * w / tot]);
+  const out = Object.fromEntries(raw.map(([k, v]) => [k, Math.floor(v)]));
+  let left = n - Object.values(out).reduce((a, b) => a + b, 0);
+  raw.sort((a, b) => (b[1] % 1) - (a[1] % 1)).forEach(([k]) => { if (left > 0 && weights[k] > 0) { out[k]++; left--; } });
+  return out;
+}
+const diffFor = m => m < 45 ? 1 : m < 70 ? 2 : 3;
+function compose(){
+  const n = Math.max(5, Math.min(20, +document.getElementById("count").value || 10));
+  const parts = split(n, ratio);
+  const curUnit = CONCEPTS.filter(c => !PREV_UNIT.includes(c.id) && c.id !== NOW);
+  const items = [];
+  // 취약: 70 미만 개념을 부족한 만큼 나눠 배정
+  const weakW = Object.fromEntries(curUnit.filter(c => mastery[c.id] < 70).map(c => [c.id, 70 - mastery[c.id]]));
+  if (Object.keys(weakW).length === 0) weakW[curUnit.sort((a, b) => mastery[a.id] - mastery[b.id])[0].id] = 1;
+  for (const [id, k] of Object.entries(split(parts.weak, weakW))) for (let i = 0; i < k; i++)
+    items.push({ kind:"weak", c:id, d:diffFor(mastery[id]), why:`숙달도 ${mastery[id]}` });
+  // 복습: 지난 단원 + 이미 익힌 개념
+  const rv = [...PREV_UNIT, ...curUnit.filter(c => mastery[c.id] >= 70).map(c => c.id)];
+  for (let i = 0; i < parts.review; i++) { const id = rv[i % rv.length]; items.push({ kind:"review", c:id, d:2, why: PREV_UNIT.includes(id) ? "지난 단원" : "익힌 개념 다시 확인" }); }
+  for (let i = 0; i < parts.now; i++) items.push({ kind:"now", c:NOW, d:diffFor(mastery[NOW]), why:"이번 수업 단원" });
+  const strong = curUnit.slice().sort((a, b) => mastery[b.id] - mastery[a.id])[0].id;
+  for (let i = 0; i < parts.chal; i++) items.push({ kind:"chal", c:strong, d:3, why:`강점 개념(${mastery[strong]}) 한 단계 위` });
+  seed = (Date.now() % 100000) + 11;
+  const seen = new Set();
+  sheet = items.map(it => { let q, g = 0; do { q = MAKE[it.c](it.d); g++; } while (seen.has(q.text) && g < 20); seen.add(q.text); return { ...it, ...q, tries:0, hintLv:0, solved:null, allowed:false, opened:0 }; });
+  cur = 0;
+  renderSheet(); renderSolve();
+}
+function renderRatio(){
+  document.getElementById("ratio").innerHTML = Object.keys(KIND).map(k => `
+    <label><span>${KIND[k][0]}</span><b>${ratio[k]}%</b><input type="range" min="0" max="100" step="5" value="${ratio[k]}" data-k="${k}" aria-label="${KIND[k][0]} 비율"></label>`).join("");
+  const tot = Object.values(ratio).reduce((a, b) => a + b, 0) || 1;
+  document.getElementById("bar").innerHTML = Object.keys(KIND).map(k => `<div class="${KIND[k][1]}" style="width:${ratio[k] / tot * 100}%"></div>`).join("");
+}
+function renderSheet(){
+  const el = document.getElementById("sheet");
+  document.getElementById("phTitle").textContent = `${STUDENTS[sid].name} 맞춤 시험지`;
+  document.getElementById("phSub").textContent = `${new Date().toLocaleDateString("ko-KR")} · ${sheet.length}문항`;
+  if (!sheet.length) { el.innerHTML = `<p class="sub">유형과 비율을 고르고 '이 학생 시험지 만들기'를 누르세요.</p>`; return; }
+  el.innerHTML = sheet.map((q, i) => `
+    <div class="q">
+      <span class="n">${i + 1}</span>
+      <div>${q.text}<div class="why"><span class="chip ${KIND[q.kind][1]}">${KIND[q.kind][0]}</span> ${cname(q.c)} · ${q.why}</div></div>
+      <span class="lv">${LV[q.d]}</span>
+    </div>`).join("");
+}
+
+// ── 풀기 · 힌트 · 해설 ──────────────────────
+const plain = s => s.replace(/\[\[(.+?)\]\]/g, "$1");
+const masked = s => settings.mask === "on" ? s.replace(/\[\[(.+?)\]\]/g, '<span class="mask" tabindex="0" role="button" aria-label="가린 숫자 보기">$1</span>') : plain(s);
+function canSolution(q){
+  if (settings.reveal === "now") return true;
+  if (settings.reveal === "try") return q.tries > 0;
+  return q.allowed;
+}
+function renderSolve(){
+  const dots = document.getElementById("dots");
+  if (!sheet.length) {
+    dots.innerHTML = ""; document.getElementById("qMeta").textContent = "";
+    document.getElementById("qText").textContent = "② 문제 자동 조합에서 시험지를 먼저 만드세요.";
+    ["ladder","lock","result","log"].forEach(id => document.getElementById(id).innerHTML = "");
+    return;
+  }
+  const q = sheet[cur];
+  dots.innerHTML = sheet.map((x, i) => `<span class="${i === cur ? "cur " : ""}${x.solved === true ? "ok" : x.solved === false ? "no" : ""}" data-i="${i}">${i + 1}</span>`).join("");
+  document.getElementById("qMeta").innerHTML = `<span class="chip ${KIND[q.kind][1]}">${KIND[q.kind][0]}</span> ${cname(q.c)} · ${LV[q.d]}`;
+  document.getElementById("qText").textContent = q.text;
+  document.getElementById("ans").value = "";
+  document.getElementById("result").className = "result";
+  document.getElementById("result").textContent = q.solved === true ? "정답" : q.tries ? `${q.tries}회 시도` : "";
+
+  // 단계: 힌트1·2·3 → 풀이 일부 → 전체 해설
+  const steps = [];
+  if (settings.hint === "step") q.hints.forEach((h, i) => steps.push({ t:`힌트 ${i + 1}`, body:masked(h), lv:i + 1, sol:false }));
+  steps.push({ t:"풀이 일부", body:masked(q.sol[0]) + "<br>…", lv:4, sol:true });
+  steps.push({ t:"전체 해설", body:q.sol.map(masked).join("<br>"), lv:5, sol:true });
+  const solOk = canSolution(q);
+  document.getElementById("ladder").innerHTML = steps.map((s, i) => {
+    const open = q.opened > i, next = q.opened === i, locked = s.sol && !solOk;
+    return `<div class="step ${open ? "open" : ""}"><span class="t">${s.t}</span>${open ? s.body :
+      next ? (locked ? "잠김" : `<button class="btn ghost" data-open="${i}">보기</button>`) : "—"}</div>`;
+  }).join("");
+  document.getElementById("lock").innerHTML = !solOk
+    ? (settings.reveal === "try" ? "해설은 한 번 풀어 본 뒤 열립니다." : `해설은 강사가 허용하면 열립니다. <button class="btn ghost" id="allow">강사로 허용 (데모)</button>`)
+    : "";
+  renderLog();
+}
+function renderLog(){
+  const done = sheet.filter(q => q.solved !== null);
+  document.getElementById("log").innerHTML = done.length ? done.map(q => `<div>${sheet.indexOf(q) + 1}번 · ${cname(q.c)} · ${q.solved ? "정답" : "오답"} · ${q.hintUsed}</div>`).join("") +
+    `<div><b>지금 숙달도</b><br>${CONCEPTS.map(c => `${c.name} ${mastery[c.id]}`).join(" · ")}</div>` : `<div>문제를 풀면 힌트 사용 단계와 숙달도 변화가 여기에 쌓입니다.</div>`;
+}
+function check(){
+  const q = sheet[cur]; if (!q || q.solved === true) return;
+  const v = document.getElementById("ans").value.trim().replace("−", "-");
+  if (v === "") return;
+  q.tries++;
+  const ok = Number(v) === q.ans;
+  const lv = Math.min(q.opened, 5);      // 0: 힌트 없음, 1~3: 힌트, 4~5: 해설
+  const gain = ok ? [8, 6, 4, 2, 0, 0][lv] : -4;
+  const before = mastery[q.c];
+  mastery[q.c] = Math.max(0, Math.min(100, before + gain));
+  q.hintUsed = lv === 0 ? "힌트 없이" : lv <= 3 ? `힌트 ${lv}단계` : "해설 보고";
+  if (ok) q.solved = true; else if (q.solved !== true) q.solved = false;
+  renderSolve();
+  const r = document.getElementById("result");
+  r.className = "result " + (ok ? "ok" : "no");
+  r.textContent = ok ? `정답 · ${q.hintUsed} · ${cname(q.c)} ${before} → ${mastery[q.c]}` : `오답 · ${cname(q.c)} ${before} → ${mastery[q.c]} · 다시 풀거나 힌트를 여세요`;
+  renderDiag();
+}
+
+// ── 이벤트 ─────────────────────────────
+document.getElementById("student").innerHTML = Object.entries(STUDENTS).map(([k, s]) => `<option value="${k}">${s.name}</option>`).join("");
+document.getElementById("student").onchange = e => { sid = e.target.value; loadStudent(); renderDiag(); renderSheet(); renderSolve(); };
+document.querySelectorAll(".tab").forEach(t => t.onclick = () => {
+  document.querySelectorAll(".tab").forEach(x => x.setAttribute("aria-selected", x === t));
+  document.querySelectorAll(".view").forEach(v => v.hidden = v.id !== "v-" + t.dataset.v);
+});
+document.getElementById("preset").onchange = e => { ratio = { ...PRESETS[e.target.value] }; renderRatio(); };
+document.getElementById("ratio").oninput = e => { if (e.target.dataset.k) { ratio[e.target.dataset.k] = +e.target.value; renderRatio(); document.querySelector(`[data-k="${e.target.dataset.k}"]`).focus(); } };
+document.getElementById("make").onclick = compose;
+document.getElementById("printBtn").onclick = () => { if (!sheet.length) compose(); window.print(); };
+document.getElementById("check").onclick = check;
+document.getElementById("ans").onkeydown = e => { if (e.key === "Enter") check(); };
+document.getElementById("prev").onclick = () => { if (cur > 0) { cur--; renderSolve(); } };
+document.getElementById("next").onclick = () => { if (cur < sheet.length - 1) { cur++; renderSolve(); } };
+document.getElementById("dots").onclick = e => { const i = e.target.dataset.i; if (i != null) { cur = +i; renderSolve(); } };
+document.getElementById("v-solve").addEventListener("click", e => {
+  const o = e.target.dataset.open; if (o != null) { sheet[cur].opened = +o + 1; renderSolve(); }
+  if (e.target.id === "allow") { sheet[cur].allowed = true; renderSolve(); }
+  if (e.target.classList.contains("mask")) e.target.classList.add("show");
+});
+document.getElementById("v-solve").addEventListener("keydown", e => { if (e.target.classList.contains("mask") && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); e.target.classList.add("show"); } });
+document.querySelectorAll("[data-group]").forEach(g => {
+  const key = g.dataset.group;
+  const sync = () => g.querySelectorAll(".opt").forEach(b => b.setAttribute("aria-pressed", b.dataset.val === settings[key]));
+  g.onclick = e => { const v = e.target.dataset.val; if (v) { settings[key] = v; sync(); renderSolve(); } };
+  sync();
+});
+
+loadStudent(); renderDiag(); renderRatio(); renderSheet(); renderSolve();
+</script>
+</body>
+</html>
