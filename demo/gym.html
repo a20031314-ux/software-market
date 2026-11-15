@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>헬스장·PT 예약·이용권·출석 모듈 — 모듈앱 마켓</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#17120f; --surface:#221b16; --surface2:#2b221c; --line:#3b312a;
+    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410;
+  }
+  *{margin:0;box-sizing:border-box}
+  body{background:var(--night);color:var(--ink);font-family:'Noto Sans KR',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;word-break:keep-all}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+  header{border-bottom:1px solid var(--line);background:rgba(23,18,15,.92);position:sticky;top:0;z-index:5;backdrop-filter:blur(6px)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+  .logo{font-weight:800;text-decoration:none}.logo b{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;background:var(--accent);color:var(--accent-ink);font-weight:700;border:0;border-radius:999px;padding:10px 20px;cursor:pointer;text-decoration:none;font-size:15px;min-height:44px}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .hero{padding:44px 0 8px}
+  .eyebrow{color:var(--muted);font-size:14px}
+  h1{font-size:34px;letter-spacing:-1px;line-height:1.3;margin:6px 0 12px}
+  .pills{display:flex;gap:8px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:5px 12px;font-size:13px}
+  nav.jump{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 4px}
+  nav.jump a{text-decoration:none;font-size:14px;padding:7px 14px;border-radius:999px;background:var(--surface);border:1px solid var(--line)}
+  nav.jump a.rec{border-color:var(--accent);color:var(--accent)}
+  .group{margin-top:56px}
+  .group > h2{font-size:15px;color:var(--muted);font-weight:500;margin-bottom:6px}
+  .module{padding:28px 0 36px;border-top:1px solid var(--line)}
+  .mhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .mhead h3{font-size:26px;letter-spacing:-.6px;line-height:1.3}
+  .mhead p{color:var(--muted);font-size:15px;margin-top:4px}
+  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+  .tag{font-size:12px;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface2);color:var(--muted)}
+  .tag.rec{background:var(--accent);color:var(--accent-ink)}
+  .scenes{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(100%,var(--min,320px)),1fr))}
+  .scenes.phone{--min:200px}
+  .scene{margin:0;display:flex;flex-direction:column;gap:10px}
+  .scene button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
+  .scene button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .scene img{display:block;width:100%;height:auto}
+  .scenes.phone img{aspect-ratio:390/700;object-fit:contain;object-position:top;background:var(--surface)}
+  .scene figcaption{font-size:14px;line-height:1.5}
+  .scene figcaption b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--accent);font-size:12px;margin-right:6px}
+  .scene figcaption span{color:var(--muted)}
+  .soon{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);font-size:15px}
+  .soon ol{margin:8px 0 0 18px;color:var(--ink)}
+  .tag.soon-tag{background:transparent;border:1px dashed var(--line)}
+  .cta{margin:64px 0 40px;padding:28px;border-radius:18px;background:var(--surface2);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .cta h2{font-size:22px}.cta p{color:var(--muted);font-size:15px}
+  footer{color:var(--muted);font-size:13px;padding:0 0 40px}
+  dialog{border:0;padding:0;background:transparent;max-width:min(96vw,1440px);max-height:94vh}
+  dialog::backdrop{background:rgba(10,8,6,.88)}
+  dialog img{display:block;max-width:100%;max-height:88vh;border-radius:12px}
+  dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
+  dialog .close{position:fixed;top:14px;right:14px}
+  @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/#system">모듈앱<b>마켓</b></a>
+  <a class="btn" href="/#contact">문의하기</a>
+</div></header>
+
+<main class="wrap">
+  <section class="hero">
+    <p class="eyebrow">시스템 서비스 · 헬스장 · PT · 필라테스 · 요가 · 클래스</p>
+    <h1>예약 · 이용권 · QR 출석 · 결제 모듈</h1>
+    <div class="pills">
+      <span class="pill">가상 데이터로 찍은 실제 화면</span>
+      <span class="pill">회원이 앱에서 예약·대기·취소</span>
+      <span class="pill">카운터 대신 매장 QR로 출석</span>
+      <span class="pill">결제되면 이용권 자동 발급</span>
+    </div>
+    <nav class="jump" aria-label="모듈" id="jump"></nav>
+  </section>
+  <div id="groups"></div>
+
+  <section class="cta">
+    <div>
+      <h2>우리 시간표·이용권으로 보고 싶다면</h2>
+      <p>수업 시간표, 이용권 종류(횟수권·기간권·가격), 취소 규칙을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
+    </div>
+    <a class="btn" href="/#contact">문의하기</a>
+  </section>
+</main>
+<footer class="wrap">화면의 헬스장·회원·예약·결제는 모두 가상 데이터예요(결제 화면은 테스트 결제). 회원 결제는 가게 명의 PG(카드사·PG 심사 필요)로 받고, PG 수수료는 가게 부담입니다.</footer>
+
+<dialog id="zoom" aria-label="크게 보기">
+  <button class="btn ghost close" type="button" id="zoomClose">닫기</button>
+  <img id="zoomImg" alt="">
+  <p id="zoomCap"></p>
+</dialog>
+
+<script>
+// 모듈별 장면 — 그룹 순서 = 보여 주는 순서(추천 모듈부터). 이미지는 img/gym/<id>.jpg
+// 장면 다시 찍기: dating 저장소 scripts/gym-demo-seed.py → scripts/gym-demo-shots.py (장면 이름이 같다)
+// soon: 아직 없는 모듈 — 화면 대신 흐름만. wideScenes: 휴대폰 장면 뒤에 붙는 PC 장면.
+const GROUPS = [
+  { title: "추천 모듈 — 카운터가 매일 하던 일", modules: [
+    { id: "book", rec: true, plan: "업종 패키지 포함", title: "수업 예약 · 대기", line: "회원이 앱에서 예약하면 이용권 1회 차감, 자리가 차면 대기 → 취소가 나면 앞 사람이 자동 예약", wide: false, scenes: [
+      ["book-1", "회원 예약 탭", "남은 횟수, 내 예약(대기 포함), 날짜별 수업과 남은 자리"],
+    ], wideScenes: [
+      ["book-3", "오늘 명단", "수업별 예약·대기, 출석 표시. 관리자 취소는 1회 돌려주고 알림"],
+    ]},
+    { id: "checkin", rec: true, plan: "업종 패키지 포함", title: "QR 출석", line: "매장에 붙인 QR을 휴대폰 카메라로. 예약한 수업이면 그 수업, 아니면 자유 이용 1회", wide: false, scenes: [
+      ["checkin-1", "찍으면 바로 출석", "남은 횟수까지 한 화면, 하루 한 번"],
+    ], wideScenes: [
+      ["checkin-2", "매장 QR", "인쇄·주소 복사, QR을 바꾸면 옛 QR은 안 됨"],
+      ["checkin-3", "그날 출석 기록", "시각 · 수업/자유 이용 · QR/직접"],
+    ]},
+    { id: "pay", rec: true, plan: "옵션", title: "이용권 판매 · 청구", line: "회원이 앱에서 이용권을 사거나 청구를 결제 → 결제되면 이용권 자동 발급", wide: false, scenes: [
+      ["pay-1", "회원 결제 화면", "결제할 것(기한), 판매 중인 이용권"],
+    ], wideScenes: [
+      ["pay-2", "청구 만들기", "결제 전·미납·이번 달 결제 합계, 회원 전체 또는 고른 사람에게"],
+      ["pay-3", "미납 관리", "기한 지난 청구, 다시 알림·결제 링크 복사·환불"],
+    ]},
+  ]},
+  { title: "다음 단계 — 문의가 오면", modules: [
+    { id: "busy", plan: "옵션", soon: true, title: "혼잡도", line: "지금 몇 명이 운동 중인지 회원이 보고 오게", steps: ["QR 출석·퇴장으로 지금 인원 계산", "회원 앱에 혼잡도(여유·보통·붐빔)", "시간대별 평균으로 한산한 때 안내"] },
+    { id: "pt", plan: "옵션", soon: true, title: "1:1 PT 시간 예약", line: "트레이너마다 비는 시간을 열고 회원이 고르게", steps: ["트레이너가 주간 가능 시간 등록", "회원이 트레이너·시간 선택 → PT 횟수 차감", "노쇼·지각 기록, 트레이너별 수업 수"] },
+  ]},
+  { title: "기본 포함", modules: [
+    { id: "manage", plan: "모든 패키지", title: "회원 이용권 · 시간표 · 직원", line: "이용권 발급·연장, 주간 시간표, 매니저·코치 권한", wide: true, scenes: [
+      ["manage-1", "회원 이용권", "이름 찾기 → 발급, 남은 횟수·끝 날짜 고치기(환불·연장·보상)"],
+      ["manage-2", "시간표", "요일·시작·길이·정원·강사, 켜기/끄기"],
+      ["manage-4", "이용권 종류", "횟수권·기간권, 가격, 판매 중/꺼짐"],
+      ["manage-3", "직원", "매니저(청구·환불 포함)·코치(명단·출석만)"],
+    ]},
+  ]},
+];
+
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+document.getElementById("jump").innerHTML = GROUPS.flatMap((g) => g.modules).map((m) => `<a href="#${m.id}"${m.rec ? ' class="rec"' : ""}>${esc(m.title)}</a>`).join("");
+document.getElementById("groups").innerHTML = GROUPS.map((g) => `
+  <section class="group">
+    <h2>${esc(g.title)}</h2>
+    ${g.modules.map((m) => `
+      <article class="module" id="${m.id}">
+        <div class="mhead">
+          <div>
+            <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span>${m.soon ? '<span class="tag soon-tag">준비 중</span>' : ""}</div>
+            <h3>${esc(m.title)}</h3>
+            <p>${esc(m.line)}</p>
+          </div>
+          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
+        </div>
+        ${m.soon ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>` : `<div class="scenes${m.wide ? "" : " phone"}">
+          ${m.scenes.map(([img, cap, sub], i) => `
+            <figure class="scene">
+              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/gym/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
+              <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
+            </figure>`).join("")}
+        </div>${m.wideScenes ? `<div class="scenes" style="margin-top:16px">${m.wideScenes.map(([img, cap, sub], i) => `
+            <figure class="scene">
+              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/gym/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
+              <figcaption><b>${m.scenes.length + i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
+            </figure>`).join("")}</div>` : ""}`}
+      </article>`).join("")}
+  </section>`).join("");
+
+const zoom = document.getElementById("zoom");
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-img]");
+  if (!b) return;
+  document.getElementById("zoomImg").src = `/img/gym/${b.dataset.img}.jpg`;
+  document.getElementById("zoomImg").alt = b.dataset.cap;
+  document.getElementById("zoomCap").textContent = b.dataset.cap;
+  zoom.showModal();
+});
+document.getElementById("zoomClose").onclick = () => zoom.close();
+zoom.addEventListener("click", (e) => { if (e.target === zoom) zoom.close(); });
+</script>
+</body>
+</html>
