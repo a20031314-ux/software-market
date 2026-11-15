@@ -632,6 +632,14 @@ function showMode(){
 window.addEventListener("hashchange", showMode);
 productSel.innerHTML += ALL_ASK.map(t => `<option value="${t}">${t}</option>`).join("");
 renderSystem();
+// 모듈 화면 페이지에서 "이 모습으로 문의하기"(?msg=…#contact) — 문의 내용에 미리 넣고 시스템 서비스 쪽으로.
+(() => {
+  const msg = new URLSearchParams(location.search).get("msg");
+  if (!msg) return;
+  const box = document.querySelector('[name="message"]');
+  if (box && !box.value) box.value = msg.slice(0, 500) + "\n\n";
+  history.replaceState(null, "", location.pathname + location.hash);
+})();
 showMode();
 
 render();

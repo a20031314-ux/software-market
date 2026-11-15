@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>헬스장·PT 예약·이용권·출석 모듈 — 모듈앱 마켓</title>
+<title>우리 헬스장 앱 — 예약·QR 출석·이용권 결제 | 모듈앱 마켓</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -59,6 +59,64 @@
   dialog img{display:block;max-width:100%;max-height:88vh;border-radius:12px}
   dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
   dialog .close{position:fixed;top:14px;right:14px}
+
+  /* ── 첫 화면: 우리 헬스장 앱 꾸며 보기 ── */
+  .studio{display:grid;grid-template-columns:1.05fr .95fr;grid-template-areas:"intro stage" "side stage";column-gap:48px;align-items:center;padding:56px 0 40px}
+  .studio .intro{grid-area:intro;align-self:end}.studio .side{grid-area:side;align-self:start}.studio .stage{grid-area:stage}
+  .studio h1{font-size:44px;letter-spacing:-1.5px;line-height:1.2;margin:10px 0 14px}
+  .studio .lead{color:var(--muted);font-size:17px;max-width:30em}
+  .controls{margin-top:28px;display:grid;gap:18px;max-width:440px}
+  .controls label{display:grid;gap:8px;font-size:14px;color:var(--muted)}
+  .controls input[type=text]{background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--ink);font:inherit;font-size:17px;padding:12px 14px}
+  .controls input[type=text]:focus{outline:none;border-color:var(--accent)}
+  .swatches,.kinds{display:flex;gap:10px;flex-wrap:wrap}
+  .swatch{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 2px var(--night),0 0 0 3px transparent}
+  .swatch[aria-pressed=true]{box-shadow:0 0 0 3px var(--night),0 0 0 5px var(--ink)}
+  .kind{all:unset;cursor:pointer;font-size:14px;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+  .kind[aria-pressed=true]{border-color:var(--ink);color:var(--ink)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .stage{display:flex;justify-content:center;align-items:flex-end;gap:22px}
+  .phone{--app:#3ccf8e;width:300px;border-radius:44px;padding:12px;background:#0b0d0d;border:1px solid #2a2f2e;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .screen{border-radius:34px;overflow:hidden;background:#111716;color:#eef3f0;height:600px;display:flex;flex-direction:column;font-size:13px}
+  .status{display:flex;justify-content:space-between;padding:14px 22px 6px;font-size:12px;font-weight:700}
+  .apphead{padding:8px 20px 14px;display:flex;align-items:center;gap:10px}
+  .apphead .mark{width:30px;height:30px;border-radius:9px;background:var(--app);color:#0b0d0d;display:grid;place-items:center;font-weight:800;font-size:15px}
+  .apphead b{font-size:19px;letter-spacing:-.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .appbody{flex:1;padding:0 16px;display:grid;gap:10px;align-content:start}
+  .card{border:1px solid #26302e;border-radius:16px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .card small{color:#97aaa3}
+  .qr{background:var(--app);color:#0b0d0d;border-radius:16px;padding:14px;font-weight:800;display:flex;justify-content:space-between;align-items:center;font-size:15px}
+  .row{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid #26302e;border-radius:14px;padding:10px 12px}
+  .row p{line-height:1.35}.row small{color:#97aaa3;font-size:11.5px}
+  .pbtn{border-radius:999px;padding:6px 12px;font-weight:700;font-size:12px;white-space:nowrap}
+  .pbtn.on{background:var(--app);color:#0b0d0d}.pbtn.off{border:1px solid #3a4644;color:#eef3f0}
+  .sec{color:#97aaa3;font-size:12px;margin-top:4px}
+  .tabbar{display:flex;justify-content:space-around;padding:12px 0 18px;border-top:1px solid #1f2826;color:#7d8c87}
+  .tabbar span.on{color:var(--app)}
+  .homeicon{display:grid;gap:8px;justify-items:center;font-size:12px;color:var(--muted);padding-bottom:30px}
+  .homeicon .ic{width:64px;height:64px;border-radius:16px;background:var(--app,#3ccf8e);display:grid;place-items:center;font-weight:800;font-size:28px;color:#0b0d0d;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .homeicon .nm{color:var(--ink);font-size:12px;max-width:80px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:18px;display:grid;gap:12px;align-content:start}
+  .step .n{color:var(--accent);font-weight:800;font-size:14px}
+  .step h3{font-size:20px;letter-spacing:-.4px}
+  .step p{color:var(--muted);font-size:14.5px}
+  .step img{width:100%;border-radius:12px;border:1px solid var(--line);display:block;cursor:zoom-in}
+  .step.phoneimg img{aspect-ratio:390/560;object-fit:cover;object-position:top}
+  .step.wideimg img{aspect-ratio:4/3;object-fit:cover;object-position:top left}
+  .block{margin-top:72px}
+  .block > h2{font-size:28px;letter-spacing:-.8px;margin-bottom:6px}
+  .block > p.sub{color:var(--muted);margin-bottom:22px}
+  .incl{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .incl div{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 20px}
+  .incl h3{font-size:16px;margin-bottom:8px}.incl ul{margin-left:18px;color:var(--muted);font-size:14.5px;display:grid;gap:4px}
+  .incl .soonbox{border-style:dashed}
+  details.all{margin-top:72px;border-top:1px solid var(--line)}
+  details.all > summary{cursor:pointer;list-style:none;padding:24px 0;font-size:18px;font-weight:700;display:flex;justify-content:space-between}
+  details.all > summary::after{content:"펼치기 ▾";color:var(--muted);font-size:14px;font-weight:500}
+  details.all[open] > summary::after{content:"접기 ▴"}
+  @media (max-width:900px){.studio{grid-template-columns:1fr;grid-template-areas:"intro" "stage" "side";row-gap:28px;padding-top:32px}.studio h1{font-size:32px}.steps,.incl{grid-template-columns:1fr}.controls{margin-top:0}}
+  @media (max-width:640px){.phone{width:250px;border-radius:38px;padding:10px}.screen{height:500px;border-radius:30px;font-size:12px}.homeicon{display:none}}
   @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
 </style>
 </head>
@@ -69,18 +127,75 @@
 </div></header>
 
 <main class="wrap">
-  <section class="hero">
-    <p class="eyebrow">시스템 서비스 · 헬스장 · PT · 필라테스 · 요가 · 클래스</p>
-    <h1>예약 · 이용권 · QR 출석 · 결제 모듈</h1>
-    <div class="pills">
-      <span class="pill">가상 데이터로 찍은 실제 화면</span>
-      <span class="pill">회원이 앱에서 예약·대기·취소</span>
-      <span class="pill">카운터 대신 매장 QR로 출석</span>
-      <span class="pill">결제되면 이용권 자동 발급</span>
+  <section class="studio">
+    <div class="intro">
+      <p class="eyebrow">헬스장 · PT · 필라테스 · 요가 · 클래스</p>
+      <h1>우리 헬스장 이름으로 된 앱</h1>
+      <p class="lead">회원은 앱으로 수업을 예약하고, 매장 QR로 출석하고, 이용권을 결제해요. 스토어 없이 링크 하나로 휴대폰 홈 화면에 설치됩니다.</p>
     </div>
-    <nav class="jump" aria-label="모듈" id="jump"></nav>
+    <div class="side">
+      <div class="controls">
+        <label>우리 가게 이름<input type="text" id="gymName" value="모아 피트니스" maxlength="14" autocomplete="off"></label>
+        <div><p class="eyebrow" style="margin-bottom:8px">대표 색</p><div class="swatches" id="swatches"></div></div>
+        <div><p class="eyebrow" style="margin-bottom:8px">업종</p><div class="kinds" id="kinds"></div></div>
+      </div>
+      <div class="actions">
+        <a class="btn" id="askThis" href="/#contact">이 모습으로 문의하기</a>
+        <a class="btn ghost" href="#how">어떻게 쓰나요</a>
+      </div>
+    </div>
+    <div class="stage" aria-label="앱 미리보기">
+      <div class="phone" id="phone">
+        <div class="screen">
+          <div class="status"><span>9:41</span><span>●●● ▮</span></div>
+          <div class="apphead"><span class="mark" id="mark">모</span><b id="appName">모아 피트니스</b></div>
+          <div class="appbody">
+            <div class="card"><span id="passName">PT 10회</span><small id="passLeft">7/10회 · ~1/26</small></div>
+            <div class="qr"><span>QR 출석</span><span>▣</span></div>
+            <p class="sec">오늘 수업</p>
+            <div id="classes" style="display:grid;gap:8px"></div>
+          </div>
+          <div class="tabbar"><span>⌂</span><span class="on">▦</span><span>○</span></div>
+        </div>
+      </div>
+      <div class="homeicon"><div class="ic" id="icon">모</div><span class="nm" id="iconName">모아 피트니스</span><span>홈 화면 아이콘</span></div>
+    </div>
   </section>
-  <div id="groups"></div>
+
+  <section class="block" id="how">
+    <h2>회원은 이렇게 써요</h2>
+    <p class="sub">카운터에 묻지 않아도 되는 세 가지</p>
+    <div class="steps">
+      <div class="step phoneimg"><span class="n">1</span><h3>앱에서 예약</h3><p>남은 자리를 보고 예약, 자리가 차면 대기. 누가 취소하면 앞 사람이 자동으로 예약돼요.</p><img src="/img/gym/book-1.jpg" alt="회원 예약 탭" data-img="book-1" data-cap="회원 예약 탭"></div>
+      <div class="step phoneimg"><span class="n">2</span><h3>매장 QR로 출석</h3><p>입구 QR을 휴대폰 카메라로 찍으면 끝. 남은 횟수가 바로 보여요.</p><img src="/img/gym/checkin-1.jpg" alt="QR 출석 완료" data-img="checkin-1" data-cap="QR 출석"></div>
+      <div class="step phoneimg"><span class="n">3</span><h3>이용권 결제</h3><p>앱에서 이용권을 사거나 받은 청구를 결제하면 이용권이 바로 들어와요.</p><img src="/img/gym/pay-1.jpg" alt="회원 결제 화면" data-img="pay-1" data-cap="회원 결제 화면"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>사장님은 이렇게 관리해요</h2>
+    <p class="sub">PC에서 한 화면으로</p>
+    <div class="steps">
+      <div class="step wideimg"><h3>오늘 명단 · 출석</h3><p>수업별 예약·대기와 누가 왔는지.</p><img src="/img/gym/book-3.jpg" alt="오늘 명단" data-img="book-3" data-cap="오늘 명단 · 출석"></div>
+      <div class="step wideimg"><h3>청구 · 미납</h3><p>회원 전체에게 청구하고, 기한 지난 것만 모아 다시 알림.</p><img src="/img/gym/pay-3.jpg" alt="미납 관리" data-img="pay-3" data-cap="청구 · 미납"></div>
+      <div class="step wideimg"><h3>회원 이용권 · 직원</h3><p>이용권 발급·연장, 코치는 명단·출석만 보게.</p><img src="/img/gym/manage-1.jpg" alt="회원 이용권" data-img="manage-1" data-cap="회원 이용권"></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>들어가는 것</h2>
+    <div class="incl">
+      <div><h3>기본</h3><ul><li>가게 이름·색·아이콘</li><li>홈 화면 설치 링크·QR</li><li>공지·알림</li><li>관리자 화면</li></ul></div>
+      <div><h3>헬스장 패키지</h3><ul><li>이용권(횟수권·기간권)</li><li>수업 시간표·예약·대기</li><li>매장 QR 출석</li><li>매니저·코치 권한</li><li>옵션: 이용권 결제·청구</li></ul></div>
+      <div class="soonbox"><h3>준비 중</h3><ul><li>혼잡도</li><li>1:1 PT 시간 예약</li><li>체성분 기록</li></ul></div>
+    </div>
+  </section>
+
+  <details class="all">
+    <summary>모든 화면 자세히 보기 (12장)</summary>
+    <nav class="jump" aria-label="모듈" id="jump"></nav>
+    <div id="groups"></div>
+  </details>
 
   <section class="cta">
     <div>
@@ -165,6 +280,37 @@ document.getElementById("groups").innerHTML = GROUPS.map((g) => `
       </article>`).join("")}
   </section>`).join("");
 
+
+// ── 첫 화면 미리보기: 이름·색·업종을 바꾸면 휴대폰 화면·아이콘이 같이 바뀜(실제 앱도 가게 설정에서 이름·색·아이콘을 바꿈) ──
+const COLORS = [["#3ccf8e","초록"],["#f08a4b","주황"],["#6aa8ff","파랑"],["#ff6b81","분홍"],["#f5c84b","노랑"],["#a98bff","보라"]];
+const KINDS = {
+  "헬스장": { pass: ["PT 10회", "7/10회 · ~1/26"], classes: [["07:00", "모닝 서킷", "3/12자리", "예약"], ["12:20", "점심 스트레칭", "마감 · 대기 2", "대기"], ["19:00", "저녁 그룹 PT", "예약함", "취소"]] },
+  "필라테스": { pass: ["그룹 레슨 20회", "14/20회 · ~3/2"], classes: [["10:00", "리포머 그룹", "2/6자리", "예약"], ["14:00", "바렐 클래스", "마감 · 대기 1", "대기"], ["20:00", "매트 필라테스", "예약함", "취소"]] },
+  "요가": { pass: ["자유 수련 1개월", "~12/14"], classes: [["07:30", "아침 빈야사", "5/15자리", "예약"], ["12:10", "점심 하타", "마감 · 대기 3", "대기"], ["21:00", "리커버리 요가", "예약함", "취소"]] },
+  "클래스": { pass: ["8회 수강권", "5/8회 · ~2/10"], classes: [["11:00", "주말 크로스핏", "4/10자리", "예약"], ["15:00", "복싱 기초", "마감 · 대기 2", "대기"], ["19:30", "하이록스", "예약함", "취소"]] },
+};
+let color = COLORS[0][0], kind = "헬스장";
+const $ = (id) => document.getElementById(id);
+function paint() {
+  const name = $("gymName").value.trim() || "우리 가게";
+  const first = name.charAt(0);
+  $("appName").textContent = name; $("iconName").textContent = name;
+  $("mark").textContent = first; $("icon").textContent = first;
+  $("phone").style.setProperty("--app", color); $("icon").style.background = color;
+  const k = KINDS[kind];
+  $("passName").textContent = k.pass[0]; $("passLeft").textContent = k.pass[1];
+  $("classes").innerHTML = k.classes.map(([t, title, left, act]) => `<div class="row"><p><b>${t}</b> ${esc(title)}<br><small>${esc(left)}</small></p><span class="pbtn ${act === "예약" ? "on" : "off"}">${act}</span></div>`).join("");
+  $("swatches").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.c === color)));
+  $("kinds").querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.k === kind)));
+  const msg = `[헬스장 앱 문의] 가게 이름: ${name} / 업종: ${kind} / 대표 색: ${COLORS.find((c) => c[0] === color)[1]}`;
+  $("askThis").href = `/?msg=${encodeURIComponent(msg)}#contact`;
+}
+$("swatches").innerHTML = COLORS.map(([c, label]) => `<button type="button" class="swatch" data-c="${c}" style="background:${c}" aria-label="${label}"></button>`).join("");
+$("kinds").innerHTML = Object.keys(KINDS).map((k) => `<button type="button" class="kind" data-k="${k}">${k}</button>`).join("");
+$("swatches").addEventListener("click", (e) => { const b = e.target.closest("[data-c]"); if (b) { color = b.dataset.c; paint(); } });
+$("kinds").addEventListener("click", (e) => { const b = e.target.closest("[data-k]"); if (b) { kind = b.dataset.k; paint(); } });
+$("gymName").addEventListener("input", paint);
+paint();
 const zoom = document.getElementById("zoom");
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-img]");
