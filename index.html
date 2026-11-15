@@ -509,7 +509,7 @@ function show(kind, text){ statusEl.className = "status " + kind; statusEl.textC
 const SYSTEM = {
   basics: ["가게 소개(사진·위치·영업시간)", "가격표", "공지", "문의 받기", "관리자 화면", "가게 이름·색 바꾸기", "휴대폰 홈 화면 앱"],
   industries: [
-    { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"soon", feat:["회원권·정기권", "출석(QR 체크인)", "혼잡도·기구 현황", "PT·수업 예약"] },
+    { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"soon", scenes:"/demo/gym", feat:["이용권(횟수권·기간권)", "수업 예약·대기", "출석(매장 QR)", "+ 이용권 판매·청구(회원 결제)", "+ 매니저·코치 권한", "혼잡도(준비 중)"] },
     { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", scenes:"/demo/academy", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 단원·개념별 취약 진단", "+ 학생별 문제 자동 조합", "+ 힌트·해설 단계 공개"] },
     { id:"sys-youth", icon:"🥋", title:"체대입시 · 유소년 스포츠 · 태권도", status:"soon", scenes:"/demo/sports", feat:["반·학생 관리", "보호자 공지", "+ 실기·체력 기록과 추이", "+ 목표 점수(배점표·승급 기준)", "+ 학부모 리포트 링크", "출석·대회(준비 중)"] },
     { id:"sys-salon", icon:"💇", title:"미용실 · 네일 · 피부관리", status:"soon", feat:["시간 예약", "담당자 선택", "시술 기록"] },
