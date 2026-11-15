@@ -4,6 +4,8 @@
 
 - `index.html` 마켓(상품 목록·상세·문의창). 상품은 파일 안 `PRODUCTS`, 아이디어 예시는 `IDEAS`, 분야별 전문 기능은 `DOMAINS`, 시스템 서비스는 `SYSTEM`에서 고친다.
 - `admin.html` 문의함(`/admin`). `ADMIN_KEY`로 연다.
+- `terms.html`·`refund.html`·`privacy.html` 이용약관·환불 정책·개인정보처리방침(`/terms`·`/refund`·`/privacy`). 공용 스타일 `legal.css`.
+- `legal.js` 사업자 정보(`BIZ`: 상호·대표·사업자번호·통신판매업 번호·주소·이메일). 모든 페이지 하단과 약관 본문이 여기서 가져간다. 빈 값(null)은 표시하지 않는다.
 - `api/inquiry.js` 문의 저장·조회. Upstash Redis에 `market:inquiries` 리스트(최신이 앞), 처리 표시는 `market:done` 집합. 1년 지난 문의는 새 문의가 들어올 때 지운다. 같은 접속 주소는 1시간에 5건까지.
 
 ## 배포 (Vercel)
