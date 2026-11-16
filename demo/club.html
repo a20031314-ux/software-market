@@ -120,10 +120,6 @@
         <li><b>크루</b><span>러닝 · 자전거 · 등산</span></li>
         <li><b>소모임</b><span>동네 · 취미 · 스터디</span></li>
       </ul>
-      <div class="actions">
-        <a class="btn" href="/#contact">문의하기</a>
-        <a class="btn ghost" href="#stories">실제 장면 보기</a>
-      </div>
     </div>
     <div class="shots" aria-label="실제 화면(가상 데이터)">
       <img class="pc" src="/img/club/admin-1.jpg" alt="운영진 PC: 동호회 이름·소개·색 꾸미기">
@@ -213,7 +209,6 @@ document.getElementById("groups").innerHTML = GROUPS.map((g) => `
             <h3>${esc(m.title)}</h3>
             <p>${esc(m.line)}</p>
           </div>
-          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
         </div>
         ${m.soon ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>` : `<div class="scenes${m.wide ? "" : " phone"}">
           ${m.scenes.map(([img, cap, sub], i) => `
