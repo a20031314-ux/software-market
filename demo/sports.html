@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>체대입시·유소년 스포츠 기록 모듈 — 앱공방</title>
+<title>체대입시·유소년 스포츠 — 기록·출석·대회 앱 — 앱공방</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -60,6 +60,22 @@
   dialog p{color:var(--ink);text-align:center;font-size:15px;margin-top:10px}
   dialog .close{position:fixed;top:14px;right:14px}
   @media (max-width:640px){h1{font-size:26px}.mhead h3{font-size:22px}}
+  /* ── 첫 화면: 무엇인지 한눈에(실제 화면 두 장 겹쳐서) ── */
+  .hero2{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:center;padding:56px 0 32px;border-bottom:1px solid var(--line)}
+  .hero2 h1{font-size:42px;letter-spacing:-1.4px;line-height:1.25;margin:10px 0 14px}
+  .hero2 .lead{color:var(--muted);font-size:17px;max-width:30em}
+  .points{list-style:none;padding:0;display:grid;gap:12px;margin:26px 0 0}
+  .points li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;font-size:16px}
+  .points li i{font-style:normal;width:28px;height:28px;border-radius:9px;background:var(--surface2);color:var(--accent);display:grid;place-items:center;font-size:14px;font-weight:800}
+  .points li span{color:var(--muted)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+  .shots{position:relative;padding:18px 0 0}
+  .shots .pc{width:86%;margin-left:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .shots .mobile{position:absolute;left:0;bottom:-24px;width:34%;border-radius:24px;border:6px solid #0b0d0d;box-shadow:0 24px 60px rgba(0,0,0,.6);background:#0b0d0d}
+  .shots .label{position:absolute;font-size:13px;font-weight:700;background:var(--night);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink)}
+  .shots .label.l2{right:3%;top:0}
+  .shots .label.l1{left:4%;bottom:-40px}
+  @media (max-width:900px){.hero2{grid-template-columns:1fr;gap:28px;padding:32px 0 56px}.hero2 h1{font-size:30px}}
 </style>
 </head>
 <body>
@@ -69,14 +85,31 @@
 </div></header>
 
 <main class="wrap">
-  <section class="hero">
-    <p class="eyebrow">시스템 서비스 · 체대입시 · 유소년 스포츠 · 태권도</p>
-    <h1>실기 기록 · 목표 점수 모듈</h1>
-    <div class="pills">
-      <span class="pill">가상 데이터로 찍은 실제 화면</span>
-      <span class="pill">엑셀 대신 반 × 종목 표에 입력</span>
-      <span class="pill">학부모는 로그인 없이 링크로</span>
+  <section class="hero2">
+    <div>
+      <p class="eyebrow">체대입시 · 유소년 스포츠 · 태권도 · 운동부</p>
+      <h1>실기 기록 · 출석 · 대회를<br>우리 학원 이름의 앱 하나로</h1>
+      <p class="lead">코치는 PC에서 기록과 출석을 표에 찍고, 학부모는 로그인 없이 링크 하나로 아이의 기록과 출석을 봐요. 앱 이름·색·아이콘은 우리 학원 것으로.</p>
+      <ul class="points">
+        <li><i>1</i><div>실기 기록 · 목표 점수 <span>— 반 × 종목 표에 입력, 목표 대학 기준으로 지금 몇 점인지</span></div></li>
+        <li><i>2</i><div>출석 · 보호자 알림 <span>— 명단에서 출석을 찍으면 학부모 휴대폰으로 바로</span></div></li>
+        <li><i>3</i><div>대회 대진표 · 순위표 <span>— 조 편성부터 결과 입력, 우승까지 자동</span></div></li>
+      </ul>
+      <div class="actions">
+        <a class="btn" href="/#contact">문의하기</a>
+        <a class="btn ghost" href="#scenes">화면 보기</a>
+      </div>
     </div>
+    <div class="shots" aria-label="실제 화면(가상 데이터)">
+      <img class="pc" src="/img/sports/goal-1.jpg" alt="코치 PC: 학생 목표 점수와 집중 종목">
+      <img class="mobile" src="/img/sports/parent-1.jpg" alt="학부모 링크: 출석 알림, 코치 한 줄, 이번 달 출석">
+      <span class="label l2">코치 PC</span>
+      <span class="label l1">학부모 링크</span>
+    </div>
+  </section>
+
+  <section class="hero" id="scenes">
+    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
     <nav class="jump" aria-label="모듈" id="jump"></nav>
   </section>
   <div id="groups"></div>
@@ -84,12 +117,12 @@
   <section class="cta">
     <div>
       <h2>우리 종목·기준으로 보고 싶다면</h2>
-      <p>측정 종목·반 구성·목표 기준(대학 배점표, 승급 기준)을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
+      <p>측정 종목·반 구성·목표 기준(대학 배점표, 승급 기준)·수업 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
     </div>
     <a class="btn" href="/#contact">문의하기</a>
   </section>
 </main>
-<footer class="wrap">화면의 학원·학생·기록은 모두 가상 데이터이고, 기준표의 학교 이름과 점수도 실제가 아니에요. 실제 기준표는 학원이 학교별 모집요강을 보고 넣습니다.</footer>
+<footer class="wrap">화면의 학원·학생·기록·출석·대회는 모두 가상 데이터이고, 기준표의 학교 이름과 점수도 실제가 아니에요. 실제 기준표는 학원이 학교별 모집요강을 보고 넣습니다.</footer>
 
 <dialog id="zoom" aria-label="크게 보기">
   <button class="btn ghost close" type="button" id="zoomClose">닫기</button>
@@ -113,14 +146,25 @@ const GROUPS = [
       ["goal-2", "반 전체 표", "학생 × 종목 최근 기록, 반 평균보다 좋으면 강조"],
       ["goal-3", "기준표 넣기", "종목마다 \"기록 점수\" 줄을 붙여넣기"],
     ]},
+    { id: "attend", rec: true, plan: "업종 패키지 포함", title: "출석 · 보호자 알림", line: "명단에서 출석·지각·결석을 찍으면 알림을 켠 학부모에게 바로", wide: true, scenes: [
+      ["attend-1", "출석부", "반 × 날짜, \"모두 출석\" 한 번에, 학생마다 이번 달 출석률"],
+      ["attend-2", "학생 출석 달력", "이번 달 출석률·지난달, 날마다 출석·지각·결석"],
+    ]},
     { id: "parent", rec: true, plan: "업종 패키지 포함", title: "학부모 리포트", line: "로그인 없이 링크 하나로. 다른 학생 이름은 보이지 않음", wide: false, scenes: [
-      ["parent-1", "리포트 첫 화면", "코치 한 줄, 요약 문장, 목표 점수"],
+      ["parent-1", "리포트 첫 화면", "출석 알림 켜기, 코치 한 줄, 이번 달 출석"],
+      ["attend-3", "이번 달 출석 · 요약", "출석 달력과 목표 점수 문장"],
       ["parent-2", "종목별 추이", "회차마다 기록, 반 평균과 목표 점선"],
     ]},
   ]},
-  { title: "다음 단계 — 출석과 대회까지", modules: [
-    { id: "attend", plan: "옵션", soon: true, title: "출결 · 공지", line: "결석을 바로 알고 학부모에게 알리게", steps: ["수업 장소 QR로 출석", "결석·지각이 자동으로 표시되고 알림", "공지는 학부모 리포트 링크와 같은 곳에"] },
-    { id: "match", plan: "옵션", soon: true, title: "대회 운영", line: "학원·도장 자체 대회를 앱에서", steps: ["참가 신청 받기", "대진표·조 편성", "결과 입력 → 순위표 자동"] },
+  { title: "옵션 — 학원·도장 자체 대회", modules: [
+    { id: "match", plan: "옵션", title: "대회 운영", line: "토너먼트 · 리그 · 조별 리그 + 본선. 결과만 넣으면 대진표와 순위표가 자동으로", wide: false, scenes: [
+      ["comp-3", "공개 링크 — 대진표", "로그인 없이, 학부모·참가자에게 링크 하나로"],
+      ["comp-4", "공개 링크 — 조별 순위", "승점 → 득실차 → 다득점, 라운드별 결과"],
+    ], wideScenes: [
+      ["comp-1", "코치 화면", "본선 대진표와 조별 순위표, 경기를 누르면 점수 입력"],
+      ["comp-2", "점수 넣기", "동점이면 승부차기 승자 고르기"],
+      ["comp-5", "참가자 · 방식", "\"이름, 소속\" 붙여넣기 또는 반 명단 불러오기, 같은 소속은 다른 조로"],
+    ]},
   ]},
   { title: "기본 포함", modules: [
     { id: "manage", plan: "모든 패키지", title: "반 · 학생 · 종목 관리", line: "명단은 붙여넣기 한 번, 종목은 학원이 직접 정함", wide: true, scenes: [

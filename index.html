@@ -511,13 +511,13 @@ const SYSTEM = {
   industries: [
     { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"ready", scenes:"/demo/gym", feat:["이용권(횟수권·기간권)", "수업 예약·대기", "출석(매장 QR)", "+ 이용권 판매·청구(회원 결제)", "+ 매니저·코치 권한", "혼잡도(준비 중)"] },
     { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"soon", scenes:"/demo/academy", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 단원·개념별 취약 진단", "+ 학생별 문제 자동 조합", "+ 힌트·해설 단계 공개"] },
-    { id:"sys-youth", icon:"🥋", title:"체대입시 · 유소년 스포츠 · 태권도", status:"soon", scenes:"/demo/sports", feat:["반·학생 관리", "보호자 공지", "+ 실기·체력 기록과 추이", "+ 목표 점수(배점표·승급 기준)", "+ 학부모 리포트 링크", "출석·대회(준비 중)"] },
+    { id:"sys-youth", icon:"🥋", title:"체대입시 · 유소년 스포츠 · 태권도", status:"ready", scenes:"/demo/sports", feat:["반·학생 관리", "출석·보호자 알림", "보호자 공지", "+ 실기·체력 기록과 추이", "+ 목표 점수(배점표·승급 기준)", "+ 학부모 리포트 링크", "+ 대회 대진표·순위표"] },
     { id:"sys-salon", icon:"💇", title:"미용실 · 네일 · 피부관리", status:"soon", feat:["시간 예약", "담당자 선택", "시술 기록"] },
     { id:"sys-cafe", icon:"☕", title:"식당 · 카페", status:"soon", feat:["메뉴판", "포장 주문", "대기 등록", "쿠폰"] },
     { id:"sys-club", icon:"🧗", title:"동호회 · 모임 · 스터디", status:"ready", demo: DEMO + "demo-club", scenes:"/demo/club", feat:["가입 승인", "모임 일정·참가 신청", "단체 채팅", "회비(준비 중)"] },
   ],
   special: [
-    { title:"대회 운영", parts:[["참가 신청·참가비",1],["공지·단체 채팅",1],["조 편성·대진표·순위표",0],["경기 결과 입력",0]] },
+    { title:"대회 운영", scenes:"/demo/sports#match", parts:[["참가 신청·참가비",1],["공지·단체 채팅",1],["조 편성·대진표·순위표",1],["경기 결과 입력",1]] },
     { title:"신체 능력 측정", scenes:"/demo/sports", parts:[["기록 추세 계산",1],["측정 항목·등급표 직접 설정",1],["단체 일괄 입력",1]] },
     { title:"개인 성장 프로필", scenes:"/demo/sports", parts:[["그래프·리포트",1],["회차별 기록 저장·비교",1],["보호자·본인 리포트 공유",1]] },
     { title:"취약 진단 · 맞춤 시험지", scenes:"/demo/academy", parts:[["레벨 측정·적응형 퀴즈",1],["단원·개념별 숙달도 히트맵·추이",0],["학생별 비율로 문제 자동 조합",0],["힌트 단계·해설 일부 공개",0]] },
