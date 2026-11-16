@@ -90,6 +90,44 @@
   .step .who i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--ink);display:grid;place-items:center;font-size:11px}
   .step .who.t{color:var(--accent)}
   @media (max-width:760px){.flow{grid-template-columns:1fr}.step img{height:auto;max-height:420px}}
+  /* ── 층위: 세 칸(층 2) → 칸 안 기능(층 3) → 기능을 열면 화면(층 4) ── */
+  .levels{padding:72px 0 8px}
+  .levels > h2,.stories > h2{font-size:30px;letter-spacing:-.8px;line-height:1.3;margin-bottom:22px}
+  .pillars{display:grid;gap:16px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .pillar{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:10px;padding:24px;border-radius:18px;background:var(--surface);border:1px solid var(--line);transition:border-color .15s}
+  .pillar:hover,.pillar[aria-current="true"]{border-color:var(--accent)}
+  .pillar:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .pillar .icon{font-size:30px;line-height:1}
+  .pillar h3{font-size:22px;letter-spacing:-.4px}
+  .pillar p{color:var(--muted);font-size:15px}
+  .pillar ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+  .pillar li{font-size:13px;border-radius:999px;padding:3px 10px;background:var(--surface2);color:var(--ink)}
+  .basic{margin-top:14px;color:var(--muted);font-size:14px}
+  .basic button{all:unset;cursor:pointer;color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+  .pdetail{padding:48px 0 8px;scroll-margin-top:64px}
+  details.mod{scroll-margin-top:64px}
+  .pdetail > .crumb{color:var(--muted);font-size:14px}
+  .pdetail > h2{font-size:28px;letter-spacing:-.6px;margin:2px 0 18px}
+  details.mod{border-top:1px solid var(--line)}
+  details.mod:last-of-type{border-bottom:1px solid var(--line)}
+  details.mod > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:20px 4px}
+  details.mod > summary::-webkit-details-marker{display:none}
+  details.mod > summary h3{font-size:21px;letter-spacing:-.4px;line-height:1.35}
+  details.mod > summary p{color:var(--muted);font-size:15px}
+  details.mod > summary .open{font-size:14px;color:var(--accent);white-space:nowrap}
+  details.mod[open] > summary .open::after{content:" ▲"}
+  details.mod:not([open]) > summary .open::after{content:" ▼"}
+  details.mod .body{padding:4px 4px 32px}
+  details.mod .body .foot{display:flex;justify-content:flex-end;margin-top:16px}
+  details.story{border-top:1px solid var(--line);padding:0;margin-top:0}
+  details.story > summary{list-style:none;cursor:pointer;padding:18px 4px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+  details.story > summary::-webkit-details-marker{display:none}
+  details.story > summary h3{font-size:20px;letter-spacing:-.4px}
+  details.story > summary .open{font-size:14px;color:var(--accent)}
+  details.story[open] > summary .open::after{content:" ▲"}
+  details.story:not([open]) > summary .open::after{content:" ▼"}
+  details.story .flow{margin:0 4px 28px}
+  @media (max-width:860px){.pillars{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -102,16 +140,11 @@
   <section class="hero2">
     <div>
       <p class="eyebrow">학원 · 공부방 · 교습소</p>
-      <h1>약점 진단 · 맞춤 시험지를<br>우리 학원 이름의 앱 하나로</h1>
-      <p class="lead">채점만 하면 학생마다 약한 개념이 보이고, 그 개념을 더 넣은 시험지가 나와요. 학생은 설치 없이 주소와 입장 코드로 풀어요. 앱 이름·색·로고는 우리 학원 것으로.</p>
-      <ul class="points">
-        <li><i>1</i><div>채점하면 진단 리포트 <span>— 개념별 숙달도·추이, 상담에 쓸 문장까지</span></div></li>
-        <li><i>2</i><div>학생별 맞춤 시험지 <span>— 약한 개념을 더 넣어 반 전체를 한 번에, 인쇄·PDF</span></div></li>
-        <li><i>3</i><div>앱에서 풀고 힌트·해설 <span>— 공개 방식은 원장님이 정하고, 결과는 학부모 링크로</span></div></li>
-      </ul>
+      <h1>우리 학원만의<br>학습 커뮤니티를 만드세요</h1>
+      <p class="lead">학생·강사·학부모가 우리 학원 이름의 앱 하나에 모여요. 학생은 설치 없이 주소와 입장 코드로 들어와요.</p>
       <div class="actions">
         <a class="btn" href="/#contact">문의하기</a>
-        <a class="btn ghost" href="#stories">수업 장면 보기</a>
+        <a class="btn ghost" href="#levels">무엇을 하나요</a>
       </div>
     </div>
     <div class="shots" aria-label="실제 화면(가상 데이터)">
@@ -123,17 +156,17 @@
   </section>
 
 
+  <section class="levels" id="levels">
+    <h2>앱 안에서 하는 일은 세 가지예요</h2>
+    <div class="pillars" id="pillars"></div>
+  </section>
+  <div id="pillarDetail"></div>
+
   <section class="stories" id="stories">
-    <p class="eyebrow">학원의 하루 — 가상 데이터로 찍은 실제 화면</p>
-    <h2>기능이 수업 안에서 이렇게 이어져요</h2>
+    <h2>학원의 하루로 보면</h2>
+    <p class="result">기능이 수업 안에서 어떻게 이어지는지 — 가상 데이터로 찍은 실제 화면</p>
     <div id="storyList"></div>
   </section>
-
-  <section class="hero" id="scenes">
-    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
-    <nav class="jump" aria-label="모듈" id="jump"></nav>
-  </section>
-  <div id="groups"></div>
 
   <section class="cta">
     <div>
@@ -155,7 +188,7 @@
 </dialog>
 
 <script>
-// 모듈별 장면 — 그룹 순서 = 보여 주는 순서(추천 모듈부터). 이미지는 img/academy/<id>.jpg
+// 모듈별 장면(층 4) — 어느 칸에 들어가는지는 아래 PILLARS. 이미지는 img/academy/<id>.jpg
 const GROUPS = [
   { title: "추천 모듈 — 학원이 가장 먼저 쓰는 것", modules: [
     { id: "diag", rec: true, plan: "라이트부터", title: "진단 · 리포트", line: "채점만 하면 개념별 숙달도·추이·상담 문장이 자동으로", wide: true, scenes: [
@@ -214,29 +247,77 @@ const GROUPS = [
 ];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-document.getElementById("jump").innerHTML = GROUPS.flatMap((g) => g.modules).map((m) => `<a href="#${m.id}"${m.rec ? ' class="rec"' : ""}>${esc(m.title)}</a>`).join("");
-document.getElementById("groups").innerHTML = GROUPS.map((g) => `
-  <section class="group">
-    <h2>${esc(g.title)}</h2>
-    ${g.modules.map((m) => `
-      <article class="module" id="${m.id}">
-        <div class="mhead">
-          <div>
-            <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span></div>
-            <h3>${esc(m.title)}</h3>
-            <p>${esc(m.line)}</p>
-          </div>
-          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
-        </div>
-        <div class="scenes${m.wide ? "" : " phone"}">
-          ${m.scenes.map(([img, cap, sub], i) => `
-            <figure class="scene">
-              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/academy/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
-              <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
-            </figure>`).join("")}
-        </div>
-      </article>`).join("")}
-  </section>`).join("");
+// 층 2: 앱 안에서 하는 일 세 칸 — 칸마다 모듈(층 3), 모듈을 열면 장면(층 4). 기본 포함은 칸 아래 한 줄.
+const PILLARS = [
+  { id: "study", icon: "✏️", title: "풀고 익히기", line: "학생은 앱에서 숙제를 풀고, 쓰던 교재도 번호로 회독해요", modules: ["solve", "book"] },
+  { id: "diagnose", icon: "📊", title: "약점 보고 맞추기", line: "채점하면 약한 개념이 보이고, 학생마다 시험지가 맞춰져요", modules: ["diag", "sheet", "parent"] },
+  { id: "talk", icon: "💬", title: "묻고 답하기", line: "막힌 문제와 질문이 강사에게 모여 수업이 돼요", modules: ["snap", "ask"] },
+];
+const BASIC = { id: "basic", icon: "⚙️", title: "기본 포함", line: "반·학생 명단, 입장 코드, 공개 설정, 수업 화면 그래프", modules: ["manage"] };
+const MODS = Object.fromEntries(GROUPS.flatMap((g) => g.modules).map((m) => [m.id, m]));
+const pillarOf = (mid) => [...PILLARS, BASIC].find((p) => p.modules.includes(mid));
+
+document.getElementById("pillars").innerHTML = PILLARS.map((p) => `
+  <button class="pillar" type="button" data-pillar="${p.id}">
+    <span class="icon" aria-hidden="true">${p.icon}</span>
+    <h3>${esc(p.title)}</h3>
+    <p>${esc(p.line)}</p>
+    <ul>${p.modules.map((id) => `<li>${esc(MODS[id].title)}</li>`).join("")}</ul>
+  </button>`).join("") ;
+document.getElementById("levels").insertAdjacentHTML("beforeend", `<p class="basic">${BASIC.icon} 기본 포함 — ${esc(BASIC.line)} · <button type="button" data-pillar="basic">화면 보기</button></p>`);
+
+const scenesHtml = (m) => `
+  <div class="scenes${m.wide ? "" : " phone"}">
+    ${m.scenes.map(([img, cap, sub], i) => `
+      <figure class="scene">
+        <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/academy/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
+        <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
+      </figure>`).join("")}
+  </div>`;
+
+function showPillar(pid, openModule) {
+  const p = [...PILLARS, BASIC].find((x) => x.id === pid);
+  if (!p) return;
+  document.querySelectorAll("[data-pillar].pillar").forEach((b) => b.setAttribute("aria-current", String(b.dataset.pillar === pid)));
+  const box = document.getElementById("pillarDetail");
+  box.innerHTML = `
+    <section class="pdetail" id="detail">
+      <p class="crumb">${p.icon} ${esc(p.title)}</p>
+      <h2>${esc(p.line)}</h2>
+      ${p.modules.map((id) => {
+        const m = MODS[id];
+        return `
+        <details class="mod" id="${m.id}"${m.id === openModule ? " open" : ""}>
+          <summary>
+            <div>
+              <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span></div>
+              <h3>${esc(m.title)}</h3>
+              <p>${esc(m.line)}</p>
+            </div>
+            <span class="open">화면</span>
+          </summary>
+          <div class="body">${scenesHtml(m)}<div class="foot"><a class="btn ghost" href="/#contact">이 모듈 문의</a></div></div>
+        </details>`;
+      }).join("")}
+    </section>`;
+}
+
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-pillar]");
+  if (!b) return;
+  showPillar(b.dataset.pillar);
+  document.getElementById("detail").scrollIntoView({ behavior: "smooth", block: "start" });
+});
+// 주소 #<모듈> 또는 #<칸>으로 오면 그 칸을 열고 그 모듈 화면까지
+function openFromHash() {
+  const h = location.hash.slice(1);
+  const p = pillarOf(h) ?? [...PILLARS, BASIC].find((x) => x.id === h);
+  if (!p) return;
+  showPillar(p.id, MODS[h] ? h : undefined);
+  requestAnimationFrame(() => document.getElementById(MODS[h] ? h : "detail")?.scrollIntoView({ block: "start" }));
+}
+openFromHash();
+window.addEventListener("hashchange", openFromHash);
 
 // 학원의 하루 — [이미지, 누구, 무엇을]. who가 강사·원장이면 강조색
 const STORIES = [
@@ -263,10 +344,11 @@ const STORIES = [
   ]},
 ];
 document.getElementById("storyList").innerHTML = STORIES.map((st) => `
-  <article class="story">
-    <span class="when">${esc(st.when)}</span>
-    <h3>${esc(st.title)}</h3>
-    <p class="result">${esc(st.result)}</p>
+  <details class="story">
+    <summary>
+      <div><span class="when">${esc(st.when)}</span><h3>${esc(st.title)}</h3><p class="result">${esc(st.result)}</p></div>
+      <span class="open">화면</span>
+    </summary>
     <div class="flow" style="--n:${st.steps.length}">
       ${st.steps.map(([img, who, cap], i) => `
         <figure class="step">
@@ -274,7 +356,7 @@ document.getElementById("storyList").innerHTML = STORIES.map((st) => `
           <figcaption><span class="who${/강사|원장/.test(who) ? " t" : ""}"><i>${i + 1}</i>${esc(who)}</span><br>${esc(cap)}</figcaption>
         </figure>`).join("")}
     </div>
-  </article>`).join("");
+  </details>`).join("");
 
 const zoom = document.getElementById("zoom");
 document.addEventListener("click", (e) => {
