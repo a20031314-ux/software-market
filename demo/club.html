@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>동호회·크루 운영 모듈 — 앱공방</title>
+<title>커뮤니티 시스템 — 동호회·크루·소모임 — 앱공방</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -93,6 +93,14 @@
   .step .who i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--ink);display:grid;place-items:center;font-size:11px}
   .step .who.t{color:var(--accent)}
   @media (max-width:760px){.flow{grid-template-columns:1fr}.step img{height:auto;max-height:420px}}
+  .fits{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .fits li{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:4px}
+  .fits b{font-size:18px}
+  .fits span{color:var(--muted);font-size:13px}
+  details.more{margin-top:40px;border-top:1px solid var(--line);padding-top:24px}
+  details.more > summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--muted);list-style:none}
+  details.more > summary::before{content:"＋ ";color:var(--accent)}
+  details.more[open] > summary::before{content:"－ "}
 </style>
 </head>
 <body>
@@ -104,13 +112,13 @@
 <main class="wrap">
   <section class="hero2">
     <div>
-      <p class="eyebrow">동호회 · 크루 · 소모임</p>
-      <h1>가입 · 정모 · 공지를<br>우리 동호회 이름의 앱 하나로</h1>
-      <p class="lead">회원은 휴대폰으로 가입하고 정모에 신청해요. 운영진은 신청을 수락하고 공지를 맨 위에 걸어 둡니다. 설치 없이 주소로, 이름·색은 우리 동호회 것으로.</p>
-      <ul class="points">
-        <li><i>1</i><div>가입 신청 · 수락 <span>— 글·회원 목록은 회원에게만</span></div></li>
-        <li><i>2</i><div>정모 신청 · 수락 <span>— 남은 자리, 참가자 단체방 자동</span></div></li>
-        <li><i>3</i><div>공지 고정 <span>— 단톡방에서 묻히지 않게 늘 맨 위</span></div></li>
+      <p class="eyebrow">커뮤니티 시스템</p>
+      <h1>우리 모임을<br>우리 이름의 앱으로</h1>
+      <p class="lead">가입 · 정모 · 공지를 한곳에서. 회원은 설치 없이 주소로 들어와요.</p>
+      <ul class="fits" aria-label="이런 모임에 맞아요">
+        <li><b>동호회</b><span>클라이밍 · 배드민턴 · 독서</span></li>
+        <li><b>크루</b><span>러닝 · 자전거 · 등산</span></li>
+        <li><b>소모임</b><span>동네 · 취미 · 스터디</span></li>
       </ul>
       <div class="actions">
         <a class="btn" href="/#contact">문의하기</a>
@@ -126,26 +134,29 @@
   </section>
 
   <section class="stories" id="stories">
-    <p class="eyebrow">동호회의 한 주 — 가상 데이터로 찍은 실제 화면</p>
-    <h2>기능이 실제로 이렇게 이어져요</h2>
+    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
+    <h2>모임에서 이렇게 써요</h2>
     <div id="storyList"></div>
   </section>
 
-  <nav class="jump" aria-label="모듈" id="jump"></nav>
-  <div id="groups"></div>
+  <details class="more">
+    <summary>모듈별 화면 자세히</summary>
+    <nav class="jump" aria-label="모듈" id="jump"></nav>
+    <div id="groups"></div>
+  </details>
 
   <section class="cta">
     <div>
-      <h2>우리 동호회 이름으로 보고 싶다면</h2>
-      <p>동호회 이름·종목·정모 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
+      <h2>우리 모임 이름으로 보고 싶다면</h2>
+      <p>모임 이름·종목·모이는 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
     </div>
     <span style="display:flex;gap:8px;flex-wrap:wrap">
-      <a class="btn ghost" href="https://dating-amber-nine.vercel.app/?t=demo-club" target="_blank" rel="noopener">체험 동호회 직접 써 보기</a>
+      <a class="btn ghost" href="https://dating-amber-nine.vercel.app/?t=demo-club" target="_blank" rel="noopener">체험 모임 직접 써 보기</a>
       <a class="btn" href="/#contact">문의하기</a>
     </span>
   </section>
 </main>
-<footer class="wrap">화면의 동호회·회원·글은 모두 가상 데이터예요. 실제 납품 시 동호회 이름·색·공지로 바뀌고, 사진은 회원이 직접 올립니다.</footer>
+<footer class="wrap">화면의 모임·회원·글은 모두 가상 데이터예요. 실제 납품 시 우리 모임 이름·색·공지로 바뀌고, 사진은 회원이 직접 올립니다.</footer>
 
 <dialog id="zoom" aria-label="크게 보기">
   <button class="btn ghost close" type="button" id="zoomClose">닫기</button>
@@ -236,7 +247,6 @@ document.getElementById("storyList").innerHTML = STORIES.map((st) => `
   <article class="story">
     <span class="when">${esc(st.when)}</span>
     <h3>${esc(st.title)}</h3>
-    <p class="result">${esc(st.result)}</p>
     <div class="flow" style="--n:${st.steps.length}">
       ${st.steps.map(([img, who, cap], i) => `
         <figure class="step">
