@@ -18,14 +18,14 @@
 - 화면·문구에 앱 이름·가격을 박아 두지 말고 한 곳(`index.html`의 `PRODUCTS`)에서 고친다.
 
 ## 3. 저장소·계정·주소
-- GitHub: `a20031314-ux/software-market` (main, **비공개**). 템플릿 원본은 `a20031314-ux/dating`(비공개, 동호회·회원 연결 엔진), `english-chat-mvp-android`(영어앱), `volume-coach`(운동 앱).
+- GitHub: `a20031314-ux/software-market` (main, **비공개**). 템플릿 원본은 `a20031314-ux/appgongbang-engine`(비공개, 동호회·회원 연결·학습 등 공용 엔진. **11/16 저장소 이름 `dating` → `appgongbang-engine`**, 이 문서의 `dating` = 이 저장소, 예전 기록은 예전 이름 그대로 둠, PR 번호는 이어짐. Vercel 프로젝트·배포 주소 `dating-amber-nine`은 그대로), `english-chat-mvp-android`(영어앱), `volume-coach`(운동 앱).
 - Vercel 프로젝트: `software-market` (main에 push하면 자동 배포)
   - 주소: **https://apps.languagebank.net** (가비아 DNS, CNAME `apps` → Vercel이 준 프로젝트 전용 값), 예비 `software-market-omega.vercel.app`
   - `languagebank.net` 본 주소는 영어앱 창구 — 건드리지 않음.
   - PR #2 미리보기(PR #1 포함 최신 구성): https://software-market-git-feat-idea-service-a20031314-6622s-projects.vercel.app
 - 환경 변수(Vercel): `KV_REST_API_URL`·`KV_REST_API_TOKEN`(Upstash 연결 시 자동), `ADMIN_KEY`(문의함 비밀번호, 사용자가 보관). **키 값은 채팅·코드에 넣지 않는다.**
 - 문의함: https://apps.languagebank.net/admin
-- 데모(동호회 앱 엔진): https://dating-amber-nine.vercel.app/?t=demo-club · `?t=demo-date`. 일정이 7일 뒤 사라지므로 `dating` 저장소의 `scripts/demo-seed.py`를 **주 1회** 실행(같은 `OPS_KEY`로). `dating`이 비공개라 raw 주소로 못 받음 → 내 컴퓨터 저장소 폴더에서 실행.
+- 데모(동호회 앱 엔진): https://dating-amber-nine.vercel.app/?t=demo-club · `?t=demo-date`. 일정이 7일 뒤 사라지므로 `appgongbang-engine` 저장소의 `scripts/demo-seed.py`를 **주 1회** 실행(같은 `OPS_KEY`로). 저장소가 비공개라 raw 주소로 못 받음 → 내 컴퓨터 저장소 폴더에서 실행.
 
 ## 4. 사이트 구조
 | 파일 | 내용 |
@@ -170,6 +170,7 @@
 - **사이트(11/14)**: 소프트웨어 마켓 형태, 문의는 사이트 안 문의창 → Upstash 저장 → 문의함. 영어앱 도메인의 서브도메인 `apps.`에 연결(영어앱과 분리, 실제 운영 앱이라는 신뢰). 커지면 전용 도메인으로 이전.
 
 ## 9. 작업 기록
+- 2026-11-16 엔진 저장소 이름 `dating` → `appgongbang-engine` 반영(3번). 엔진 `AGENTS.md`에 장면 스크린샷 규칙 추가(이 저장소 `docs/design.md` 4번 기준).
 - 2026-11-16 디자인 지침 추가: `CLAUDE.md`(자동으로 읽히는 작업 지침, 이 문서 먼저 읽기 + 디자인 핵심 규칙), `docs/design.md`(정보 위계·첫 화면 예산·핵심 흐름·스크린샷 규칙), `.claude/agents/design-reviewer.md`(검사 에이전트), `.vercelignore`(지침 파일은 사이트에 올리지 않음).
 - 2026-11-16 합침·배포: `dating` #24(교재 회독, main과 README 충돌 정리)·#26(혼자 쓰기)·#27(서비스 이름 "수험생도구"), `software-market` #22. 배포 확인: `/solo/exam-book` 200(수험생도구), `/api/solo` 로그인 없이 401, `/demo/academy` 교재 회독 모듈.
 - 2026-11-16 모듈 → 서비스 구조 결정(8번) + 혼자 쓰기: `dating` PR #26(#24 위에 쌓음 — 코어 `soloSpace.ts` 개인 공간·하루 한도·계정 삭제, `src/services.ts`, `/api/solo`, `/solo/[service]`, `NEXT_PUBLIC_SERVICE`면 `/`가 서비스, 교재 화면 부품 공용화, 테스트 209, 로컬 브라우저로 가입 → 정답 사진(가짜 AI) → 채점 → 2회독 확인).
