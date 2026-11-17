@@ -73,48 +73,29 @@
   .shots .label.l2{left:3%;bottom:-40px}
   .shots .label.l1{right:4%;bottom:-40px}
   @media (max-width:900px){.hero2{grid-template-columns:1fr;gap:28px;padding:32px 0 56px}.hero2 h1{font-size:30px}}
-  /* ── 학원의 하루: 기능이 실제로 이어지는 장면(누가 → 무엇을 → 어떻게 돌아오나) ── */
-  .stories{padding:64px 0 8px}
-  .stories > h2{font-size:30px;letter-spacing:-.8px;line-height:1.3;margin-bottom:22px}
-  .stories > h2{font-size:30px;letter-spacing:-.8px;line-height:1.3;margin:6px 0 4px}
-  .story{padding:32px 0;border-top:1px solid var(--line);margin-top:28px}
-  .story .when{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px}
-  .story h3{font-size:24px;letter-spacing:-.5px;line-height:1.35}
-  .story .result{color:var(--muted);font-size:15px;margin-top:4px}
-  .flow{display:grid;gap:18px;margin-top:20px;grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}
-  .step{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
-  .step button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
-  .step button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .step img{display:block;width:100%;height:250px;object-fit:contain;background:var(--surface)}
-  .step figcaption{font-size:14px;line-height:1.5}
-  .step .who{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:2px}
-  .step .who i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--ink);display:grid;place-items:center;font-size:11px}
-  .step .who.t{color:var(--accent)}
-  @media (max-width:760px){.flow{grid-template-columns:1fr}.step img{height:auto;max-height:420px}}
   /* ── 쌓이는 데이터: 장면마다 큰 화면 하나 + 실제 숫자 ── */
   .values{padding:24px 0 8px}
-  .value{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:48px;align-items:center;padding:56px 0;border-bottom:1px solid var(--line)}
-  .value.flip{grid-template-columns:minmax(0,1.3fr) minmax(0,.9fr)}
-  .value.flip .vtext{order:2}
-  .value.phone{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)}
-  .value.phone.flip{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}
+  .value{padding:64px 0;border-bottom:1px solid var(--line)}
+  .value.phone{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+  .vtext{margin-bottom:24px}
   .vtext .who{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px}
-  .vtext h2{font-size:32px;letter-spacing:-1px;line-height:1.3}
-  .vtext p{color:var(--muted);font-size:16px;margin-top:8px}
-  .vtext ul{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:10px}
-  .vtext li{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:baseline;font-size:15px}
-  .vtext li b{font-size:20px;color:var(--ink);letter-spacing:-.4px}
-  .vtext li span{color:var(--muted)}
-  .vtext .more{all:unset;cursor:pointer;display:inline-block;margin-top:22px;font-size:14px;color:var(--accent)}
+  .vtext h2{font-size:34px;letter-spacing:-1px;line-height:1.3}
+  .vtext .more{all:unset;cursor:pointer;display:inline-block;margin-top:12px;font-size:14px;color:var(--muted)}
+  .vtext .more:hover{color:var(--accent)}
+  .vshots{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vshot.full{grid-column:1/-1}
+  .value.phone .vshots{grid-template-columns:1fr;justify-items:center}
+  .value.phone .vshot{max-width:360px;border-radius:24px}
+  .textlink{color:var(--muted);font-size:15px;text-decoration:none;align-self:center}
+  .textlink:hover{color:var(--ink)}
   .note{position:absolute;transform:translateY(-50%);background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:700;line-height:1.3;padding:5px 11px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.45);white-space:nowrap;pointer-events:none}
   .note.top{left:10px;top:10px;transform:none;background:rgba(23,18,15,.85);color:var(--ink);border:1px solid var(--line);font-weight:500}
-  .scene button,.step button{position:relative}
-  .vshot{all:unset;position:relative;cursor:zoom-in;display:block;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+  .scene button{position:relative}
+  .vshot{all:unset;position:relative;cursor:zoom-in;display:block;width:100%;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45)}
   .vshot img{display:block;width:100%;height:auto}
-  .value.phone .vshot{max-width:340px;justify-self:center;border-radius:26px;border:6px solid #0b0d0d}
   .vshot:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
   @media (max-width:560px){.note{font-size:11px;padding:3px 8px}}
-  @media (max-width:860px){.value,.value.flip,.value.phone,.value.phone.flip{grid-template-columns:1fr;gap:22px;padding:40px 0}.value.flip .vtext{order:0}.vtext h2{font-size:25px}}
+  @media (max-width:860px){.value.phone{grid-template-columns:1fr}.vshots{grid-template-columns:1fr}.vtext h2{font-size:26px}}
   .catalog{padding:40px 0 0}
   .catalog > details > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 4px;border-top:1px solid var(--line)}
   .catalog > details > summary::-webkit-details-marker{display:none}
@@ -134,14 +115,6 @@
   details.mod:not([open]) > summary .open::after{content:" ▼"}
   details.mod .body{padding:4px 4px 32px}
   details.mod .body .foot{display:flex;justify-content:flex-end;margin-top:16px}
-  details.story{border-top:1px solid var(--line);padding:0;margin-top:0}
-  details.story > summary{list-style:none;cursor:pointer;padding:18px 4px;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
-  details.story > summary::-webkit-details-marker{display:none}
-  details.story > summary h3{font-size:20px;letter-spacing:-.4px}
-  details.story > summary .open{font-size:14px;color:var(--accent)}
-  details.story[open] > summary .open::after{content:" ▲"}
-  details.story:not([open]) > summary .open::after{content:" ▼"}
-  details.story .flow{margin:0 4px 28px}
 </style>
 </head>
 <body>
@@ -155,14 +128,14 @@
     <div>
       <p class="eyebrow">학원 · 공부방 · 교습소</p>
       <h1>우리 학원만의<br>학습 커뮤니티를 만드세요</h1>
-      <p class="lead">채점·숙제·질문이 쌓여 학생 한 명 한 명의 데이터가 돼요. 학생·강사·학부모가 우리 학원 이름의 앱 하나에서 같은 데이터를 봐요.</p>
+      <p class="lead">채점·숙제·질문이 쌓여 학생 한 명 한 명의 데이터가 돼요.</p>
       <div class="actions">
         <a class="btn" href="/system#contact">문의하기</a>
-        <a class="btn ghost" href="#values">어떤 데이터가 쌓이나요</a>
+        <a class="textlink" href="#values">어떤 데이터가 쌓이나요 ↓</a>
       </div>
     </div>
     <div class="shots" aria-label="실제 화면(가상 데이터)">
-      <img class="pc" src="/img/academy/diag-2.jpg" alt="원장님 PC: 반 학생 × 개념 숙달도 표">
+      <img class="pc" src="/img/academy/v-heat.jpg" alt="원장님 PC: 반 학생 × 개념 숙달도 표">
       <img class="mobile" src="/img/academy/home-1.jpg" alt="학생 앱 첫 화면: 출결 번호, 오늘 할 숙제, 교재, 질문, 공지">
       <span class="label l2">원장님 PC</span>
       <span class="label l1">학생 앱</span>
@@ -172,15 +145,9 @@
 
   <section class="values" id="values"></section>
 
-  <section class="stories" id="stories">
-    <h2>학원의 하루로 보면</h2>
-    <p class="result">기능이 수업 안에서 어떻게 이어지는지 — 가상 데이터로 찍은 실제 화면</p>
-    <div id="storyList"></div>
-  </section>
-
   <section class="catalog" id="catalog">
     <details id="catalogBox">
-      <summary><h2>기능별 화면 전체</h2><span class="open">펼치기</span></summary>
+      <summary><h2>모듈 · 요금제</h2><span class="open">펼치기</span></summary>
       <div id="catalogList"></div>
     </details>
   </section>
@@ -264,32 +231,30 @@ const GROUPS = [
 ];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-// 쌓이는 데이터 — 장면마다 실제 화면 하나와 그 화면에 보이는 숫자(가상 학원 '민지'). more = 그 기능 화면 전체.
+// 쌓이는 데이터 — 섹션마다 학원이 얻는 것 한 줄 + 그 데이터 화면(핵심 영역만 잘라 낸 v-*.jpg, 화면마다 이름 하나). more = 그 모듈 화면 전체.
 const VALUES = [
-  { who: "원장님 PC", title: "민지는 '근과 계수'에서 막혀 있어요", img: "diag-3", more: "diag",
-    notes: [[30, 40, "상담 문장이 저절로"], [7, 63, "30 → 68"], [64, 39, "개념 × 회차"], [30, 85, "근과 계수 48 · 반 55"]] },
-  { who: "원장님 PC", title: "그래서 민지 숙제엔 약한 개념이 7문제", img: "sheet-3", more: "sheet", flip: true,
-    notes: [[28, 33, "약한 개념 7 · 복습 2 · 도전 1"], [30, 46, "문항마다 고른 이유"], [72, 21, "인쇄 · 정답지"]] },
-  { who: "강사 PC", title: "쓰던 종이 문제집도 데이터가 돼요", img: "book-4", more: "book",
-    notes: [[14, 19, "반에서 많이 틀린 번호"], [40, 46, "민지 1회독 87/120"], [52, 62, "다시 볼 번호"]] },
-  { who: "강사 PC", title: "막힌 문제가 수업 전에 모여요", img: "snap-4", more: "snap", flip: true,
-    notes: [[2, 51, "학생이 찍은 사진"], [42, 44, "AI가 다시 그린 그래프"], [62, 57, "학생 질문"], [40, 90, "답장 · 수업에서 다룸"]] },
-  { who: "학부모 폰", title: "학부모는 같은 데이터를 링크로 봐요", img: "parent-2", more: "parent", phone: true,
-    notes: [[48, 9, "상담 문장"], [50, 36, "회차 추이"], [44, 57, "보충할 개념"]] },
+  { who: "원장님 PC", title: "학생 데이터를 체계적이고 다양한 그래프로", more: "diag",
+    shots: [["v-class", "반별 평균 · 약한 개념", "full"], ["v-trend", "학생 회차 추이"], ["v-matrix", "개념 × 회차"]] },
+  { who: "원장님 PC", title: "약한 개념을 더 넣은 시험지를 학생마다", more: "sheet", shots: [["v-sheet", "학생별 맞춤 시험지", "full"]] },
+  { who: "강사 PC", title: "종이 교재로 푼 것도 기록으로", more: "book", shots: [["v-book", "반 회독 · 많이 틀린 번호", "full"]] },
+  { who: "강사 PC", title: "막힌 문제는 수업 전에 강사에게", more: "snap", shots: [["v-snap", "학생이 찍은 문제 · 질문", "full"]] },
+  { who: "학부모 폰", title: "학부모에게는 같은 데이터를 링크 하나로", more: "parent", phone: true, shots: [["v-parent", "학부모 리포트"]] },
 ];
 const MODS = Object.fromEntries(GROUPS.flatMap((g) => g.modules).map((m) => [m.id, m]));
 
 document.getElementById("values").innerHTML = VALUES.map((v) => `
-  <article class="value${v.flip ? " flip" : ""}${v.phone ? " phone" : ""}">
+  <article class="value${v.phone ? " phone" : ""}">
     <div class="vtext">
       <span class="who">${esc(v.who)}</span>
       <h2>${esc(v.title)}</h2>
       <button class="more" type="button" data-more="${v.more}">화면 ${MODS[v.more].scenes.length}장 더 →</button>
     </div>
-    <button class="vshot" type="button" data-img="${v.img}" data-cap="${esc(v.title)}" aria-label="크게 보기">
-      <img src="/img/academy/${v.img}.jpg" alt="${esc(v.who + ": " + v.title)}" loading="lazy">
-      ${v.notes.map(([x, y, t]) => `<span class="note" style="left:${x}%;top:${y}%">${esc(t)}</span>`).join("")}
-    </button>
+    <div class="vshots">
+      ${v.shots.map(([img, label, span]) => `
+        <button class="vshot${span ? " full" : ""}" type="button" data-img="${img}" data-cap="${esc(label)}" aria-label="${esc(label)} 크게 보기">
+          <img src="/img/academy/${img}.jpg" alt="${esc(label)}" loading="lazy"><span class="note top">${esc(label)}</span>
+        </button>`).join("")}
+    </div>
   </article>`).join("");
 
 const scenesHtml = (m) => `
@@ -331,44 +296,6 @@ document.addEventListener("click", (e) => {
 const openFromHash = () => openModule(location.hash.slice(1));
 openFromHash();
 window.addEventListener("hashchange", openFromHash);
-
-// 학원의 하루 — [이미지, 누구, 무엇을]. who가 강사·원장이면 강조색
-const STORIES = [
-  { when: "수업 시작", title: "출결 번호를 띄우면, 그 반 학생만 출석", result: "출석부는 저절로 채워지고 학부모에게 알림", steps: [
-    ["st-d1", "강사 · 교실 화면", "4자리 번호를 띄움. 들어온 학생·아직인 학생이 바로 보임"],
-    ["st-d2", "학생 폰", "그 반 학생만 번호를 넣어 출석(다른 반·틀린 번호는 안 됨)"],
-    ["st-d3", "학부모", "알림을 켜 두면 출석 알림, 리포트에 이번 달 출석"],
-  ]},
-  { when: "수업 끝", title: "채점 한 번이면, 내일 숙제가 학생마다 다르게", result: "약한 개념을 더 넣은 시험지가 반 전체 한 번에", steps: [
-    ["st-b1", "강사 PC", "학생 × 개념 숙달도. 약할수록 진하게"],
-    ["st-b3", "강사 PC", "민지 시험지: 약한 개념 7 · 복습 2 · 도전 1, 문항마다 고른 이유"],
-    ["st-b4", "학생 폰", "학생 앱 '오늘 할 것'에 내 숙제가 먼저"],
-  ]},
-  { when: "집에서 숙제", title: "종이 문제집에서 막히면, 찍어서 질문", result: "정답 대신 힌트부터 — 그래도 모르면 선생님께 (AI 사용료 별도)", steps: [
-    ["st-c1", "학생 폰", "찍으면 AI가 문제와 그래프를 읽음"],
-    ["st-c2", "학생 폰", "힌트를 한 단계씩, 그래도 모르면 질문"],
-    ["st-c3", "강사 PC", "사진·풀이·정답과 함께 받아 답장 / 수업에서 다룸 / 문제은행에 넣기"],
-  ]},
-  { when: "다음 수업", title: "해설에 단 질문이 모여, 수업 내용이 돼요", result: "어디서 막혔는지 수업 전에 알고 들어감", steps: [
-    ["st-a1", "학생 폰", "해설 1단계를 골라 \"이 식으로 왜 바꾸는지 모르겠어요\""],
-    ["st-a2", "강사", "같은 곳을 물은 학생 4명이 한 묶음으로"],
-    ["st-a3", "강사", "\"수업에서 다룸\" + 수업 메모 한 줄"],
-    ["st-a4", "학생 폰", "학생 화면 그 해설 옆에 메모가 돌아옴"],
-  ]},
-];
-document.getElementById("storyList").innerHTML = STORIES.map((st) => `
-  <details class="story">
-    <summary>
-      <div><span class="when">${esc(st.when)}</span><h3>${esc(st.title)}</h3><p class="result">${esc(st.result)}</p></div>
-      <span class="open">화면</span>
-    </summary>
-    <div class="flow" style="--n:${st.steps.length}">
-      ${st.steps.map(([img, who, cap], i) => `
-        <figure class="step">
-          <button type="button" data-img="${img}" data-cap="${esc(who)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/academy/${img}.jpg" alt="${esc(who + ": " + cap)}" loading="lazy"><span class="note top">${i + 1} · ${esc(who)}</span></button>
-        </figure>`).join("")}
-    </div>
-  </details>`).join("");
 
 const zoom = document.getElementById("zoom");
 document.addEventListener("click", (e) => {
