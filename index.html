@@ -193,6 +193,13 @@
   details.more[open] > summary::before{content:"－ "}
   ul.plain{color:var(--muted);font-size:15px;line-height:1.8;margin-top:12px;padding-left:18px}
   .idea .one{color:var(--muted);font-size:14px}
+  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;max-width:1100px}
+  .feats figure{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0e0b09;position:relative}
+  .feats img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#0e0b09}
+  .feats figcaption{padding:10px 14px;font-weight:800;font-size:14px;color:var(--accent);border-bottom:1px solid var(--line);background:var(--surface)}
+  @media(max-width:700px){.feats{grid-template-columns:1fr;gap:10px}.feats figcaption{font-size:12px}}
+  .thumb.feat img{object-fit:contain;background:#0e0b09}
+  #grid .thumb,#grid .thumb.mod{aspect-ratio:16/10}
 </style>
 </head>
 <body>
@@ -215,7 +222,11 @@
       <h1>내 서비스 앱을<br><em>이미 돌아가는 기능</em>으로.</h1>
       <p class="lead">내 이름 · 내 서버로 납품합니다. 소스코드 포함.</p>
       <div class="hero-act"><a class="btn" href="#contact">문의하기</a></div>
-      <img class="hero-shot" src="img/hero.jpg" loading="eager" alt="실제 앱 화면 모음: 문장 교정, 가입 신청, 고도 기록, 단체 대화, 식단, 인터벌, 세트 기록, 기록 추이" width="1304" height="976">
+      <div class="feats" aria-label="실제 기능 화면(가상 데이터)">
+        <figure><figcaption>그래프 · 리포트</figcaption><img src="img/feat/graph.jpg" alt="시간대별 단백질 막대그래프"></figure>
+        <figure><figcaption>AI 문장 교정</figcaption><img src="img/feat/ai.jpg" alt="틀린 단어를 고치고 자연스러운 표현을 제안"></figure>
+        <figure><figcaption>단체 대화</figcaption><img src="img/feat/chat.jpg" alt="모임 단체 대화방"></figure>
+      </div>
     </div>
   </section>
 
@@ -333,24 +344,24 @@ const scenesBtn = (url, cls = "btn sm") => url ? `<a class="${cls}" href="${url}
 const PRODUCTS = [
   { id:"idea", kind:"template", status:"ready",
     title:"커뮤니티 + 거래 서비스", short:"회원끼리 이어지고 거래하는 서비스",
-    img:["community-members","match-chat"], from:"390만 원",
+    icon:"🤝", from:"390만 원",
     feat:["회원·프로필·로그인","추천·연결, 1:1 대화, 단체 채팅","커뮤니티 게시판·모임 일정","결제·정기 구독","신고·차단·관리자 화면","상품·주문, 회원 간 거래, 다국어는 준비 중(사전 상담)"],
     tiers:[["연결형","회원·대화·커뮤니티 · 4주","390만 원"],["연결 + 판매","상품·주문·결제 · 6주","590만 원"],["해외형","다국어·번역 채팅·해외 결제 · 8주","890만 원"]],
     tags:"사업 아이디어 창업 MVP 커뮤니티 거래 마켓 굿즈 팬 매칭 해외 한일" },
   { id:"match", kind:"template", status:"ready", demo:DEMO+"demo-date",
     title:"회원 연결 · 대화 앱", short:"조건 맞는 회원끼리 연결하고 대화",
-    img:["match-chat","safety"], from:"350만 원",
+    img:["feat/match"], from:"350만 원",
     feat:["프로필·사진 6장, 조건 설정","조건이 맞는 회원 추천","서로 좋아요하면 연결, 1:1 대화","지역 모임·단체 채팅","성인 본인인증(1인 1계정)","신고(근거 첨부·자동 차단)·운영자 정지"],
     tiers:[["웹앱","10일","350만 원"],["웹앱 + 스토어 앱","21일","590만 원"],["영상통화 + 인앱결제","35일","990만 원"]],
     tags:"매칭 연결 대화 채팅 본인인증 신고 모임" },
   { id:"fitness", kind:"template", status:"ready",
     title:"운동 · 러닝 · 식단 앱", short:"러닝·운동·식단을 기록하고 추천",
-    img:["fitness-run","fitness-gym","fitness-diet"], from:"문의",
+    img:["feat/interval","feat/set","feat/trend","feat/gps"], from:"문의",
     feat:["GPS 러닝, 인터벌·스프린트 음성 안내","페이스·고도 그래프, 경사 보정 페이스","회복도·컨디션 기반 운동 추천","세트 기록, 휴식 타이머, 추정 1RM","목표 칼로리·단백질, 식습관 분석","체중·인바디 추세"],
     tiers:[], tags:"운동 헬스 러닝 식단 그래프 지도 PT 피트니스" },
   { id:"lang", kind:"template", status:"ready",
     title:"AI 언어 학습 앱", short:"AI 튜터와 대화하며 언어 학습",
-    img:["ai-english"], from:"문의",
+    icon:"🗣️", from:"문의",
     feat:["AI 튜터와 대화·음성 통화","문장 자동 교정 + 자연스러운 표현","문장 구간 분석과 질문","레벨 측정, 적응형 퀴즈, 단어장","구독·포인트 결제","14개 언어 지원"],
     tiers:[], tags:"AI 영어 한국어 일본어 언어 학습 교정 학원" },
   { id:"membership", kind:"template", status:"soon",
@@ -371,9 +382,9 @@ const PRODUCTS = [
   { id:"m-i18n", kind:"module", status:"soon", icon:"🌏", title:"다국어 · 번역 채팅", short:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", from:"80만 원", tags:"다국어 번역 해외 일본 영어 글로벌" },
   { id:"m-workspace", kind:"module", status:"soon", icon:"🗂️", title:"학습 워크스페이스", short:"반·조별 공간, 과제 내기·제출·피드백, 자료 공유, 선생님 화면.", from:"150만 원", tags:"학습 워크스페이스 과제 제출 피드백 조별 반 선생님 학원 교육 LMS" },
   { id:"m-learndata", kind:"module", status:"soon", icon:"🧾", title:"학습 기록 · 데이터", short:"문제별 정답·오답·소요 시간 서버 저장, 학생·반 리포트, CSV 내보내기.", from:"100만 원", tags:"학습 데이터 기록 분석 리포트 내보내기 CSV 교육" },
-  { id:"m-admin", kind:"module", status:"ready", icon:"🛠️", title:"관리자 화면", short:"회원 관리, 기간 정지, 신고 확인, 사용량, 앱 꾸미기.", from:"템플릿 포함", tags:"관리자 운영 신고 정지 회원" },
-  { id:"m-map", kind:"module", status:"ready", icon:"🗺️", title:"지도 · GPS 기록", short:"경로 기록, 구간 기록, 고도 정보.", from:"30만 원", tags:"지도 GPS 위치 경로 러닝" },
-  { id:"m-chart", kind:"module", status:"ready", icon:"📈", title:"그래프 · 리포트", short:"기록 그래프, 추세, 주간·월간 리포트.", from:"30만 원", tags:"그래프 통계 리포트 차트" },
+  { id:"m-admin", kind:"module", status:"ready", img:["feat/join"], title:"관리자 화면", short:"가입 승인, 회원 관리, 기간 정지, 신고 확인, 사용량.", from:"템플릿 포함", tags:"관리자 운영 신고 정지 회원" },
+  { id:"m-map", kind:"module", status:"ready", img:["feat/gps"], title:"지도 · GPS 기록", short:"경로 기록, 구간 기록, 고도 정보.", from:"30만 원", tags:"지도 GPS 위치 경로 러닝" },
+  { id:"m-chart", kind:"module", status:"ready", img:["feat/trend"], title:"그래프 · 리포트", short:"기록 그래프, 추세, 주간·월간 리포트.", from:"30만 원", tags:"그래프 통계 리포트 차트" },
   { id:"m-ai", kind:"module", status:"ready", icon:"✨", title:"AI 대화 · 교정", short:"AI 대화, 문장 교정, 음성 대화, 맞춤 추천. AI 사용료 별도.", from:"문의", tags:"AI 인공지능 교정 대화 추천" },
   { id:"m-branch", kind:"module", status:"ready", icon:"🏢", title:"다지점 관리", short:"지점마다 별도 공간, 본사에서 한 화면으로 관리.", from:"문의", tags:"지점 프랜차이즈 본사 기업 B2B" },
 
@@ -394,7 +405,7 @@ function render(){
     (!q || (p.title + " " + p.short + " " + (p.tags||"")).toLowerCase().includes(q)));
   grid.innerHTML = list.map(p => `
     <button class="item" data-id="${p.id}" aria-label="${p.title} 자세히">
-      ${p.img ? `<div class="thumb"><img src="img/${p.img[0]}.jpg" alt="" loading="lazy"></div>` : `<div class="thumb mod" aria-hidden="true">${p.icon||"🧩"}</div>`}
+      ${p.img ? `<div class="thumb${p.img[0].startsWith("feat/") ? " feat" : ""}"><img src="img/${p.img[0]}.jpg" alt="" loading="lazy"></div>` : `<div class="thumb mod" aria-hidden="true">${p.icon||"🧩"}</div>`}
       <div class="body">
         <div class="meta"><span class="pill">${kindName[p.kind]}</span>${statusPill(p)}${p.scenes||p.demo?'<span class="pill demo">'+(p.scenes?'화면':'데모')+'</span>':''}</div>
         <h3>${p.title}</h3>

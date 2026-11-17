@@ -198,6 +198,11 @@
   .ind .ind-icon{font-size:30px}
   .ind .go{color:var(--accent);font-size:14px;font-weight:700}
   .idea .one{color:var(--muted);font-size:14px}
+  .feats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:32px;max-width:1100px}
+  .feats figure{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0e0b09;position:relative}
+  .feats img{display:block;width:100%;aspect-ratio:2/1;object-fit:contain;background:#0e0b09}
+  .feats figcaption{padding:10px 14px;font-weight:800;font-size:14px;color:var(--accent);border-bottom:1px solid var(--line);background:var(--surface)}
+  @media(max-width:700px){.feats{gap:10px}.feats figcaption{font-size:12px}}
 </style>
 </head>
 <body>
@@ -218,9 +223,14 @@
   <section class="hero">
     <div class="wrap">
       <h1>우리 조직 이름의 앱,<br><em>월 29,000원부터</em>.</h1>
-      <p class="lead">학원 · 체대입시 · 헬스장 · 커뮤니티</p>
+      <p class="lead">출석 · 숙제 · 공지를 우리 이름 앱 하나로.</p>
       <div class="hero-act"><a class="btn" href="#contact">문의하기</a></div>
-      <img class="hero-shot" src="/img/system-hero.jpg" alt="실제 화면(가상 데이터): 학원 숙제, 체대입시 목표 점수, 헬스장 출석, 커뮤니티 정모 대화" width="1460" height="1060">
+      <div class="feats" aria-label="업종별 실제 화면(가상 데이터)">
+        <figure><figcaption>학원 · 오늘 할 숙제</figcaption><img src="/img/sys/academy.jpg" alt="학생 앱: 오늘 할 숙제와 진행 막대"></figure>
+        <figure><figcaption>체대입시 · 목표 점수</figcaption><img src="/img/sys/sports.jpg" alt="목표 대학 기준 점수와 종목별 점수"></figure>
+        <figure><figcaption>헬스장 · 출석 체크</figcaption><img src="/img/sys/gym.jpg" alt="출석했어요와 남은 횟수"></figure>
+        <figure><figcaption>커뮤니티 · 정모 대화</figcaption><img src="/img/sys/club.jpg" alt="정모 참가자 단체 대화방"></figure>
+      </div>
     </div>
   </section>
 
