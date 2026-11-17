@@ -97,8 +97,8 @@
 </head>
 <body>
 <header><div class="wrap">
-  <a class="logo" href="/#system">앱<b>공방</b></a>
-  <a class="btn" href="/#contact">문의하기</a>
+  <a class="logo" href="/system">앱<b>공방</b></a>
+  <a class="btn" href="/system#contact">문의하기</a>
 </div></header>
 
 <main class="wrap">
@@ -113,7 +113,7 @@
         <li><i>3</i><div>대회 대진표 · 순위표 <span>— 조 편성부터 결과 입력, 우승까지 자동</span></div></li>
       </ul>
       <div class="actions">
-        <a class="btn" href="/#contact">문의하기</a>
+        <a class="btn" href="/system#contact">문의하기</a>
         <a class="btn ghost" href="#stories">수업 장면 보기</a>
       </div>
     </div>
@@ -143,7 +143,7 @@
       <h2>우리 종목·기준으로 보고 싶다면</h2>
       <p>측정 종목·반 구성·목표 기준(대학 배점표, 승급 기준)·수업 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
     </div>
-    <a class="btn" href="/#contact">문의하기</a>
+    <a class="btn" href="/system#contact">문의하기</a>
   </section>
 </main>
 <footer class="wrap">화면의 학원·학생·기록·출석·대회는 모두 가상 데이터이고, 기준표의 학교 이름과 점수도 실제가 아니에요. 실제 기준표는 학원이 학교별 모집요강을 보고 넣습니다.</footer>
@@ -212,7 +212,7 @@ document.getElementById("groups").innerHTML = GROUPS.map((g) => `
             <h3>${esc(m.title)}</h3>
             <p>${esc(m.line)}</p>
           </div>
-          <a class="btn ghost" href="/#contact">이 모듈 문의</a>
+          <a class="btn ghost" href="/system#contact">이 모듈 문의</a>
         </div>
         ${m.soon ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>` : `<div class="scenes${m.wide ? "" : " phone"}">
           ${m.scenes.map(([img, cap, sub], i) => `

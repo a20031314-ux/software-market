@@ -191,9 +191,10 @@
   <div class="wrap">
     <a class="logo" href="#top">앱<b>공방</b></a>
     <nav>
-      <a href="#apps">앱 판매</a>
-      <a href="#system">시스템 서비스</a>
+      <a href="#ideas">아이디어</a>
+      <a href="#market">앱 · 모듈</a>
       <a href="#how">이용 방법</a>
+      <a href="/system">조직 운영 시스템</a>
       <a class="btn sm" href="#contact">문의하기</a>
     </nav>
   </div>
@@ -202,21 +203,9 @@
 <main id="top">
   <section class="hero">
     <div class="wrap">
-      <span class="eyebrow">앱 템플릿 · 기능 모듈 · 조직 운영 시스템</span>
+      <span class="eyebrow">앱 템플릿 · 기능 모듈</span>
       <h1>앱을 처음부터 만들지 마세요.<br><em>이미 돌아가는 기능</em>을 고르세요.</h1>
-      <p class="lead">실제 서비스에서 쓰는 앱과 기능 모듈을 조합합니다. 서비스 앱을 사서 내 것으로 가져가거나, 우리 조직 운영 시스템을 월 구독으로 바로 쓰세요.</p>
-      <div class="modes" role="tablist" aria-label="판매 방식">
-        <a class="mode" role="tab" href="#apps" data-mode="apps">
-          <span class="mode-tag">앱 판매</span>
-          <b>내 서비스 앱 사기</b>
-          <span>사용자가 가입해서 쓰는 서비스 앱(회원 연결·커뮤니티 거래·멤버십·학습·운동)을 내 이름·내 서버로 납품. 소스코드 포함.</span>
-        </a>
-        <a class="mode" role="tab" href="#system" data-mode="system">
-          <span class="mode-tag">시스템 서비스</span>
-          <b>우리 조직 운영 시스템</b>
-          <span>학원·체대입시·헬스장·커뮤니티 운영자용. 월 구독으로 바로 쓰고, 설치형도 가능.</span>
-        </a>
-      </div>
+      <p class="lead">실제 서비스에서 쓰는 앱과 기능 모듈을 조합해, 내 이름·내 서버로 납품합니다. 소스코드 포함.</p>
     </div>
   </section>
 
@@ -236,7 +225,7 @@
     </div>
   </section>
   <section id="market" style="padding-top:8px">
-    <div class="wrap"><div class="sec-head" style="margin-bottom:0"><h2>앱 판매</h2><p>앱 템플릿을 고르고 필요한 기능 모듈을 더하세요. 구매자 명의 서버·스토어 계정으로 납품하고 소스코드를 드립니다. 학원·헬스장·모임 운영은 <a href="#system">시스템 서비스</a>.</p></div></div>
+    <div class="wrap"><div class="sec-head" style="margin-bottom:0"><h2>앱 판매</h2><p>앱 템플릿을 고르고 필요한 기능 모듈을 더하세요. 구매자 명의 서버·스토어 계정으로 납품하고 소스코드를 드립니다. 학원·헬스장·모임 운영은 <a href="/system">조직 운영 시스템</a>.</p></div></div>
     <div class="wrap">
       <div class="bar">
         <div class="filters" role="group" aria-label="분류">
@@ -249,31 +238,6 @@
       </div>
       <div class="grid" id="grid"></div>
       <p id="empty" style="display:none;color:var(--muted);padding:30px 0">찾는 상품이 없어요. 아래 문의창에 필요한 기능을 적어 주세요.</p>
-    </div>
-  </section>
-  </div>
-
-  <div id="view-system" class="view" hidden>
-  <section style="padding-top:8px">
-    <div class="wrap">
-      <div class="sec-head"><h2>시스템 서비스</h2><p>가게 소개부터 예약·회원권·결제·문의까지, 우리 가게 이름의 앱 하나로. 업종을 고르면 필요한 기능이 같이 켜집니다.</p></div>
-
-      <h3 class="sub-h">1. 기본 — 모든 업종에 포함</h3>
-      <div class="basics" id="basics"></div>
-
-      <h3 class="sub-h">2. 업종 패키지 — 업종을 고르면 같이 켜지는 기능</h3>
-      <div class="grid" id="industries"></div>
-
-      <h3 class="sub-h">3. 추가 기능 — 필요한 것만 더하기</h3>
-      <div class="addons" id="addons"></div>
-
-      <h3 class="sub-h">4. 우리 조직 전용 모듈 — 다른 프로그램에 없는, 그 조직이 실제로 하는 일</h3>
-      <div class="ideas" id="special"></div>
-      <p class="legend">✓ 지금 있는 부품으로 바로 · ○ 준비 중(사전 상담) · 조직마다 항목·순서·이름을 설정으로 바꿉니다</p>
-
-      <h3 class="sub-h">5. 이용 방식</h3>
-      <div class="plans" id="plans"></div>
-      <p class="fine">가격은 VAT 포함 기준입니다. 결제·알림톡 등 외부 서비스 수수료는 실제 사용량만큼 별도입니다. 의료·약국 업종은 받지 않습니다.</p>
     </div>
   </section>
   </div>
@@ -362,6 +326,8 @@
 </dialog>
 
 <script>
+// 예전 주소(/#system)는 조직 운영 시스템 페이지로
+if (location.hash === "#system") location.replace("/system");
 const DEMO = "https://dating-amber-nine.vercel.app/?t=";
 // scenes: 모듈 화면 페이지(/demo/<업종>, 가상 데이터 장면 스크린샷). demo: 직접 써 보는 체험 앱(새 탭).
 const scenesBtn = (url, cls = "btn sm") => url ? `<a class="${cls}" href="${url}">모듈 화면 보기</a>` : "";
@@ -494,39 +460,6 @@ form.addEventListener("submit", async e => {
 });
 function show(kind, text){ statusEl.className = "status " + kind; statusEl.textContent = text; }
 
-// ── 시스템 서비스(자영업·소규모 사업장) ─────────────────
-const SYSTEM = {
-  basics: ["가게 소개(사진·위치·영업시간)", "가격표", "공지", "문의 받기", "관리자 화면", "가게 이름·색 바꾸기", "휴대폰 홈 화면 앱"],
-  industries: [
-    { id:"sys-gym", icon:"🏋️", title:"헬스장 · PT · 필라테스", status:"ready", scenes:"/demo/gym", feat:["이용권(횟수권·기간권)", "수업 예약·대기", "출석(매장 QR)", "+ 이용권 판매·청구(회원 결제)", "+ 매니저·코치 권한", "혼잡도(준비 중)"] },
-    { id:"sys-academy", icon:"📚", title:"학원 · 공부방", status:"ready", scenes:"/demo/academy", feat:["반·학생 관리", "출결", "숙제", "학부모 공지", "+ 단원·개념별 취약 진단", "+ 학생별 문제 자동 조합", "+ 힌트·해설 단계 공개"] },
-    { id:"sys-youth", icon:"🥋", title:"체대입시 · 유소년 스포츠 · 태권도", status:"ready", scenes:"/demo/sports", feat:["반·학생 관리", "출석·보호자 알림", "보호자 공지", "+ 실기·체력 기록과 추이", "+ 목표 점수(배점표·승급 기준)", "+ 학부모 리포트 링크", "+ 대회 대진표·순위표"] },
-    { id:"sys-salon", icon:"💇", title:"미용실 · 네일 · 피부관리", status:"soon", feat:["시간 예약", "담당자 선택", "시술 기록"] },
-    { id:"sys-cafe", icon:"☕", title:"식당 · 카페", status:"soon", feat:["메뉴판", "포장 주문", "대기 등록", "쿠폰"] },
-    { id:"sys-club", icon:"🧗", title:"커뮤니티 시스템 · 동호회 · 크루 · 소모임", status:"ready", scenes:"/demo/club", feat:["가입 승인", "모임 일정·참가 신청", "단체 채팅", "회비(준비 중)"] },
-  ],
-  special: [
-    { title:"대회 운영", scenes:"/demo/sports#match", parts:[["참가 신청·참가비",1],["공지·단체 채팅",1],["조 편성·대진표·순위표",1],["경기 결과 입력",1]] },
-    { title:"신체 능력 측정", scenes:"/demo/sports", parts:[["기록 추세 계산",1],["측정 항목·등급표 직접 설정",1],["단체 일괄 입력",1]] },
-    { title:"개인 성장 프로필", scenes:"/demo/sports", parts:[["그래프·리포트",1],["회차별 기록 저장·비교",1],["보호자·본인 리포트 공유",1]] },
-    { title:"취약 진단 · 맞춤 시험지", scenes:"/demo/academy", parts:[["레벨 측정·적응형 퀴즈",1],["단원·개념별 숙달도 히트맵·추이",0],["학생별 비율로 문제 자동 조합",0],["힌트 단계·해설 일부 공개",0]] },
-    { title:"상황 요청 · 재실", parts:[["1:1·단체 메시지",1],["상황 요청 → 담당자 → 처리 확인",0],["지금 자리에 있음/외출 표시",0]] },
-    { title:"내부 안내", parts:[["공지·게시판",1],["\"이거 어디 있어요\" 안내 모음",0],["AI 안내 답변",0]] },
-  ],
-  addons: [
-    { id:"sys-a-grow", title:"손님 모으기", desc:"쿠폰, 첫 방문 혜택, 친구 초대", price:"30만 원" },
-    { id:"sys-a-pay", title:"돈 받기", desc:"카드 결제, 정기결제, 가상계좌", price:"30만 원" },
-    { id:"sys-a-return", title:"다시 오게 하기", desc:"카카오 알림톡, 리뷰 요청, 재방문 쿠폰", price:"50만 원" },
-    { id:"sys-a-stats", title:"기록 · 분석", desc:"매출·방문 그래프, 월간 리포트", price:"30만 원" },
-    { id:"sys-a-staff", title:"직원 관리", desc:"직원 계정, 권한, 근무표", price:"50만 원" },
-    { id:"sys-a-branch", title:"지점 추가", desc:"지점마다 공간 + 본사 한 화면", price:"지점당 30만 원" },
-  ],
-  plans: [
-    { id:"sys-p-sub", title:"월 구독", price:"월 29,000원부터", pick:true, feat:["설치 없이 바로 시작", "서버·업데이트·백업 포함", "업종 패키지 포함", "언제든 해지"] },
-    { id:"sys-p-own", title:"설치형 (내 서버)", price:"90만 원부터", feat:["내 서버·내 계정으로 설치", "소스코드 포함", "서버비는 직접 부담", "하자보수 1개월"] },
-    { id:"sys-p-care", title:"유지보수", price:"월 10만 원부터", feat:["오류 대응", "작은 수정", "설치형 고객용"] },
-  ],
-};
 const IDEAS = [
   { title:"한일 커플 매칭", parts:[["회원·프로필·사진",1],["추천·서로 좋아요하면 연결",1],["1:1 대화",1],["본인·나이 확인",1],["한·일 다국어·번역 채팅",0]] },
   { title:"K팝 굿즈 · 팬 마켓", parts:[["아티스트별 커뮤니티",1],["공연 동행 모집·단체 채팅",1],["1:1 대화",1],["상품·주문·배송",0],["회원 간 교환·양도",0]] },
@@ -567,42 +500,8 @@ document.getElementById("ideaList").innerHTML = IDEAS.map(i => `
     <ul><li>무엇을 파는지</li><li>누구와 누구를 잇는지</li><li>언제 시작하고 싶은지</li></ul>
     <button class="btn sm" data-ask="아이디어 · 내 아이디어">아이디어 보내기</button>
   </div>`;
-const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...DOMAINS.map(d => "전문 기능 · " + d.title), "전문 기능 · 기타", ...SYSTEM.industries.map(i => "시스템 · " + i.title), ...SYSTEM.special.map(m => "시스템 · 전용 모듈 · " + m.title), ...SYSTEM.plans.map(p => "시스템 · " + p.title), "기타 · 맞춤 제작"];
+const ALL_ASK = [...PRODUCTS.map(p => p.title), ...IDEAS.map(i => "아이디어 · " + i.title), "아이디어 · 내 아이디어", ...DOMAINS.map(d => "전문 기능 · " + d.title), "전문 기능 · 기타", "기타 · 맞춤 제작"];
 
-function renderSystem(){
-  document.getElementById("basics").innerHTML = SYSTEM.basics.map(b => `<span>✓ ${b}</span>`).join("");
-  document.getElementById("industries").innerHTML = SYSTEM.industries.map(i => `
-    <div class="item ind" style="cursor:default">
-      <div class="thumb mod" aria-hidden="true">${i.icon}</div>
-      <div class="body">
-        <div class="meta">${i.status === "ready" ? '<span class="pill ready">바로 가능</span>' : '<span class="pill soon">준비 중 · 사전 상담</span>'}${i.scenes || i.demo ? '<span class="pill demo">' + (i.scenes ? '화면' : '데모') + '</span>' : ''}</div>
-        <h3>${i.title}</h3>
-        <ul>${i.feat.map(f => `<li>${f}</li>`).join("")}</ul>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
-          <button class="btn sm" data-ask="시스템 · ${i.title}">문의하기</button>
-          ${scenesBtn(i.scenes, "btn sm ghost")}${i.demo ? `<a class="btn sm ghost" href="${i.demo}" target="_blank" rel="noopener">데모 ↗</a>` : ""}
-        </div>
-      </div>
-    </div>`).join("");
-  document.getElementById("special").innerHTML = SYSTEM.special.map(m => `
-    <div class="idea">
-      <h4>${m.title}</h4>
-      <ul>${m.parts.map(([t,ok]) => `<li class="${ok?"":"no"}">${ok?"✓":"○"} ${t}</li>`).join("")}</ul>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:auto">
-        <button class="btn sm ghost" data-ask="시스템 · 전용 모듈 · ${m.title}">이 모듈 문의</button>
-        ${scenesBtn(m.scenes)}${m.demo ? `<a class="btn sm" href="${m.demo}" target="_blank" rel="noopener">데모 써 보기 ↗</a>` : ""}
-      </div>
-    </div>`).join("");
-  document.getElementById("addons").innerHTML = SYSTEM.addons.map(a => `
-    <div class="addon"><h4>${a.title}</h4><p>${a.desc}</p><div class="price">${a.price}</div></div>`).join("");
-  document.getElementById("plans").innerHTML = SYSTEM.plans.map(p => `
-    <div class="plan ${p.pick ? "pick" : ""}">
-      ${p.pick ? '<span class="pill demo" style="align-self:flex-start">추천</span>' : ""}
-      <h4>${p.title}</h4><div class="price">${p.price}</div>
-      <ul>${p.feat.map(f => `<li>${f}</li>`).join("")}</ul>
-      <button class="btn sm" data-ask="시스템 · ${p.title}">이 방식으로 문의</button>
-    </div>`).join("");
-}
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-ask]"); if (!b) return;
   productSel.value = b.dataset.ask;
@@ -610,18 +509,7 @@ document.addEventListener("click", e => {
   document.querySelector('[name="contact"]').focus({ preventScroll: true });
 });
 
-// 앱 판매 / 시스템 서비스 전환 (#apps, #system)
-function showMode(){
-  const mode = location.hash === "#system" ? "system" : "apps";
-  document.getElementById("view-apps").hidden = mode !== "apps";
-  document.getElementById("view-system").hidden = mode !== "system";
-  document.querySelectorAll(".mode").forEach(m => m.setAttribute("aria-selected", m.dataset.mode === mode ? "true" : "false"));
-  if (location.hash === "#apps" || location.hash === "#system") document.querySelector(".modes").scrollIntoView({ block: "start" });
-}
-window.addEventListener("hashchange", showMode);
 productSel.innerHTML += ALL_ASK.map(t => `<option value="${t}">${t}</option>`).join("");
-renderSystem();
-showMode();
 
 render();
 </script>
