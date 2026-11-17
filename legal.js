@@ -5,9 +5,9 @@ window.BIZ = {
   company: "웨어하우스", // 상호(사업자등록증과 같게)
   ceo: "조시현", // 대표자
   bizNo: "711-24-01935", // 사업자등록번호
-  mailOrderNo: null, // 통신판매업 신고번호 — 신고증 번호를 넣는다
+  mailOrderNo: "2026-경남밀양-14", // 통신판매업 신고번호
   address: null, // 사업장 주소 — 등록증 주소(또는 바꾼 주소)를 넣는다
-  email: null, // 문의 이메일 — 공개해도 되는 주소
+  email: "a20031314@gmail.com", // 문의 이메일(공개)
   phone: null, // 전화(선택)
   privacyOfficer: "조시현", // 개인정보 보호책임자
   hosting: "Vercel Inc.", // 호스팅 사업자
