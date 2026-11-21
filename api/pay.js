@@ -191,7 +191,8 @@ export default async function handler(req, res) {
         paymentId: id,
         orderName: item.title,
         amount: item.amount,
-        customer: { fullName: name, phoneNumber: phone, email },
+        // 구매자 ID: KPN은 필수. 휴대폰 번호로 만든 고정 값(번호 자체는 넣지 않음)
+        customer: { customerId: "c-" + createHash("sha256").update(phone).digest("hex").slice(0, 20), fullName: name, phoneNumber: phone, email },
       });
     }
 
