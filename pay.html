@@ -163,7 +163,7 @@ $("f").addEventListener("submit", async (e) => {
     if (!result || result.code) { $("err").textContent = result?.message || "결제를 취소했어요."; return; }
     await confirmPay(start.paymentId);
   } catch (err) {
-    $("err").textContent = ERRORS[err.message] || "결제하지 못했어요. 잠시 뒤 다시 시도해 주세요.";
+    $("err").textContent = ERRORS[err.message] || "결제하지 못했어요. 잠시 뒤 다시 시도해 주세요." + (err?.message ? " (" + String(err.message).slice(0, 80) + ")" : "");
   } finally {
     updateButton();
   }
