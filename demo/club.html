@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>커뮤니티 시스템 — 동호회·크루·소모임 — 앱공방</title>
+<title>동호회·크루 운영 모듈 — 앱공방</title>
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -48,9 +48,6 @@
   .scene figcaption{font-size:14px;line-height:1.5}
   .scene figcaption b{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--surface2);color:var(--accent);font-size:12px;margin-right:6px}
   .scene figcaption span{color:var(--muted)}
-  .soon{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);font-size:15px}
-  .soon ol{margin:8px 0 0 18px;color:var(--ink)}
-  .tag.soon-tag{background:transparent;border:1px dashed var(--line)}
   .cta{margin:64px 0 40px;padding:28px;border-radius:18px;background:var(--surface2);display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
   .cta h2{font-size:22px}.cta p{color:var(--muted);font-size:15px}
   footer{color:var(--muted);font-size:13px;padding:0 0 40px}
@@ -70,37 +67,61 @@
   .points li span{color:var(--muted)}
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
   .shots{position:relative;padding:18px 0 0}
-  .shots .pc{width:86%;margin-left:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
-  .shots .mobile{position:absolute;left:0;bottom:-24px;width:34%;border-radius:24px;border:6px solid #0b0d0d;box-shadow:0 24px 60px rgba(0,0,0,.6);background:#0b0d0d}
+  .shots .pc{width:86%;margin-right:auto;display:block;border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5)}
+  .shots .mobile{position:absolute;right:0;bottom:-24px;width:34%;border-radius:24px;border:6px solid #0b0d0d;box-shadow:0 24px 60px rgba(0,0,0,.6);background:#0b0d0d}
   .shots .label{position:absolute;font-size:13px;font-weight:700;background:var(--night);border:1px solid var(--line);border-radius:999px;padding:4px 12px;color:var(--ink)}
-  .shots .label.l2{right:3%;top:0}
-  .shots .label.l1{left:4%;bottom:-40px}
+  .shots .label.l2{left:3%;bottom:-40px}
+  .shots .label.l1{right:4%;bottom:-40px}
   @media (max-width:900px){.hero2{grid-template-columns:1fr;gap:28px;padding:32px 0 56px}.hero2 h1{font-size:30px}}
-  /* ── 동호회의 한 주: 기능이 실제로 이어지는 장면(누가 → 무엇을 → 어떻게 돌아오나) ── */
-  .stories{padding:64px 0 8px}
-  .stories > h2{font-size:30px;letter-spacing:-.8px;line-height:1.3;margin:6px 0 4px}
-  .story{padding:32px 0;border-top:1px solid var(--line);margin-top:28px}
-  .story .when{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px}
-  .story h3{font-size:24px;letter-spacing:-.5px;line-height:1.35}
-  .story .result{color:var(--muted);font-size:15px;margin-top:4px}
-  .flow{display:grid;gap:18px;margin-top:20px;grid-template-columns:repeat(var(--n,3),minmax(0,1fr))}
-  .step{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
-  .step button{all:unset;cursor:zoom-in;display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--surface)}
-  .step button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-  .step img{display:block;width:100%;height:250px;object-fit:contain;background:var(--surface)}
-  .step figcaption{font-size:14px;line-height:1.5}
-  .step .who{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:2px}
-  .step .who i{font-style:normal;width:20px;height:20px;border-radius:50%;background:var(--surface2);color:var(--ink);display:grid;place-items:center;font-size:11px}
-  .step .who.t{color:var(--accent)}
-  @media (max-width:760px){.flow{grid-template-columns:1fr}.step img{height:auto;max-height:420px}}
-  .fits{list-style:none;padding:0;margin:28px 0 0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-  .fits li{border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 16px;display:grid;gap:4px}
-  .fits b{font-size:18px}
-  .fits span{color:var(--muted);font-size:13px}
-  details.more{margin-top:40px;border-top:1px solid var(--line);padding-top:24px}
-  details.more > summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--muted);list-style:none}
-  details.more > summary::before{content:"＋ ";color:var(--accent)}
-  details.more[open] > summary::before{content:"－ "}
+  /* ── 쌓이는 데이터: 장면마다 큰 화면 하나 + 실제 숫자 ── */
+  .values{padding:24px 0 8px}
+  .value{padding:64px 0;border-bottom:1px solid var(--line)}
+  .value.phone{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center}
+  .vtext{margin-bottom:24px}
+  .vtext .who{display:inline-block;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:6px}
+  .vtext h2{font-size:34px;letter-spacing:-1px;line-height:1.3}
+  .vtext .more{all:unset;cursor:pointer;display:inline-block;margin-top:12px;font-size:14px;color:var(--muted)}
+  .vtext .more:hover{color:var(--accent)}
+  .vshots{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vshot.full{grid-column:1/-1}
+  .vshots{align-items:start}
+  .vshots.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .soon{border:1px dashed var(--line);border-radius:14px;padding:18px 20px;color:var(--muted);font-size:15px}
+  .soon ol{margin:8px 0 0 18px;color:var(--ink)}
+  .tag.soon-tag{background:transparent;border:1px dashed var(--line)}
+  .value.phone .vshots{grid-template-columns:1fr;justify-items:center}
+  .value.phone .vshot{max-width:360px;border-radius:24px}
+  .textlink{color:var(--muted);font-size:15px;text-decoration:none;align-self:center}
+  .textlink:hover{color:var(--ink)}
+  .note{position:absolute;transform:translateY(-50%);background:var(--accent);color:var(--accent-ink);font-size:13px;font-weight:700;line-height:1.3;padding:5px 11px;border-radius:999px;box-shadow:0 6px 18px rgba(0,0,0,.45);white-space:nowrap;pointer-events:none}
+  .note.top{left:10px;top:10px;transform:none;background:rgba(23,18,15,.85);color:var(--ink);border:1px solid var(--line);font-weight:500}
+  .scene button{position:relative}
+  .vshot{all:unset;position:relative;cursor:zoom-in;display:block;width:100%;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+  .vshot img{display:block;width:100%;height:auto}
+  .vshot:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  @media (max-width:560px){.note{font-size:11px;padding:3px 8px}}
+  @media (max-width:860px){.value.phone{grid-template-columns:1fr}.vshots,.vshots.n3{grid-template-columns:1fr}.vtext h2{font-size:26px}}
+  .catalog{padding:40px 0 0}
+  .catalog > details > summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 4px;border-top:1px solid var(--line)}
+  .catalog > details > summary::-webkit-details-marker{display:none}
+  .catalog > details > summary h2{font-size:22px}
+  .catalog > details > summary .open{font-size:14px;color:var(--accent)}
+  .catalog .gtitle{font-size:14px;color:var(--muted);margin:24px 4px 4px}
+  details.mod{scroll-margin-top:64px}
+  details.mod{scroll-margin-top:64px}
+  details.mod{border-top:1px solid var(--line)}
+  details.mod:last-of-type{border-bottom:1px solid var(--line)}
+  details.mod > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:20px 4px}
+  details.mod > summary::-webkit-details-marker{display:none}
+  details.mod > summary h3{font-size:21px;letter-spacing:-.4px;line-height:1.35}
+  details.mod > summary p{color:var(--muted);font-size:15px}
+  details.mod > summary .open{font-size:14px;color:var(--accent);white-space:nowrap}
+  details.mod[open] > summary .open::after{content:" ▲"}
+  details.mod:not([open]) > summary .open::after{content:" ▼"}
+  details.mod .body{padding:4px 4px 32px}
+  details.mod .body .foot{display:flex;justify-content:flex-end;margin-top:16px}
+  /* 이름표가 화면 내용을 가리지 않게 — 이름표 자리를 화면 위에 따로 */
+  .vshots .vshot,.scene button:has(.note){padding-top:42px;background:var(--surface)}
 </style>
 </head>
 <body>
@@ -112,43 +133,38 @@
 <main class="wrap">
   <section class="hero2">
     <div>
-      <p class="eyebrow">시스템 서비스</p>
-      <h1>커뮤니티 시스템</h1>
-      <p class="lead">모임을 우리 이름의 앱으로 운영해요.</p>
-      <ul class="fits" aria-label="이런 모임에 맞아요">
-        <li><b>동호회</b><span>클라이밍 · 배드민턴 · 독서</span></li>
-        <li><b>크루</b><span>러닝 · 자전거 · 등산</span></li>
-        <li><b>소모임</b><span>동네 · 취미 · 스터디</span></li>
-      </ul>
+      <p class="eyebrow">동호회 · 크루 · 소모임</p>
+      <h1>단톡방에 흩어지던 모임을<br>우리 이름의 앱 하나로</h1>
+      <p class="lead">가입·정모·공지가 한곳에 모여 운영진 일이 줄어요.</p>
+      <div class="actions">
+        <a class="btn" href="/system#contact">문의하기</a>
+        <a class="textlink" href="#values">어떻게 달라지나요 ↓</a>
+      </div>
     </div>
     <div class="shots" aria-label="실제 화면(가상 데이터)">
-      <img class="pc" src="/img/club/admin-1.jpg" alt="운영진 PC: 동호회 이름·소개·색 꾸미기">
-      <img class="mobile" src="/img/club/meet-1.jpg" alt="회원 앱: 다가오는 정모">
-      <span class="label l2">운영진 PC</span>
+      <img class="pc" src="/img/club/st-a2.jpg" alt="운영진: 가입 신청 수락">
+      <img class="mobile" src="/img/club/v-phone.jpg" alt="회원 앱: 다가오는 정모">
+      <span class="label l2">운영진</span>
       <span class="label l1">회원 앱</span>
     </div>
   </section>
 
-  <section class="stories" id="stories">
-    <p class="eyebrow">가상 데이터로 찍은 실제 화면</p>
-    <h2>모임에서 이렇게 써요</h2>
-    <div id="storyList"></div>
-  </section>
 
-  <details class="more">
-    <summary>모듈별 화면 자세히</summary>
-    <nav class="jump" aria-label="모듈" id="jump"></nav>
-    <div id="groups"></div>
-  </details>
+  <section class="values" id="values"></section>
+
+  <section class="catalog" id="catalog">
+    <details id="catalogBox">
+      <summary><h2>모듈 · 요금제</h2><span class="open">펼치기</span></summary>
+      <div id="catalogList"></div>
+    </details>
+  </section>
 
   <section class="cta">
     <div>
       <h2>우리 모임 이름으로 보고 싶다면</h2>
       <p>모임 이름·종목·모이는 요일을 적어 주시면 그 내용으로 바꾼 화면을 보내 드려요.</p>
     </div>
-    <span style="display:flex;gap:8px;flex-wrap:wrap">
-      <a class="btn" href="/system#contact">문의하기</a>
-    </span>
+    <a class="btn" href="/system#contact">문의하기</a>
   </section>
 </main>
 <footer class="wrap">화면의 모임·회원·글은 모두 가상 데이터예요. 실제 납품 시 우리 모임 이름·색·공지로 바뀌고, 사진은 회원이 직접 올립니다.</footer>
@@ -160,9 +176,8 @@
 </dialog>
 
 <script>
-// 모듈별 장면 — 그룹 순서 = 보여 주는 순서(추천 모듈부터). 이미지는 img/club/<id>.jpg
-// 장면 다시 찍기: dating 저장소 scripts/club-demo-seed.py → scripts/club-demo-shots.py (장면 이름이 같다)
-// soon: 아직 없는 모듈 — 화면 대신 흐름만 적는다.
+// 모듈별 장면 — 맨 아래 "모듈 · 요금제"에 접어 둠. 이미지는 img/club/<id>.jpg
+// 다시 찍기: appgongbang-engine scripts/club-demo-seed.py → club-demo-shots.py
 const GROUPS = [
   { title: "추천 모듈 — 운영진이 매일 하던 일", modules: [
     { id: "join", rec: true, plan: "베이직부터", title: "가입 · 회원 관리", line: "가입 신청을 운영진이 수락하고, 회원 목록에서 관리", wide: false, scenes: [
@@ -196,59 +211,72 @@ const GROUPS = [
 ];
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-document.getElementById("jump").innerHTML = GROUPS.flatMap((g) => g.modules).map((m) => `<a href="#${m.id}"${m.rec ? ' class="rec"' : ""}>${esc(m.title)}</a>`).join("");
-document.getElementById("groups").innerHTML = GROUPS.map((g) => `
-  <section class="group">
-    <h2>${esc(g.title)}</h2>
-    ${g.modules.map((m) => `
-      <article class="module" id="${m.id}">
-        <div class="mhead">
-          <div>
-            <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span>${m.soon ? '<span class="tag soon-tag">준비 중</span>' : ""}</div>
-            <h3>${esc(m.title)}</h3>
-            <p>${esc(m.line)}</p>
-          </div>
-        </div>
-        ${m.soon ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>` : `<div class="scenes${m.wide ? "" : " phone"}">
-          ${m.scenes.map(([img, cap, sub], i) => `
-            <figure class="scene">
-              <button type="button" data-img="${img}" data-cap="${esc(cap + " — " + sub)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/club/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"></button>
-              <figcaption><b>${i + 1}</b>${esc(cap)}<br><span>${esc(sub)}</span></figcaption>
-            </figure>`).join("")}
-        </div>`}
-      </article>`).join("")}
-  </section>`).join("");
-
-// 동호회의 한 주 — [이미지, 누구, 무엇을]. 운영진은 강조색
-const STORIES = [
-  { when: "새 회원", title: "가입 신청이 오면, 운영진이 한 번에 수락", result: "단톡방 초대·명단 정리 대신 앱 하나로", steps: [
-    ["st-a1", "처음 온 사람", "링크로 들어와(설치 없이) \"가입 신청\" — 글·회원 목록은 회원에게만"],
-    ["st-a2", "운영진", "가입 신청이 맨 위에, 수락·거절 한 번"],
-    ["st-a3", "운영진", "회원 목록: 승인제/바로 가입, 운영진 표시, 내보내기"],
-  ]},
-  { when: "정모", title: "정모를 올리면, 신청 → 수락 → 참가자 단체방까지", result: "누가 오는지·자리가 남았는지 다시 묻지 않음", steps: [
-    ["st-b1", "회원 폰", "다가오는 정모 — 남은 자리·비용 방식"],
-    ["st-b2", "회원 폰", "참가 신청. 정확한 장소는 참가자에게만"],
-    ["st-b3", "운영진", "신청자 수락·거절, 차면 \"자리 없음\""],
-    ["st-b4", "참가자", "수락되면 그 정모 단체방에 자동으로"],
-  ]},
-  { when: "공지", title: "공지를 켜고 올리면, 늘 맨 위에", result: "단톡방에서 공지가 묻히지 않음", steps: [
-    ["st-c1", "운영진", "글을 쓰고 \"공지\"를 켜서 올리기"],
-    ["st-c2", "회원 폰", "공지는 맨 위에 고정, 그 아래 회원 글"],
-  ]},
+// 쌓이는 데이터 — 섹션마다 학원이 얻는 것 한 줄 + 그 데이터 화면(핵심 영역만 잘라 낸 v-*.jpg, 화면마다 이름 하나). more = 그 모듈 화면 전체.
+const VALUES = [
+  {"who": "처음 온 사람 → 운영진", "title": "가입은 신청 → 수락, 회원만 안을 봐요", "more": "join", "shots": [["st-a1", "처음 온 사람"], ["st-a3", "승인제 회원 목록"]]},
+  {"who": "회원 폰", "title": "정모 인원이 앱에서 모이고, 단체방도 저절로", "more": "meet", "shots": [["st-b1", "정모 · 남은 자리"], ["st-b3", "참가 신청 수락"], ["st-b4", "참가자 단체방"]]},
+  {"who": "회원 폰", "title": "공지가 단톡방에 묻히지 않게", "more": "board", "shots": [["st-c2", "늘 맨 위에 고정"], ["st-c1", "운영진은 올리기만"]]},
 ];
-document.getElementById("storyList").innerHTML = STORIES.map((st) => `
-  <article class="story">
-    <span class="when">${esc(st.when)}</span>
-    <h3>${esc(st.title)}</h3>
-    <div class="flow" style="--n:${st.steps.length}">
-      ${st.steps.map(([img, who, cap], i) => `
-        <figure class="step">
-          <button type="button" data-img="${img}" data-cap="${esc(who + " — " + cap)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/club/${img}.jpg" alt="${esc(who + ": " + cap)}" loading="lazy"></button>
-          <figcaption><span class="who${/운영진/.test(who) ? " t" : ""}"><i>${i + 1}</i>${esc(who)}</span><br>${esc(cap)}</figcaption>
-        </figure>`).join("")}
+const MODS = Object.fromEntries(GROUPS.flatMap((g) => g.modules).map((m) => [m.id, m]));
+
+document.getElementById("values").innerHTML = VALUES.map((v) => `
+  <article class="value${v.phone ? " phone" : ""}">
+    <div class="vtext">
+      <span class="who">${esc(v.who)}</span>
+      <h2>${esc(v.title)}</h2>
+      <button class="more" type="button" data-more="${v.more}">화면 ${MODS[v.more].scenes.length + (MODS[v.more].wideScenes || []).length}장 더 →</button>
+    </div>
+    <div class="vshots${v.shots.filter((x) => !x[2]).length === 3 ? " n3" : ""}">
+      ${v.shots.map(([img, label, span]) => `
+        <button class="vshot${span ? " full" : ""}" type="button" data-img="${img}" data-cap="${esc(label)}" aria-label="${esc(label)} 크게 보기">
+          <img src="/img/club/${img}.jpg" alt="${esc(label)}" loading="lazy"><span class="note top">${esc(label)}</span>
+        </button>`).join("")}
     </div>
   </article>`).join("");
+
+const sceneList = (list, cls) => `
+  <div class="scenes${cls}">
+    ${list.map(([img, cap, sub]) => `
+      <figure class="scene">
+        <button type="button" data-img="${img}" data-cap="${esc(cap)}" aria-label="${esc(cap)} 크게 보기"><img src="/img/club/${img}.jpg" alt="${esc(cap + ": " + sub)}" loading="lazy"><span class="note top">${esc(cap)}</span></button>
+      </figure>`).join("")}
+  </div>`;
+// soon = 아직 없는 모듈(화면 없이 흐름만), wideScenes = 휴대폰 장면 뒤에 붙는 PC 장면
+const scenesHtml = (m) => m.soon
+  ? `<div class="soon">만들면 이렇게 돼요 — 화면은 준비 중<ol>${m.steps.map((t) => `<li>${esc(t)}</li>`).join("")}</ol></div>`
+  : sceneList(m.scenes, m.wide ? "" : " phone") + (m.wideScenes ? `<div style="margin-top:16px">${sceneList(m.wideScenes, "")}</div>` : "");
+
+// 기능별 화면 전체 — 맨 아래에 접어 둠(모듈마다 열어야 화면)
+document.getElementById("catalogList").innerHTML = GROUPS.map((g) => `
+  <p class="gtitle">${esc(g.title)}</p>
+  ${g.modules.map((m) => `
+    <details class="mod" id="${m.id}">
+      <summary>
+        <div>
+          <div class="tags">${m.rec ? '<span class="tag rec">추천</span>' : ""}<span class="tag">${esc(m.plan)}</span>${m.soon ? '<span class="tag soon-tag">준비 중</span>' : ""}</div>
+          <h3>${esc(m.title)}</h3>
+          <p>${esc(m.line)}</p>
+        </div>
+        <span class="open">${m.soon ? "흐름" : "화면"}</span>
+      </summary>
+      <div class="body">${scenesHtml(m)}<div class="foot"><a class="btn ghost" href="/system#contact">이 모듈 문의</a></div></div>
+    </details>`).join("")}`).join("");
+
+function openModule(id) {
+  const d = document.getElementById(id);
+  if (!d || !MODS[id]) return;
+  document.getElementById("catalogBox").open = true;
+  d.open = true;
+  requestAnimationFrame(() => d.scrollIntoView({ behavior: "smooth", block: "start" }));
+}
+document.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-more]");
+  if (b) openModule(b.dataset.more);
+});
+// 주소 #<모듈>로 오면 그 기능 화면을 열어 줌(사이트 다른 페이지 링크)
+const openFromHash = () => openModule(location.hash.slice(1));
+openFromHash();
+window.addEventListener("hashchange", openFromHash);
 
 const zoom = document.getElementById("zoom");
 document.addEventListener("click", (e) => {
