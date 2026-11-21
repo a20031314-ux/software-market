@@ -182,7 +182,8 @@ export default async function handler(req, res) {
       if (count === 1) await redis(["EXPIRE", ipKey, "3600"]);
       if (count > PER_HOUR) return send(res, 429, { error: "TOO_MANY" });
 
-      const id = "ord-" + Date.now().toString(36) + "-" + randomUUID().slice(0, 8);
+      // 주문 번호는 영문·숫자만(KPN은 하이픈 등 특수문자를 받지 않음)
+      const id = "ord" + Date.now().toString(36) + randomUUID().replace(/-/g, "").slice(0, 10);
       const order = { id, at: Date.now(), item: item.id, title: item.title, amount: item.amount, channel: channel.id, name, phone, email, org, status: "READY", paidAt: null };
       await saveOrder(order, false);
       return send(res, 200, {
