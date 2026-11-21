@@ -89,6 +89,7 @@
   .plan .price{font-size:24px}
   .plan ul{padding-left:18px;color:var(--muted);font-size:14px;flex:1}
   .plan .btn{align-self:flex-start;margin-top:6px}
+  .plan .pay-link{font-size:14px;color:var(--muted);margin-top:4px}
   @media(max-width:900px){.plans{grid-template-columns:1fr}}
   .fine{color:var(--muted);font-size:13px;margin-top:16px}
 
@@ -389,7 +390,7 @@ const SYSTEM = {
     { id:"sys-a-branch", title:"지점 추가", desc:"지점마다 공간 + 본사 한 화면", price:"지점당 30만 원" },
   ],
   plans: [
-    { id:"sys-p-sub", title:"월 구독", price:"월 29,000원부터", pick:true, feat:["설치 없이 바로 시작", "서버·업데이트·백업 포함", "업종 패키지 포함", "언제든 해지"] },
+    { id:"sys-p-sub", title:"월 구독", price:"월 29,000원부터", pick:true, feat:["설치 없이 바로 시작", "서버·업데이트·백업 포함", "업종 패키지 포함", "언제든 해지"], pay:"/pay?item=sys-month", payLabel:"1개월 이용권 29,000원 카드 결제 →" },
     { id:"sys-p-own", title:"설치형 (내 서버)", price:"90만 원부터", feat:["내 서버·내 계정으로 설치", "소스코드 포함", "서버비는 직접 부담", "하자보수 1개월"] },
   ],
 };
@@ -419,6 +420,7 @@ function renderSystem(){
       ${p.pick ? '<span class="pill demo" style="align-self:flex-start">추천</span>' : ""}
       <h4>${p.title}</h4><div class="price">${p.price}</div>
       <ul>${p.feat.map(f => `<li>${f}</li>`).join("")}</ul>
+      ${p.pay ? `<a class="pay-link" href="${p.pay}">${p.payLabel}</a>` : ""}
     </div>`).join("");
 }
 document.addEventListener("click", e => {

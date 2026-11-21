@@ -42,6 +42,7 @@
     <button data-v="open" aria-pressed="true">처리 전</button>
     <button data-v="done" aria-pressed="false">처리함</button>
     <button data-v="all" aria-pressed="false">전체</button>
+    <button data-v="paid" aria-pressed="false">결제</button>
   </div>
   <p class="msg" id="msg"></p>
   <div id="list"></div>
@@ -61,7 +62,25 @@ async function load(){
   items = (await res.json()).items || []; draw();
 }
 function esc(s){ return String(s||"").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c])); }
+let orders = null;
+async function drawPaid(){
+  if (!orders) {
+    msg.textContent = "결제 불러오는 중…";
+    const res = await fetch("/api/pay?list=1", { headers: { "x-admin-key": getKey() } });
+    if (!res.ok) { msg.textContent = "결제를 불러오지 못했어요 (" + res.status + ")."; return; }
+    orders = (await res.json()).orders || [];
+  }
+  msg.textContent = `결제 ${orders.length}건 · 합계 ${orders.reduce((n, o) => n + o.amount, 0).toLocaleString("ko-KR")}원`;
+  list.innerHTML = orders.map(o => `
+    <div class="card">
+      <div class="top"><div><span class="who">${esc(o.name)}</span><span class="prod">${esc(o.title)}</span>${o.org ? `<span class="prod">${esc(o.org)}</span>` : ""}</div>
+      <div>${new Date(o.paidAt).toLocaleString("ko-KR")}</div></div>
+      <div class="top" style="margin-top:4px"><div>${esc(o.phone)} · ${esc(o.email)}</div><div><b style="color:var(--ink)">${o.amount.toLocaleString("ko-KR")}원</b> · ${esc(o.channel)} · ${esc(o.id)}</div></div>
+      <div class="actions" style="margin-top:8px"><button data-copy="${esc(o.phone)}" class="ghost">연락처 복사</button></div>
+    </div>`).join("") || '<p class="msg">결제가 없어요.</p>';
+}
 function draw(){
+  if (view === "paid") return void drawPaid();
   const shown = items.filter(i => view === "all" || (view === "done" ? i.done : !i.done));
   msg.textContent = `처리 전 ${items.filter(i=>!i.done).length}건 · 전체 ${items.length}건`;
   list.innerHTML = shown.map(i => `
@@ -84,7 +103,7 @@ list.addEventListener("click", async e => {
   if (res.ok) { const it = items.find(x => x.id === d.dataset.done); it.done = d.dataset.to === "1"; draw(); }
 });
 document.getElementById("login").addEventListener("submit", e => { e.preventDefault(); setKey(keyInput.value.trim()); keyInput.value = ""; load(); });
-document.getElementById("logout").onclick = () => { setKey(""); items = []; load(); };
+document.getElementById("logout").onclick = () => { setKey(""); items = []; orders = null; load(); };
 document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => { view = b.dataset.v; document.querySelectorAll(".tabs button").forEach(x => x.setAttribute("aria-pressed", x === b ? "true" : "false")); draw(); });
 load();
 </script>
