@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결제 — 앱공방</title>
+<link rel="canonical" href="https://apps.languagebank.net/pay">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/legal.css">
+<script src="/legal.js" defer></script>
+<style>
+  .wrap.narrow{max-width:560px}
+  .items{display:grid;gap:10px;margin:18px 0 26px}
+  .item{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;cursor:pointer}
+  .item:has(input:checked){border-color:var(--accent)}
+  .item input{margin-top:5px;accent-color:var(--accent)}
+  .item b{display:block;font-size:16px}
+  .item span{color:var(--muted);font-size:14px}
+  .item .won{margin-left:auto;font-weight:800;font-size:17px;white-space:nowrap}
+  .f{display:block;font-size:14px;color:var(--muted);margin:14px 0 6px}
+  input.t{width:100%;background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 14px;font:inherit}
+  .agree{display:flex;gap:10px;align-items:flex-start;margin:22px 0 6px;font-size:14px;color:#ddd3c9}
+  .agree input{margin-top:5px;accent-color:var(--accent)}
+  .fine{font-size:13px;color:var(--muted)}
+  button.pay{width:100%;margin-top:18px;background:var(--accent);color:#1d1410;border:0;border-radius:999px;padding:15px;font:inherit;font-size:17px;font-weight:800;cursor:pointer}
+  button.pay:disabled{opacity:.5;cursor:default}
+  .err{color:#ff9b7a;font-size:14px;margin-top:10px;min-height:1em}
+  .done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .done h2{margin-top:0}
+  .done dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:15px;margin:14px 0}
+  .done dt{color:var(--muted)}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <a class="logo" href="/">앱<b>공방</b></a>
+</div></header>
+
+<main><div class="wrap narrow">
+  <section id="form-view">
+    <h1>결제</h1>
+    <p class="meta">한 번 결제하는 이용권이에요. 자동으로 다시 결제되지 않아요.</p>
+
+    <form id="f" novalidate>
+      <div class="items" id="items"></div>
+
+      <label class="f" for="name">이름 (또는 상호)</label>
+      <input class="t" id="name" name="name" autocomplete="name" maxlength="40" required>
+      <label class="f" for="phone">휴대폰 번호</label>
+      <input class="t" id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="01012345678" maxlength="13" required>
+      <label class="f" for="email">이메일</label>
+      <input class="t" id="email" name="email" type="email" autocomplete="email" maxlength="100" required>
+      <label class="f" for="org">쓰실 조직 이름 (선택)</label>
+      <input class="t" id="org" name="org" maxlength="60" placeholder="예: 모아 수학학원">
+
+      <p class="f">결제 수단: 신용·체크카드</p>
+
+      <label class="agree"><input type="checkbox" id="agree"> <span><a href="/terms" target="_blank">이용약관</a>과 <a href="/refund" target="_blank">환불 정책</a>을 확인했고, 결제와 <a href="/privacy" target="_blank">개인정보 수집·이용</a>(이름·연락처·결제 기록, 5년 보관)에 동의합니다.</span></label>
+      <p class="fine">결제가 확인되면 1영업일 안에 연락드려 개설을 시작해요. 개설 전에는 전액 환불됩니다.</p>
+
+      <button class="pay" id="payBtn" disabled>불러오는 중…</button>
+      <p class="err" id="err" role="alert"></p>
+    </form>
+  </section>
+
+  <section id="done-view" hidden>
+    <div class="done">
+      <h2>결제가 완료됐어요</h2>
+      <dl id="doneInfo"></dl>
+      <p class="fine">1영업일 안에 남겨 주신 연락처로 연락드릴게요. 환불은 <a href="/refund">환불 정책</a>을 따릅니다.</p>
+    </div>
+    <p style="margin-top:18px"><a href="/">처음으로</a></p>
+  </section>
+</div></main>
+
+<footer><div class="wrap" data-biz-footer></div></footer>
+
+<script src="https://cdn.portone.io/v2/browser-sdk.js" async></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const q0 = new URLSearchParams(location.search);
+const won = (n) => n.toLocaleString("ko-KR") + "원";
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" })[c]);
+const ERRORS = {
+  NO_NAME: "이름을 적어 주세요.", BAD_PHONE: "휴대폰 번호를 숫자로 적어 주세요.", BAD_EMAIL: "이메일을 확인해 주세요.",
+  NO_AGREE: "약관·환불 정책 동의가 필요해요.", NO_ITEM: "상품을 골라 주세요.", TOO_MANY: "잠시 뒤에 다시 시도해 주세요.",
+  PAY_NOT_SET: "지금은 결제를 받을 수 없어요. 문의창으로 남겨 주세요.", AMOUNT_MISMATCH: "결제 금액이 맞지 않아 취소했어요. 다시 시도해 주세요.",
+};
+let data = null;
+
+async function post(action, body) {
+  const res = await fetch("/api/pay?action=" + action, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(json.error || "SERVER");
+  return json;
+}
+
+function picked() { return data.items.find((i) => i.id === document.querySelector('[name="item"]:checked')?.value); }
+function updateButton() {
+  const it = picked();
+  $("payBtn").disabled = !data.ready || !it;
+  $("payBtn").textContent = !data.ready ? "결제 준비 중" : it ? won(it.amount) + " 결제하기" : "상품을 골라 주세요";
+}
+
+function showDone(order) {
+  $("form-view").hidden = true;
+  $("done-view").hidden = false;
+  $("doneInfo").innerHTML = `<dt>상품</dt><dd>${esc(order.title)}</dd><dt>금액</dt><dd>${won(order.amount)}</dd><dt>주문 번호</dt><dd>${esc(order.id)}</dd>` +
+    (order.paidAt ? `<dt>결제 시각</dt><dd>${new Date(order.paidAt).toLocaleString("ko-KR")}</dd>` : "");
+}
+
+async function confirmPay(paymentId) {
+  const { order } = await post("confirm", { paymentId });
+  if (order.status === "PAID") showDone(order);
+  else $("err").textContent = "결제가 끝나지 않았어요 (" + order.status + "). 다시 시도해 주세요.";
+}
+
+async function init() {
+  // 모바일 결제 뒤 돌아온 경우: /pay?paymentId=…(&code=… 실패)
+  const q = new URLSearchParams(location.search);
+  const back = q.get("paymentId");
+  if (back) { for (const k of ["paymentId", "code", "message", "transactionType", "txId", "pgCode", "pgMessage"]) q0.delete(k); history.replaceState(null, "", "/pay" + (q0.toString() ? "?" + q0 : "")); }
+
+  data = await fetch("/api/pay").then((r) => r.json());
+  const want = q.get("item");
+  $("items").innerHTML = data.items.map((it, i) => `
+    <label class="item"><input type="radio" name="item" value="${esc(it.id)}" ${(want ? it.id === want : i === 0) ? "checked" : ""}>
+      <div><b>${esc(it.title)}</b><span>${esc(it.desc)}</span></div><div class="won">${won(it.amount)}</div></label>`).join("");
+  $("items").addEventListener("change", updateButton);
+  updateButton();
+
+  if (back) {
+    if (q.get("code")) $("err").textContent = q.get("message") || "결제를 취소했어요.";
+    else await confirmPay(back).catch((e) => ($("err").textContent = ERRORS[e.message] || "결제 확인에 실패했어요. 문의창으로 알려 주세요."));
+  }
+}
+
+$("f").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("err").textContent = "";
+  if (!$("agree").checked) { $("err").textContent = ERRORS.NO_AGREE; return; }
+  if (!window.PortOne) { $("err").textContent = "결제창을 불러오지 못했어요. 새로고침해 주세요."; return; }
+  const btn = $("payBtn");
+  btn.disabled = true;
+  try {
+    const start = await post("start", {
+      item: picked()?.id,
+      channel: q0.get("pg") || undefined, // 결제대행사 고르기: 기본은 첫 채널, ?pg=kpn 처럼 주소로만
+      name: $("name").value, phone: $("phone").value, email: $("email").value, org: $("org").value,
+      agree: true,
+    });
+    const result = await PortOne.requestPayment({
+      storeId: start.storeId,
+      channelKey: start.channelKey,
+      paymentId: start.paymentId,
+      orderName: start.orderName,
+      totalAmount: start.amount,
+      currency: "CURRENCY_KRW",
+      payMethod: "CARD",
+      customer: start.customer,
+      redirectUrl: location.origin + "/pay?item=" + encodeURIComponent(picked().id) + (q0.get("pg") ? "&pg=" + encodeURIComponent(q0.get("pg")) : ""),
+    });
+    if (!result || result.code) { $("err").textContent = result?.message || "결제를 취소했어요."; return; }
+    await confirmPay(start.paymentId);
+  } catch (err) {
+    $("err").textContent = ERRORS[err.message] || "결제하지 못했어요. 잠시 뒤 다시 시도해 주세요.";
+  } finally {
+    updateButton();
+  }
+});
+
+init().catch(() => { $("payBtn").textContent = "불러오지 못했어요"; });
+</script>
+</body>
+</html>

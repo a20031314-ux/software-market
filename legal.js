@@ -33,7 +33,7 @@ window.BIZ = {
     document.querySelectorAll("[data-biz-footer]").forEach((el) => {
       el.innerHTML =
         '<nav class="biz-links">' +
-        '<a href="/terms">이용약관</a><a href="/refund">환불 정책</a><a href="/privacy"><b>개인정보처리방침</b></a>' +
+        '<a href="/pay">결제</a><a href="/terms">이용약관</a><a href="/refund">환불 정책</a><a href="/privacy"><b>개인정보처리방침</b></a>' +
         "</nav>" +
         '<p class="biz-info">' +
         lines.map(([k, v]) => "<span>" + esc(k) + " " + esc(v) + "</span>").join("") +
