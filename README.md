@@ -3,6 +3,7 @@
 앱 템플릿·기능 모듈 소개 사이트. 정적 페이지 + Vercel 서버리스 함수 하나.
 
 - `index.html`(`/`) 앱 판매 — 아이디어 사업자용 서비스 앱 납품(상품 목록·상세·문의창). 상품은 파일 안 `PRODUCTS`에서 고친다(카드 `short`는 한 구절, 기능 목록은 상세 창 `feat`에만). 첫 화면 이미지 `img/hero.jpg`. 예전 주소 `/#system`은 `/system`으로 넘김.
+- `academy.html`(`/academy`) 학원 판매 페이지 — 원장님용(핵심 화면 5개·기본 포함·요금·시작 방법·자주 묻는 질문·체험 신청). 내용은 파일 안 `VALUES`·`BASICS`·`PLANS`·`FINE`·`FAQ` 한 곳. 체험 신청은 `/api/inquiry`에 `page=/academy`로 저장되어 문의함에 "학원"으로 보인다. 기능별 화면 전체는 `/demo/academy`.
 - `system.html`(`/system`) 조직 운영 시스템 — 학원·체대입시·헬스장·커뮤니티(업종 패키지·추가 기능·전용 모듈·이용 방식·문의창). 데이터는 파일 안 `SYSTEM`. 업종 소개 페이지(`/demo/*`)의 로고·문의는 여기로 온다.
 - 문의함은 하나(`/admin`), 문의에 저장되는 `page`로 "앱 판매 / 조직 운영 시스템" 표시.
 - `admin.html` 문의함(`/admin`). `ADMIN_KEY`로 연다.
