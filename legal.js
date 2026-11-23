@@ -5,6 +5,7 @@ window.BIZ = {
   company: "웨어하우스", // 상호(사업자등록증과 같게)
   ceo: "조시현", // 대표자
   bizNo: "711-24-01935", // 사업자등록번호
+  taxType: "간이과세자", // 과세 유형(간이과세자면 표기 필수 — 이니시스 심사). 일반과세자로 바뀌면 null
   mailOrderNo: "2026-경남밀양-14", // 통신판매업 신고번호
   address: "경상남도 밀양시 미리벌중앙로 3길 21, 9층 901호(삼문동, 동화팰리스2차)", // 사업장 주소(등록증과 같게)
   email: "a20031314@gmail.com", // 문의 이메일(공개)
@@ -19,7 +20,7 @@ window.BIZ = {
   const lines = [
     ["상호", B.company],
     ["대표", B.ceo],
-    ["사업자등록번호", B.bizNo],
+    ["사업자등록번호", B.taxType ? B.bizNo + " (" + B.taxType + ")" : B.bizNo],
     ["통신판매업 신고", B.mailOrderNo],
     ["주소", B.address],
     ["이메일", B.email],
