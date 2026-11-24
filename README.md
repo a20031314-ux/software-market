@@ -4,6 +4,7 @@
 
 - `index.html`(`/`) 앱 판매 — 아이디어 사업자용 서비스 앱 납품(상품 목록·상세·문의창). 상품은 파일 안 `PRODUCTS`에서 고친다(카드 `short`는 한 구절, 기능 목록은 상세 창 `feat`에만). 첫 화면 이미지 `img/hero.jpg`. 예전 주소 `/#system`은 `/system`으로 넘김.
 - `system.html`(`/system`) 조직 운영 시스템 — 학원·체대입시·헬스장·커뮤니티(업종 패키지·추가 기능·전용 모듈·이용 방식·문의창). 데이터는 파일 안 `SYSTEM`. 업종 소개 페이지(`/demo/*`)의 로고·문의는 여기로 온다.
+- `en.html`(`/en`) 영어 사이트 — 업종이 아니라 기능 모듈 단위(사람·일정·돈·데이터·AI·운영 6묶음, Ready/In progress), 모듈을 골라 "Ask about this set"으로 문의창에 채움, 조합 예시 4개, 진행 방식, 달러 가격(추정), FAQ, 영어 문의창(`page=/en`). 모듈·예시 데이터는 파일 안 `GROUPS`·`EXAMPLES` 한 곳. 사업자 정보는 `legal.js`의 `BIZ`를 영어 이름표로.
 - 문의함은 하나(`/admin`), 문의에 저장되는 `page`로 "앱 판매 / 조직 운영 시스템" 표시.
 - `admin.html` 문의함(`/admin`). `ADMIN_KEY`로 연다.
 - `terms.html`·`refund.html`·`privacy.html` 이용약관·환불 정책·개인정보처리방침(`/terms`·`/refund`·`/privacy`). 공용 스타일 `legal.css`.
