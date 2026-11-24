@@ -84,7 +84,7 @@
   .mod p{color:var(--muted);font-size:14px;flex:1}
   .mod .add{font-size:13px;font-weight:700;color:var(--muted)}
   .mod[aria-pressed="true"] .add{color:var(--accent)}
-  .mod[aria-pressed="true"] .add:before{content:'✓ '}
+  .mod[aria-pressed="true"] .add:before{content:'✓ 담음 · '}
   .tag{font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}
   .tag.soon{color:#e9c46a;border:1px solid #5a4a20}
   @media(max-width:1100px){.mods{grid-template-columns:repeat(3,1fr)}}
@@ -160,6 +160,23 @@
   .status.err{color:#ff8f8f}
   @media(max-width:900px){.contact{grid-template-columns:1fr;padding:28px}.two{grid-template-columns:1fr}}
 
+  /* 모듈 화면 창 */
+  dialog#modDlg{margin:auto;border:0;padding:0;background:transparent;width:min(880px,94vw);max-width:none;color:var(--ink)}
+  dialog#modDlg::backdrop{background:rgba(0,0,0,.72)}
+  .mdsheet{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr;max-height:88vh}
+  .mdshots{background:#0e0b09;padding:18px;display:grid;gap:12px;align-content:center;overflow:auto}
+  .mdshots img{width:100%;border-radius:12px;border:1px solid var(--line)}
+  .noshot{color:var(--muted);font-size:14px;text-align:left}
+  .mdsheet.text{grid-template-columns:1fr;width:min(520px,94vw);margin:auto}
+  .mdsheet.text .mdshots{order:2;background:none;padding:0 26px 26px}
+  dialog#modDlg:has(.mdsheet.text){width:min(520px,94vw)}
+  .mdinfo{padding:28px 26px;display:flex;flex-direction:column;gap:12px;align-self:center}
+  .mdinfo h3{font-size:24px;letter-spacing:-.6px}
+  .mdinfo p{color:var(--muted)}
+  .mdinfo .btn{align-self:flex-start;margin-top:6px}
+  .mdclose{position:absolute;top:12px;right:12px;z-index:2;background:rgba(0,0,0,.6);border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px}
+  @media(max-width:760px){.mdsheet{grid-template-columns:1fr}.mdshots{max-height:52vh;padding-top:58px}}
+
   footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:13px}
   .biz-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px}
   .biz-links a{text-decoration:none}
@@ -206,7 +223,7 @@
     <div class="wrap">
       <span class="step-no">① 모듈</span>
       <h2>이런 기능을 골라 조합할 수 있어요</h2>
-      <p class="sec-lead">모듈은 같은 엔진에서 켜고 끄는 방식이라 어떤 조합이든 같이 돌아갑니다. 필요한 것을 눌러 담아 문의하세요.</p>
+      <p class="sec-lead">모듈은 같은 엔진에서 켜고 끄는 방식이라 어떤 조합이든 같이 돌아갑니다. 눌러서 실제 화면을 보고, 필요한 것을 담아 문의하세요.</p>
       <div id="groups"></div>
       <div class="picked" id="picked" role="status">
         <span><b id="pickedN">0</b>개 골랐어요 <small id="pickedList"></small></span>
@@ -299,6 +316,19 @@
   </section>
 </main>
 
+<dialog id="modDlg" aria-labelledby="mdTitle">
+  <div class="mdsheet">
+    <button class="mdclose" id="mdClose" aria-label="닫기">✕</button>
+    <div class="mdshots" id="mdShots"></div>
+    <div class="mdinfo">
+      <div id="mdTag"></div>
+      <h3 id="mdTitle"></h3>
+      <p id="mdText"></p>
+      <button type="button" class="btn" id="mdPick">이 모듈 담기</button>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap" data-biz-footer></div>
   <div class="wrap" style="margin-top:10px"><a href="/en" lang="en" style="color:var(--muted)">해외 고객용 영어 사이트 (Clients outside Korea) →</a></div>
@@ -312,43 +342,43 @@ const DEMO = "https://dating-amber-nine.vercel.app/?t=";
 // ① 모듈 — 기능 설명은 이 한 곳에서만. status: ready(바로 가능) / soon(준비 중 · 사전 상담)
 const GROUPS = [
   { name:"사람 · 커뮤니티", mods:[
-    { id:"members", icon:"👥", title:"회원 · 가입", text:"자유 가입 또는 승인제, 프로필, 회원 목록.", status:"ready" },
-    { id:"roles", icon:"🔑", title:"직원 역할", text:"대표·관리자·강사마다 보이는 화면이 달라요.", status:"ready" },
-    { id:"community", icon:"📣", title:"공지 · 게시판 · 채팅", text:"공지, 게시판, 1:1 대화, 단체 채팅, 읽음 표시.", status:"ready" },
-    { id:"match", icon:"💞", title:"회원 추천 · 연결", text:"조건이 맞는 회원 추천, 서로 좋아요하면 대화가 열려요.", status:"ready" },
+    { id:"members", img:["members"], icon:"👥", title:"회원 · 가입", text:"자유 가입 또는 승인제, 프로필, 회원 목록.", status:"ready" },
+    { id:"roles", img:["roles"], icon:"🔑", title:"직원 역할", text:"대표·관리자·강사마다 보이는 화면이 달라요.", status:"ready" },
+    { id:"community", img:["community","chat"], icon:"📣", title:"공지 · 게시판 · 채팅", text:"공지, 게시판, 1:1 대화, 단체 채팅, 읽음 표시.", status:"ready" },
+    { id:"match", img:["match"], icon:"💞", title:"회원 추천 · 연결", text:"조건이 맞는 회원 추천, 서로 좋아요하면 대화가 열려요.", status:"ready" },
     { id:"verify", icon:"🪪", title:"본인인증", text:"휴대폰 본인인증으로 실명·성인 확인, 1인 1계정.", status:"ready" },
     { id:"safety", icon:"🛡️", title:"신고 · 차단 · 정지", text:"근거가 붙는 신고, 차단, 운영자 기간 정지.", status:"ready" },
     { id:"call", icon:"📞", title:"영상 · 음성 통화", text:"1:1 영상·음성 통화.", status:"ready" },
     { id:"voice", icon:"🎙️", title:"음성 채팅방", text:"여러 명이 함께 말하는 방, 방장 권한. 음성 서버 사용료 별도.", status:"ready" },
   ]},
   { name:"일정 · 출석", mods:[
-    { id:"events", icon:"🗓️", title:"모임 · 일정", text:"모임 올리기, 참가 신청·수락·대기. 정확한 장소는 참가자에게만.", status:"ready" },
-    { id:"booking", icon:"📅", title:"수업 예약 · 이용권", text:"주간 시간표·정원, 빈자리가 나면 대기자 자동 예약, 횟수·기간 이용권.", status:"ready" },
-    { id:"checkin", icon:"✅", title:"QR 출석", text:"입구 QR을 찍거나 직원이 명단에서 체크.", status:"ready" },
-    { id:"tournament", icon:"🏆", title:"대회 · 리그", text:"토너먼트·리그·조별 대진, 결과 입력, 공개 순위표 링크.", status:"ready" },
+    { id:"events", img:["events"], icon:"🗓️", title:"모임 · 일정", text:"모임 올리기, 참가 신청·수락·대기. 정확한 장소는 참가자에게만.", status:"ready" },
+    { id:"booking", img:["booking"], icon:"📅", title:"수업 예약 · 이용권", text:"주간 시간표·정원, 빈자리가 나면 대기자 자동 예약, 횟수·기간 이용권.", status:"ready" },
+    { id:"checkin", img:["checkin"], icon:"✅", title:"QR 출석", text:"입구 QR을 찍거나 직원이 명단에서 체크.", status:"ready" },
+    { id:"tournament", img:["tournament"], icon:"🏆", title:"대회 · 리그", text:"토너먼트·리그·조별 대진, 결과 입력, 공개 순위표 링크.", status:"ready" },
   ]},
   { name:"돈", mods:[
-    { id:"pay", icon:"💳", title:"회원 결제", text:"한 명 또는 전체 청구, 결제 링크, 미납 확인, 환불. 결제되면 이용권 자동 발급.", status:"ready" },
+    { id:"pay", img:["pay"], icon:"💳", title:"회원 결제", text:"한 명 또는 전체 청구, 결제 링크, 미납 확인, 환불. 결제되면 이용권 자동 발급.", status:"ready" },
     { id:"iap", icon:"🛒", title:"인앱결제", text:"스토어 앱 안의 구독과 포인트 충전.", status:"ready" },
     { id:"stripe", icon:"🌍", title:"해외 카드 결제", text:"Stripe 계정으로 해외 카드 결제.", status:"soon" },
     { id:"shop", icon:"🛍️", title:"상품 · 주문", text:"상품·옵션·재고, 장바구니, 주문·결제, 배송 상태 알림.", status:"soon" },
     { id:"trade", icon:"🔁", title:"회원 간 거래", text:"회원끼리 사고팔기·교환·양도, 거래 상태, 신고 연동.", status:"soon" },
   ]},
   { name:"기록 · 학습", mods:[
-    { id:"records", icon:"📈", title:"기록 · 그래프", text:"사람마다 회차별 수치 기록, 추세 그래프, 목표 대비 점수.", status:"ready" },
-    { id:"share", icon:"🔗", title:"공유 리포트 링크", text:"학부모·고객에게 늘 최신 기록이 보이는 개인 링크.", status:"ready" },
-    { id:"quiz", icon:"📝", title:"문제은행 · 진단", text:"문제은행, 자동 채점, 개념별 약점 표, 맞춤 시험지 인쇄.", status:"ready" },
-    { id:"gps", icon:"🗺️", title:"지도 · GPS 기록", text:"경로·구간 기록, 고도.", status:"ready" },
+    { id:"records", img:["records"], icon:"📈", title:"기록 · 그래프", text:"사람마다 회차별 수치 기록, 추세 그래프, 목표 대비 점수.", status:"ready" },
+    { id:"share", img:["share"], icon:"🔗", title:"공유 리포트 링크", text:"학부모·고객에게 늘 최신 기록이 보이는 개인 링크.", status:"ready" },
+    { id:"quiz", img:["quiz"], icon:"📝", title:"문제은행 · 진단", text:"문제은행, 자동 채점, 개념별 약점 표, 맞춤 시험지 인쇄.", status:"ready" },
+    { id:"gps", img:["gps"], icon:"🗺️", title:"지도 · GPS 기록", text:"경로·구간 기록, 고도.", status:"ready" },
   ]},
   { name:"AI", mods:[
-    { id:"aitutor", icon:"🤖", title:"AI 대화 · 교정", text:"글·음성 대화와 문장 교정, 14개 언어. AI 사용료 별도.", status:"ready" },
-    { id:"photo", icon:"📷", title:"사진으로 힌트", text:"문제를 찍으면 AI가 읽고 답 대신 단계별 힌트.", status:"ready" },
+    { id:"aitutor", img:["aitutor"], icon:"🤖", title:"AI 대화 · 교정", text:"글·음성 대화와 문장 교정, 14개 언어. AI 사용료 별도.", status:"ready" },
+    { id:"photo", img:["photo"], icon:"📷", title:"사진으로 힌트", text:"문제를 찍으면 AI가 읽고 답 대신 단계별 힌트.", status:"ready" },
     { id:"i18n", icon:"🌏", title:"다국어 · 번역 채팅", text:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", status:"soon" },
   ]},
   { name:"운영", mods:[
-    { id:"admin", icon:"🧭", title:"관리자 화면", text:"회원·사용량·설정, 내 이름·로고·색.", status:"ready" },
+    { id:"admin", img:["admin"], icon:"🧭", title:"관리자 화면", text:"회원·사용량·설정, 내 이름·로고·색.", status:"ready" },
     { id:"push", icon:"🔔", title:"알림", text:"스토어 앱 없이 휴대폰 알림, 자동 또는 직접 보내기.", status:"ready" },
-    { id:"install", icon:"📲", title:"설치 링크 · QR", text:"링크 하나로 내 아이콘 그대로 홈 화면에 설치.", status:"ready" },
+    { id:"install", img:["install"], icon:"📲", title:"설치 링크 · QR", text:"링크 하나로 내 아이콘 그대로 홈 화면에 설치.", status:"ready" },
     { id:"branch", icon:"🏢", title:"다지점 관리", text:"지점마다 따로, 본사는 한 화면에서.", status:"ready" },
   ]},
 ];
@@ -402,7 +432,7 @@ document.getElementById("groups").innerHTML = GROUPS.map(g => `
       <button class="mod" type="button" data-id="${m.id}" aria-pressed="false">
         <div class="top"><h4>${m.icon} ${esc(m.title)}</h4>${tagOf(m.status)}</div>
         <p>${esc(m.text)}</p>
-        <span class="add">담기</span>
+        <span class="add">${m.img ? "화면 보기" : "자세히"}</span>
       </button>`).join("")}
   </div></div>`).join("");
 
@@ -433,11 +463,34 @@ function updatePicked(){
   document.getElementById("pickedList").textContent = picked.size ? "· " + [...picked].map(id => byId[id].title).join(", ") : "";
   document.getElementById("picked").classList.toggle("show", picked.size > 0);
 }
+// 모듈 카드 → 기능 화면 창(담기·빼기는 창에서)
+const modDlg = document.getElementById("modDlg");
+let openId = null;
+function openMod(id){
+  const m = byId[id]; openId = id;
+  document.getElementById("mdTitle").textContent = m.icon + " " + m.title;
+  document.getElementById("mdText").textContent = m.text;
+  document.getElementById("mdTag").innerHTML = tagOf(m.status);
+  document.querySelector(".mdsheet").classList.toggle("text", !m.img);
+  document.getElementById("mdShots").innerHTML = m.img
+    ? m.img.map(i => `<img src="img/mod/${i}.jpg" alt="${esc(m.title)} 화면">`).join("")
+    : `<div class="noshot">${m.status === "soon" ? "준비 중인 모듈이에요. 문의하시면 진행 상황과 일정을 알려드려요." : "이 모듈 화면은 문의하시면 데모로 보여 드려요."}</div>`;
+  syncPickBtn(); modDlg.showModal();
+}
+function syncPickBtn(){
+  const on = picked.has(openId), b = document.getElementById("mdPick");
+  b.textContent = on ? "✓ 담았어요 · 빼기" : "이 모듈 담기";
+  b.className = on ? "btn ghost" : "btn";
+}
 document.getElementById("groups").addEventListener("click", e => {
-  const b = e.target.closest(".mod"); if (!b) return;
-  picked.has(b.dataset.id) ? picked.delete(b.dataset.id) : picked.add(b.dataset.id);
-  updatePicked();
+  const b = e.target.closest(".mod"); if (b) openMod(b.dataset.id);
 });
+document.getElementById("mdPick").addEventListener("click", () => {
+  picked.has(openId) ? picked.delete(openId) : picked.add(openId);
+  updatePicked(); syncPickBtn();
+});
+document.getElementById("mdClose").addEventListener("click", () => modDlg.close());
+modDlg.addEventListener("click", e => { if (e.target === modDlg) modDlg.close(); });
 const productSel = document.getElementById("product"), msg = document.getElementById("message");
 const OWN = "내가 고른 모듈";
 productSel.innerHTML += [...EXAMPLES.map(e => e.title), OWN, "내 아이디어", "기타 · 맞춤 제작"].map(t => `<option>${esc(t)}</option>`).join("");
