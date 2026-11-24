@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>앱공방 — 이미 만든 기능으로 짓는 우리 이름의 앱</title>
-<meta name="description" content="이미 돌아가는 앱 기능 모듈을 조합해 빠르게 만드는 앱 제작. 커뮤니티·매칭·거래 서비스, 학원 학습 진단·문제 자동 조합, 동호회·체육관 운영 시스템. 데모를 바로 써 보세요.">
+<meta name="description" content="이미 돌아가는 기능 모듈(회원·채팅·예약·출석·결제·기록·AI 등)을 골라 조합해 내 이름의 앱으로 납품합니다. 헬스장·학원·동호회·커뮤니티 예시와 데모를 바로 보세요.">
 <link rel="canonical" href="https://apps.languagebank.net/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="앱공방">
 <meta property="og:title" content="앱공방 — 이미 만든 기능으로 짓는 우리 이름의 앱">
-<meta property="og:description" content="이미 돌아가는 기능 모듈을 조합해 빠르게 만드는 앱. 커뮤니티·매칭·거래 서비스, 학원 학습 진단, 조직 운영 시스템.">
+<meta property="og:description" content="이미 돌아가는 기능 모듈을 골라 조합해 내 이름의 앱으로. 완성된 서비스 예시와 데모.">
 <meta property="og:url" content="https://apps.languagebank.net/">
 <meta property="og:image" content="https://apps.languagebank.net/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -22,7 +22,7 @@
 <style>
   :root{
     --night:#17120f; --surface:#221b16; --surface2:#2b221c; --line:#3b312a;
-    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410; --blue:#6f86ff;
+    --ink:#f4eee8; --muted:#ab9e92; --accent:#f08a4b; --accent-ink:#1d1410; --ok:#7bd88f;
   }
   *{margin:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -45,103 +45,104 @@
   .btn:disabled{opacity:.5;cursor:default}
   @media(max-width:760px){nav a:not(.btn){display:none}}
 
-  .hero{padding:64px 0 36px;position:relative;overflow:hidden}
-  .hero:before{content:'';position:absolute;width:900px;height:900px;left:-300px;top:-480px;border-radius:50%;background:radial-gradient(circle,rgba(240,138,75,.22),transparent 62%)}
-  .hero .wrap{position:relative}
-  .eyebrow{display:inline-block;border:1.5px solid var(--accent);color:var(--accent);border-radius:999px;padding:4px 13px;font-size:13px;font-weight:700}
-  h1{font-size:clamp(32px,4.6vw,50px);line-height:1.18;letter-spacing:-1.4px;font-weight:800;margin:16px 0 14px;max-width:760px}
-  h1 em{font-style:normal;color:var(--accent)}
-  .lead{color:var(--muted);font-size:18px;max-width:640px}
-  .points{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
-  .points span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:14px}
-  .points b{color:var(--accent)}
-
-  /* 판매 방식 */
-  .modes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;max-width:860px}
-  .mode{display:flex;flex-direction:column;gap:6px;text-decoration:none;background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:20px 22px;transition:border-color .15s}
-  .mode b{font-size:19px;letter-spacing:-.4px}
-  .mode span:last-child{color:var(--muted);font-size:14px}
-  .mode-tag{align-self:flex-start;font-size:12px;font-weight:700;color:var(--accent);border:1px solid #6b3d22;border-radius:999px;padding:2px 10px}
-  .mode[aria-selected="true"]{border-color:var(--accent);background:linear-gradient(135deg,#2e2119,#221b16)}
-  @media(max-width:700px){.modes{grid-template-columns:1fr}}
-  .sub-h{font-size:18px;margin:34px 0 14px;letter-spacing:-.3px}
-  .basics{display:flex;flex-wrap:wrap;gap:8px}
-  .basics span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 14px;font-size:14px}
-  .ind ul{padding-left:18px;color:var(--muted);font-size:14px;margin-top:2px}
-  .ind li{margin:2px 0}
-  .addons{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .addon{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px}
-  .addon h4{font-size:16px;margin-bottom:4px}
-  .addon p{color:var(--muted);font-size:14px}
-  .addon .price{font-size:16px;margin-top:8px}
-  .ideas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-  .idea{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
-  .idea h4{font-size:16px}
-  .idea ul{list-style:none;padding:0;margin:0;display:grid;gap:4px;font-size:14px}
-  .idea li.no{color:var(--muted)}
-  .idea .btn{align-self:flex-start;margin-top:auto}
-  .legend{color:var(--muted);font-size:13px;margin-top:10px}
-  @media (max-width:860px){.ideas{grid-template-columns:1fr}}
-  @media(max-width:900px){.addons{grid-template-columns:1fr 1fr}}
-  @media(max-width:560px){.addons{grid-template-columns:1fr}}
-  .plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  .plan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:8px}
-  .plan.pick{border:1.5px solid var(--accent)}
-  .plan h4{font-size:18px}
-  .plan .price{font-size:24px}
-  .plan ul{padding-left:18px;color:var(--muted);font-size:14px;flex:1}
-  .plan .btn{align-self:flex-start;margin-top:6px}
-  @media(max-width:900px){.plans{grid-template-columns:1fr}}
-  .fine{color:var(--muted);font-size:13px;margin-top:16px}
-
-  /* 마켓 */
-  .bar{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:28px 0 18px;flex-wrap:wrap}
-  .filters{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{background:var(--surface);border:1px solid var(--line);color:var(--muted);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:700;cursor:pointer}
-  .chip[aria-pressed="true"]{background:var(--ink);color:var(--night);border-color:var(--ink)}
-  .search{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:9px 16px;font:inherit;font-size:14px;min-width:220px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:620px){.grid{grid-template-columns:1fr}}
-  .item{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;cursor:pointer;transition:transform .15s,border-color .15s;text-align:left;color:inherit;padding:0}
-  .item:hover{transform:translateY(-3px);border-color:#5a4a3e}
-  .thumb{aspect-ratio:4/3;background:#0e0b09;overflow:hidden}
-  .thumb img{width:100%;height:100%;object-fit:cover}
-  .thumb.mod{aspect-ratio:16/7;display:grid;place-items:center;font-size:40px;background:linear-gradient(135deg,#2b221c,#1b1511)}
-  .body{padding:18px;display:flex;flex-direction:column;gap:8px;flex:1}
-  .meta{display:flex;gap:6px;flex-wrap:wrap}
-  .pill{font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px;border:1px solid var(--line);color:var(--muted)}
-  .pill.ready{color:#7bd88f;border-color:#2e5a38}
-  .pill.soon{color:#e9c46a;border-color:#5a4a20}
-  .pill.demo{color:var(--accent);border-color:#6b3d22}
-  .item h3{font-size:19px;letter-spacing:-.4px;line-height:1.35}
-  .item p{color:var(--muted);font-size:14px;flex:1}
-  .price{font-weight:800;font-size:18px}
-  .price small{font-size:13px;color:var(--muted);font-weight:500}
-
   section{padding:72px 0}
-  .sec-head{max-width:640px;margin-bottom:30px}
-  .sec-head .eyebrow{margin-bottom:12px}
+  h1{font-size:clamp(32px,4.6vw,50px);line-height:1.18;letter-spacing:-1.4px;font-weight:800;margin:0 0 14px}
+  h1 em{font-style:normal;color:var(--accent)}
   h2{font-size:clamp(26px,3.4vw,36px);letter-spacing:-1px;line-height:1.25;font-weight:800}
-  .sec-head p{color:var(--muted);margin-top:10px}
+  .lead{color:var(--muted);font-size:18px;max-width:560px}
+  .step-no{display:inline-block;color:var(--accent);font-weight:800;font-size:14px;margin-bottom:6px}
+  .sec-lead{color:var(--muted);font-size:17px;max-width:680px;margin:10px 0 8px}
 
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:s}
+  /* 첫 화면: 모듈이 앱 하나로 합쳐지는 그림 */
+  .hero{padding:64px 0 56px;position:relative;overflow:hidden}
+  .hero:before{content:'';position:absolute;width:900px;height:900px;left:-300px;top:-480px;border-radius:50%;background:radial-gradient(circle,rgba(240,138,75,.22),transparent 62%)}
+  .hero .wrap{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+  .hero-act{margin-top:26px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+  .hero-link{color:var(--muted);font-size:15px;text-decoration:underline;text-underline-offset:3px}
+  .hero-link:hover{color:var(--ink)}
+  .board{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px}
+  .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .tile{border:1px solid transparent;opacity:.45;border-radius:12px;padding:12px;font-size:15px;color:var(--muted);display:flex;gap:8px;align-items:center;transition:all .3s}
+  .tile.on{border:1.5px solid var(--accent);color:var(--ink);background:#2e2119;opacity:1}
+  .tile i{font-style:normal}
+  .arrow{text-align:center;color:var(--accent);font-size:22px;margin:12px 0}
+  .app{background:var(--night);border:1.5px solid var(--accent);border-radius:16px;padding:16px 18px}
+  .app b{display:block;font-size:18px}
+  .app span{color:var(--muted);font-size:14px}
+  @media(max-width:900px){.hero .wrap{grid-template-columns:1fr}}
+  @media(max-width:520px){.tiles{grid-template-columns:repeat(2,1fr)}}
+
+  /* ① 모듈 */
+  .group{margin-top:32px}
+  .group h3{font-size:14px;letter-spacing:.5px;color:var(--muted);margin-bottom:12px;font-weight:700}
+  .mods{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .mod{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px;text-align:left;color:inherit;cursor:pointer;transition:border-color .15s}
+  .mod:hover{border-color:#5a4a3e}
+  .mod[aria-pressed="true"]{border-color:var(--accent);background:linear-gradient(135deg,#2e2119,#221b16)}
+  .mod .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .mod h4{font-size:17px;letter-spacing:-.3px}
+  .mod p{color:var(--muted);font-size:14px;flex:1}
+  .mod .add{font-size:13px;font-weight:700;color:var(--muted)}
+  .mod[aria-pressed="true"] .add{color:var(--accent)}
+  .mod[aria-pressed="true"] .add:before{content:'✓ 담음 · '}
+  .tag{font-size:12px;font-weight:700;border-radius:999px;padding:2px 10px;white-space:nowrap}
+  .tag.soon{color:#e9c46a;border:1px solid #5a4a20}
+  @media(max-width:1100px){.mods{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:900px){.mods{grid-template-columns:1fr 1fr}}
+  @media(max-width:600px){.mods{grid-template-columns:1fr}}
+  .picked{position:sticky;bottom:16px;z-index:10;margin-top:28px;display:none;align-items:center;justify-content:space-between;gap:16px;background:#2e2119;border:1.5px solid var(--accent);border-radius:18px;padding:14px 18px}
+  .picked.show{display:flex}
+  .picked small{color:var(--muted)}
+
+  /* ② 완성된 서비스 예시 */
+  .examples{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:24px}
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column}
+  .ex .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .ex h4{font-size:19px;letter-spacing:-.4px}
+  .ex .who{color:var(--muted);font-size:14px;margin:2px 0 14px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chips span{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .chips span.soon{color:var(--muted);border-style:dashed}
+  .ex .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:16px;font-size:15px;flex-wrap:wrap}
+  .ex .meta b{font-size:18px}
+  .ex .meta small{color:var(--muted)}
+  .ex .go{background:none;border:0;color:var(--muted);font-weight:700;cursor:pointer;font-size:14px;padding:0}
+  .ex:hover .go,.ex .go:focus{color:var(--accent)}
+  .extra-line{color:var(--muted);font-size:14px;margin-top:16px}
+  .extra-line b{color:var(--ink)}
+  @media(max-width:760px){.examples{grid-template-columns:1fr}}
+
+  /* ③ 데모 */
+  .demos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+  .demo{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;text-decoration:none;transition:border-color .15s}
+  .demo:hover{border-color:#5a4a3e}
+  .demo .shot{aspect-ratio:4/3;background:#0e0b09;overflow:hidden;border-bottom:1px solid var(--line)}
+  .demo .shot img{width:100%;height:100%;object-fit:cover;object-position:top left}
+  .demo .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+  .demo h4{font-size:17px}
+  .demo .more{font-size:14px;color:var(--muted)}
+  .live{font-size:14px;color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+  @media(max-width:1000px){.demos{grid-template-columns:1fr 1fr}}
+  @media(max-width:520px){.demos{grid-template-columns:1fr}}
+
+  /* 진행·가격 */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:s;margin-top:24px}
   .step{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
-  .step:before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:15px;margin-bottom:12px}
+  .step:before{counter-increment:s;content:counter(s);display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--accent-ink);font-weight:800;font-size:14px;margin-bottom:12px}
   .step h3{font-size:17px;margin-bottom:6px}
   .step p{color:var(--muted);font-size:14px}
   @media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
-  .notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
-  .notes .step:before{display:none}
-  .notes ul{padding-left:18px;color:var(--muted);font-size:14px}
-  .notes li{margin:3px 0}
-  @media(max-width:800px){.notes{grid-template-columns:1fr}}
+  details.more{margin-top:24px;border-top:1px solid var(--line);padding-top:18px}
+  details.more > summary{cursor:pointer;font-weight:700;color:var(--muted);list-style:none}
+  details.more > summary::before{content:"＋ ";color:var(--accent)}
+  details.more[open] > summary::before{content:"－ "}
+  ul.plain{color:var(--muted);font-size:15px;line-height:1.8;margin-top:12px;padding-left:18px}
 
-  details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:10px}
-  summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:16px}
-  summary:after{content:'+';color:var(--accent);font-size:20px;line-height:1}
-  details[open] summary:after{content:'–'}
-  details p{color:var(--muted);margin-top:10px;font-size:15px}
+  .faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+  .faq summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;gap:16px}
+  .faq summary:after{content:'+';color:var(--accent);font-size:20px;line-height:1}
+  .faq details[open] summary:after{content:'–'}
+  .faq details p{color:var(--muted);margin-top:10px;font-size:15px}
 
   /* 문의 */
   .contact{background:linear-gradient(135deg,#2a1e16,#1d1612);border:1px solid var(--line);border-radius:26px;padding:44px;display:grid;grid-template-columns:.9fr 1.1fr;gap:40px}
@@ -155,29 +156,26 @@
   .agree input{width:auto;margin-top:3px;accent-color:var(--accent)}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
   .status{font-size:14px;min-height:22px}
-  .status.ok{color:#7bd88f}
+  .status.ok{color:var(--ok)}
   .status.err{color:#ff8f8f}
   @media(max-width:900px){.contact{grid-template-columns:1fr;padding:28px}.two{grid-template-columns:1fr}}
 
-  /* 상세 창 */
-  dialog{border:0;padding:0;background:transparent;max-width:min(980px,94vw);width:100%;color:var(--ink)}
-  dialog::backdrop{background:rgba(0,0,0,.7)}
-  .sheet{background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;max-height:90vh;display:grid;grid-template-columns:1.2fr 1fr}
-  .sheet .shots{overflow:auto;background:#0e0b09;padding:14px;display:grid;gap:12px;align-content:start}
-  .sheet .shots img{border-radius:12px}
-  .sheet .info{padding:26px;overflow:auto;display:flex;flex-direction:column;gap:12px}
-  .sheet h3{font-size:24px;letter-spacing:-.6px}
-  .sheet .desc{color:var(--muted)}
-  .sheet ul.feat{padding-left:18px;font-size:15px}
-  .sheet ul.feat li{margin:3px 0}
-  .tiers{display:grid;gap:8px}
-  .tier{border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
-  .tier div{font-size:14px;color:var(--muted)}
-  .tier b{display:block;color:var(--ink);font-size:15px}
-  .tier strong{white-space:nowrap}
-  .close{position:absolute;top:12px;right:14px;background:rgba(0,0,0,.6);border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:18px}
-  .sheet .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
-  @media(max-width:820px){.sheet{grid-template-columns:1fr}.sheet .shots{max-height:40vh}}
+  /* 모듈 화면 창 */
+  dialog#modDlg{margin:auto;border:0;padding:0;background:transparent;width:min(880px,94vw);max-width:none;color:var(--ink)}
+  dialog#modDlg::backdrop{background:rgba(0,0,0,.72)}
+  .mdsheet{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr;max-height:88vh}
+  .mdshots{background:#0e0b09;padding:18px;display:grid;gap:12px;align-content:center;overflow:auto}
+  .mdshots img{width:100%;border-radius:12px;border:1px solid var(--line)}
+  .noshot{color:var(--muted);font-size:14px;text-align:left}
+  .mdsheet.text{grid-template-columns:1fr;width:min(520px,94vw);margin:auto}
+  .mdsheet.text .mdshots{order:2;background:none;padding:0 26px 26px}
+  dialog#modDlg:has(.mdsheet.text){width:min(520px,94vw)}
+  .mdinfo{padding:28px 26px;display:flex;flex-direction:column;gap:12px;align-self:center}
+  .mdinfo h3{font-size:24px;letter-spacing:-.6px}
+  .mdinfo p{color:var(--muted)}
+  .mdinfo .btn{align-self:flex-start;margin-top:6px}
+  .mdclose{position:absolute;top:12px;right:12px;z-index:2;background:rgba(0,0,0,.6);border:1px solid var(--line);color:var(--ink);width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:15px}
+  @media(max-width:760px){.mdsheet{grid-template-columns:1fr}.mdshots{max-height:52vh;padding-top:58px}}
 
   footer{border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:13px}
   .biz-links{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px}
@@ -185,25 +183,6 @@
   .biz-links a:hover{color:var(--ink)}
   .biz-info{display:flex;flex-wrap:wrap;gap:4px 14px}
   .biz-copy{margin-top:8px}
-  .hero-act{margin-top:22px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-  .hero-link{color:var(--muted);font-size:15px;text-decoration:underline;text-underline-offset:3px}
-  .hero-link:hover{color:var(--ink)}
-  .hero-shot{display:block;width:100%;max-width:980px;height:auto;margin-top:36px;border-radius:18px;border:1px solid var(--line)}
-  details.more{margin-top:28px;border-top:1px solid var(--line);padding-top:18px}
-  details.more > summary{cursor:pointer;font-weight:700;color:var(--muted);list-style:none}
-  details.more > summary{justify-content:flex-start}
-  details.more > summary::after{content:none}
-  details.more > summary::before{content:"＋ ";color:var(--accent)}
-  details.more[open] > summary::before{content:"－ "}
-  ul.plain{color:var(--muted);font-size:15px;line-height:1.8;margin-top:12px;padding-left:18px}
-  .idea .one{color:var(--muted);font-size:14px}
-  .feats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;max-width:1100px}
-  .feats figure{margin:0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#0e0b09;position:relative}
-  .feats img{display:block;width:100%;aspect-ratio:4/3;object-fit:contain;background:#0e0b09}
-  .feats figcaption{padding:10px 14px;font-weight:800;font-size:14px;color:var(--accent);border-bottom:1px solid var(--line);background:var(--surface)}
-  @media(max-width:700px){.feats{grid-template-columns:1fr;gap:10px}.feats figcaption{font-size:12px}}
-  .thumb.feat img{object-fit:contain;background:#0e0b09}
-  #grid .thumb,#grid .thumb.mod{aspect-ratio:16/10}
 </style>
 </head>
 <body>
@@ -212,58 +191,77 @@
   <div class="wrap">
     <a class="logo" href="#top">앱<b>공방</b></a>
     <nav>
-      <a href="#market">앱 · 모듈</a>
-      <a href="#how">이용 방법</a>
+      <a href="#modules">모듈</a>
+      <a href="#examples">서비스 예시</a>
+      <a href="#demo">데모</a>
       <a href="/demo/academy">학원</a>
       <a href="/system">조직 운영 시스템</a>
-      <a class="btn sm" href="#contact">문의하기</a>
+      <a class="btn ghost sm" href="#contact">문의하기</a>
     </nav>
   </div>
 </header>
 
 <main id="top">
+  <!-- 첫 화면: 결과 약속 1 + 보조 1 + 주 버튼 1 + 그림 1(모듈이 앱 하나로) -->
   <section class="hero">
     <div class="wrap">
-      <h1>내 서비스 앱을<br><em>이미 돌아가는 기능</em>으로.</h1>
-      <p class="lead">내 이름 · 내 서버로 납품합니다. 소스코드 포함.</p>
-      <div class="hero-act"><a class="btn" href="#contact">문의하기</a><a class="hero-link" href="/demo/academy">학원이세요? 학원 앱 보기 →</a></div>
-      <div class="feats" aria-label="실제 기능 화면(가상 데이터)">
-        <figure><figcaption>그래프 · 리포트</figcaption><img src="img/feat/graph.jpg" alt="시간대별 단백질 막대그래프"></figure>
-        <figure><figcaption>AI 문장 교정</figcaption><img src="img/feat/ai.jpg" alt="틀린 단어를 고치고 자연스러운 표현을 제안"></figure>
-        <figure><figcaption>단체 대화</figcaption><img src="img/feat/chat.jpg" alt="모임 단체 대화방"></figure>
+      <div>
+        <h1>내 이름의 앱을<br><em>이미 돌아가는 기능</em>으로.</h1>
+        <p class="lead">필요한 기능만 골라 조합하고, 내 이름·내 서버로 납품합니다.</p>
+        <div class="hero-act"><a class="btn" href="#contact">문의하기</a><a class="hero-link" href="/demo/academy">학원이세요? 학원 앱 보기 →</a></div>
+      </div>
+      <div class="board" aria-label="예: 기능 모듈 넷을 골라 앱 하나로">
+        <div class="tiles" id="tiles" aria-hidden="true"></div>
+        <div class="arrow" aria-hidden="true">↓</div>
+        <div class="app"><b id="appName"></b><span id="appMods"></span></div>
       </div>
     </div>
   </section>
 
-  <div id="view-apps" class="view">
-  <section id="market" style="padding-top:8px">
-    <div class="wrap"><div class="sec-head" style="margin-bottom:0"><h2>앱 · 모듈</h2></div></div>
+  <!-- ① 모듈: 기능 설명은 페이지에서 여기 한 번만 -->
+  <section id="modules" style="padding-top:24px">
     <div class="wrap">
-      <div class="bar">
-        <div class="filters" role="group" aria-label="분류">
-          <button class="chip" data-f="template" aria-pressed="true">앱 템플릿</button>
-          <button class="chip" data-f="module" aria-pressed="false">기능 모듈</button>
-          <button class="chip" data-f="service" aria-pressed="false">설치 · 운영</button>
-        </div>
-        <input class="search" id="q" type="search" placeholder="찾기 (예: 결제, 채팅, 러닝)" aria-label="상품 찾기">
+      <span class="step-no">① 모듈</span>
+      <h2>이런 기능을 골라 조합할 수 있어요</h2>
+      <p class="sec-lead">모듈은 같은 엔진에서 켜고 끄는 방식이라 어떤 조합이든 같이 돌아갑니다. 눌러서 실제 화면을 보고, 필요한 것을 담아 문의하세요.</p>
+      <div id="groups"></div>
+      <div class="picked" id="picked" role="status">
+        <span><b id="pickedN">0</b>개 골랐어요 <small id="pickedList"></small></span>
+        <a class="btn sm" href="#contact" id="pickedGo">이 조합으로 문의</a>
       </div>
-      <div class="grid" id="grid"></div>
-      <p id="empty" style="display:none;color:var(--muted);padding:30px 0">찾는 상품이 없어요. 아래 문의창에 필요한 기능을 적어 주세요.</p>
     </div>
   </section>
-  </div>
+
+  <!-- ② 완성된 서비스 예시: 모듈 이름만, 설명은 반복하지 않음 -->
+  <section id="examples">
+    <div class="wrap">
+      <span class="step-no">② 서비스 예시</span>
+      <h2>조합하면 이런 서비스가 돼요</h2>
+      <p class="sec-lead">정해진 상품이 아니라 출발점이에요. 모듈을 빼거나 더해서 시작할 수 있습니다.</p>
+      <div class="examples" id="examplesGrid"></div>
+      <p class="extra-line">모듈 하나 더하기 <b>30만 원부터</b> · 목록에 없는 새 모듈 <b>견적</b> · 스토어 출시 대행 <b>70만 원</b> · 유지보수 <b>월 20만 원</b></p>
+    </div>
+  </section>
+
+  <!-- ③ 데모: 실제 앱 + 가상 데이터 -->
+  <section id="demo">
+    <div class="wrap">
+      <span class="step-no">③ 데모</span>
+      <h2>실제로 돌아가는 화면을 보세요</h2>
+      <p class="sec-lead">실제 앱에 가상 데이터를 넣은 화면이에요. 일부는 직접 눌러 볼 수 있습니다.</p>
+      <div class="demos" id="demoGrid"></div>
+      <p class="extra-line">회원 연결 · 대화 앱은 <a class="live" id="tryMatch" target="_blank" rel="noopener">직접 써 보기 ↗</a></p>
+    </div>
+  </section>
 
   <section id="how">
     <div class="wrap">
-      <div class="sec-head">
-        <span class="eyebrow">이용 방법</span>
-        <h2>진행 순서</h2>
-      </div>
+      <h2>진행 순서</h2>
       <div class="steps">
-        <div class="step"><h3>고르기</h3><p>템플릿과 모듈.</p></div>
+        <div class="step"><h3>문의</h3><p>예시나 고른 모듈로 보내요.</p></div>
         <div class="step"><h3>질문지 한 장</h3><p>범위와 기간 확정.</p></div>
-        <div class="step"><h3>내 이름으로</h3><p>이름·색·기능 맞추기.</p></div>
-        <div class="step"><h3>납품</h3><p>내 서버에 배포.</p></div>
+        <div class="step"><h3>데모 확인</h3><p>고른 모듈로 만든 화면을 눌러 봐요.</p></div>
+        <div class="step"><h3>납품</h3><p>내 서버에 배포, 소스코드 전달.</p></div>
       </div>
       <details class="more">
         <summary>받으시는 것 · 알아 두실 것</summary>
@@ -277,13 +275,13 @@
     </div>
   </section>
 
-  <section style="padding-top:0">
+  <section class="faq" style="padding-top:0">
     <div class="wrap" style="max-width:820px">
-      <div class="sec-head"><span class="eyebrow">자주 묻는 질문</span><h2>궁금한 점</h2></div>
-      <details><summary>템플릿을 사면 다른 사람도 같은 앱을 쓰나요?</summary><p>같은 템플릿을 다른 구매자도 쓸 수 있지만, 앱 이름·색·문구·기능 구성이 각자 다르고 서버와 회원 데이터도 완전히 따로입니다. 지역이나 업종 독점이 필요하면 문의해 주세요.</p></details>
+      <h2 style="margin-bottom:24px">궁금한 점</h2>
+      <details><summary>같은 예시를 고르면 다른 사람과 같은 앱이 되나요?</summary><p>같은 모듈 조합을 다른 구매자도 쓸 수 있지만, 앱 이름·색·문구·모듈 구성이 각자 다르고 서버와 회원 데이터도 완전히 따로입니다. 지역이나 업종 독점이 필요하면 문의해 주세요.</p></details>
       <details><summary>개발을 몰라도 쓸 수 있나요?</summary><p>네. 설치와 배포는 저희가 하고, 운영은 관리자 화면에서 합니다. 계정 만드는 방법도 안내해 드립니다.</p></details>
-      <details><summary>아이디어만 있고 기획서는 없어요.</summary><p>괜찮습니다. 무엇을 팔고 누구와 누구를 이어 주고 싶은지만 적어 주세요. 질문지 한 장으로 필요한 부품과 금액·기간을 정리해 드립니다. 업종에 따라 신고·등록이 필요한 사업(결혼중개, 해외 매칭, 회원 간 거래 등)은 확인할 곳도 함께 알려드립니다.</p></details>
-      <details><summary>목록에 없는 기능이 필요해요.</summary><p>문의창에 적어 주세요. 기존 모듈로 가능한지, 새로 만들면 얼마인지 알려드립니다.</p></details>
+      <details><summary>아이디어만 있고 기획서는 없어요.</summary><p>괜찮습니다. 누가 쓰고 무엇을 하는 앱인지만 적어 주세요. 질문지 한 장으로 필요한 모듈과 금액·기간을 정리해 드립니다. 업종에 따라 신고·등록이 필요한 사업(결혼중개, 해외 매칭, 회원 간 거래 등)은 확인할 곳도 함께 알려드립니다.</p></details>
+      <details><summary>목록에 없는 기능이 필요해요.</summary><p>문의창에 적어 주세요. 기존 모듈로 되는지, 새 모듈로 만들면 얼마인지 알려드립니다. 새 모듈도 같은 엔진에 들어가서 다른 모듈과 같이 돌아갑니다.</p></details>
     </div>
   </section>
 
@@ -291,8 +289,7 @@
     <div class="wrap">
       <div class="contact">
         <div>
-          <span class="eyebrow">문의하기</span>
-          <h2 style="margin-top:14px">원하는 앱을<br>알려 주세요</h2>
+          <h2>원하는 앱을<br>알려 주세요</h2>
           <p>가능 여부와 예상 금액·기간을 알려드립니다.</p>
         </div>
         <form id="ask" novalidate>
@@ -301,12 +298,12 @@
             <label>연락처 (이메일 또는 전화)<input name="contact" maxlength="100" required autocomplete="email"></label>
           </div>
           <div class="two">
-            <label>관심 상품
+            <label>시작점
               <select name="product" id="product"><option value="">선택 안 함</option></select>
             </label>
             <label>일정 · 예산 (선택)<input name="budget" maxlength="80" placeholder="예: 다음 달, 200만 원 안쪽"></label>
           </div>
-          <label>내용<textarea name="message" maxlength="2000" required placeholder="어떤 앱인지, 꼭 필요한 기능은 무엇인지 적어 주세요."></textarea></label>
+          <label>내용<textarea name="message" id="message" maxlength="2000" required placeholder="어떤 앱인지, 꼭 필요한 기능은 무엇인지 적어 주세요."></textarea></label>
           <div class="hp" aria-hidden="true"><label>웹사이트<input name="website" tabindex="-1" autocomplete="off"></label></div>
           <label class="agree"><input type="checkbox" name="agree" required> <span>답변을 위해 이름과 연락처를 수집하며, 문의일로부터 1년 뒤 삭제합니다(<a href="/privacy" target="_blank">개인정보처리방침</a>). 이에 동의합니다.</span></label>
           <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
@@ -319,140 +316,197 @@
   </section>
 </main>
 
+<dialog id="modDlg" aria-labelledby="mdTitle">
+  <div class="mdsheet">
+    <button class="mdclose" id="mdClose" aria-label="닫기">✕</button>
+    <div class="mdshots" id="mdShots"></div>
+    <div class="mdinfo">
+      <div id="mdTag"></div>
+      <h3 id="mdTitle"></h3>
+      <p id="mdText"></p>
+      <button type="button" class="btn" id="mdPick">이 모듈 담기</button>
+    </div>
+  </div>
+</dialog>
+
 <footer>
   <div class="wrap" data-biz-footer></div>
   <div class="wrap" style="margin-top:10px"><a href="/en" lang="en" style="color:var(--muted)">해외 고객용 영어 사이트 (Clients outside Korea) →</a></div>
 </footer>
 
-<dialog id="detail" aria-label="상품 상세">
-  <div style="position:relative">
-    <button class="close" id="closeDetail" aria-label="닫기">✕</button>
-    <div class="sheet">
-      <div class="shots" id="dShots"></div>
-      <div class="info">
-        <div class="meta" id="dMeta"></div>
-        <h3 id="dTitle"></h3>
-        <p class="desc" id="dDesc"></p>
-        <ul class="feat" id="dFeat"></ul>
-        <div class="tiers" id="dTiers"></div>
-        <div class="actions" id="dActions"></div>
-      </div>
-    </div>
-  </div>
-</dialog>
-
 <script>
 // 예전 주소(/#system)는 조직 운영 시스템 페이지로
 if (location.hash === "#system") location.replace("/system");
 const DEMO = "https://dating-amber-nine.vercel.app/?t=";
-// scenes: 모듈 화면 페이지(/demo/<업종>, 가상 데이터 장면 스크린샷). demo: 직접 써 보는 체험 앱(새 탭).
-const scenesBtn = (url, cls = "btn sm") => url ? `<a class="${cls}" href="${url}">모듈 화면 보기</a>` : "";
-const PRODUCTS = [
-  { id:"idea", kind:"template", status:"ready",
-    title:"커뮤니티 + 거래 서비스", short:"회원끼리 이어지고 거래하는 서비스",
-    icon:"🤝", from:"390만 원",
-    feat:["회원·프로필·로그인","추천·연결, 1:1 대화, 단체 채팅","커뮤니티 게시판·모임 일정","결제·정기 구독","신고·차단·관리자 화면","상품·주문, 회원 간 거래, 다국어는 준비 중(사전 상담)"],
-    tiers:[["연결형","회원·대화·커뮤니티 · 4주","390만 원"],["연결 + 판매","상품·주문·결제 · 6주","590만 원"],["해외형","다국어·번역 채팅·해외 결제 · 8주","890만 원"]],
-    tags:"사업 아이디어 창업 MVP 커뮤니티 거래 마켓 굿즈 팬 매칭 해외 한일" },
-  { id:"match", kind:"template", status:"ready", demo:DEMO+"demo-date",
-    title:"회원 연결 · 대화 앱", short:"조건 맞는 회원끼리 연결하고 대화",
-    img:["feat/match"], from:"350만 원",
-    feat:["프로필·사진 6장, 조건 설정","조건이 맞는 회원 추천","서로 좋아요하면 연결, 1:1 대화","지역 모임·단체 채팅","성인 본인인증(1인 1계정)","신고(근거 첨부·자동 차단)·운영자 정지"],
-    tiers:[["웹앱","10일","350만 원"],["웹앱 + 스토어 앱","21일","590만 원"],["영상통화 + 인앱결제","35일","990만 원"]],
-    tags:"매칭 연결 대화 채팅 본인인증 신고 모임" },
-  { id:"fitness", kind:"template", status:"ready",
-    title:"운동 · 러닝 · 식단 앱", short:"러닝·운동·식단을 기록하고 추천",
-    img:["feat/interval","feat/set","feat/trend","feat/gps"], from:"문의",
-    feat:["GPS 러닝, 인터벌·스프린트 음성 안내","페이스·고도 그래프, 경사 보정 페이스","회복도·컨디션 기반 운동 추천","세트 기록, 휴식 타이머, 추정 1RM","목표 칼로리·단백질, 식습관 분석","체중·인바디 추세"],
-    tiers:[], tags:"운동 헬스 러닝 식단 그래프 지도 PT 피트니스" },
-  { id:"lang", kind:"template", status:"ready",
-    title:"AI 언어 학습 앱", short:"AI 튜터와 대화하며 언어 학습",
-    icon:"🗣️", from:"문의",
-    feat:["AI 튜터와 대화·음성 통화","문장 자동 교정 + 자연스러운 표현","문장 구간 분석과 질문","레벨 측정, 적응형 퀴즈, 단어장","구독·포인트 결제","14개 언어 지원"],
-    tiers:[], tags:"AI 영어 한국어 일본어 언어 학습 교정 학원" },
-  { id:"membership", kind:"template", status:"soon",
-    title:"유료 멤버십 커뮤니티", short:"구독 회원만 들어오는 커뮤니티",
-    icon:"🔒", from:"270만 원",
-    feat:["월 구독 결제(요금제 여러 개)","회원 전용 공지·게시판·Q&A","구독 만료 시 자동 정리·재가입","운영자 1:1 메시지","관리자 화면·사용량"],
-    tiers:[["웹앱 + 월 구독","10일","270만 원"],["웹앱 + 스토어 앱","21일","450만 원"],["인앱결제 + 영상 학습","30일","690만 원"]],
-    tags:"멤버십 구독 강사 인플루언서 커뮤니티 결제" },
 
-  { id:"m-pay", kind:"module", status:"ready", icon:"💳", title:"결제 모듈", short:"카드 결제, 월 정기결제(빌링), 가상계좌. 실패 재시도·해지 포함.", from:"30만 원", tags:"결제 정기결제 구독 카드 가상계좌 PG" },
-  { id:"m-iap", kind:"module", status:"ready", icon:"🛒", title:"인앱결제 모듈", short:"스토어 앱 안의 구독과 포인트 충전.", from:"문의", tags:"인앱결제 구독 포인트 스토어" },
-  { id:"m-chat", kind:"module", status:"ready", icon:"💬", title:"채팅 모듈", short:"1:1 대화, 단체 채팅, 읽음 표시, 신고 연동.", from:"30만 원", tags:"채팅 대화 단체 메시지" },
-  { id:"m-call", kind:"module", status:"ready", icon:"📞", title:"영상 · 음성 통화 모듈", short:"1:1 영상·음성 통화.", from:"문의", tags:"영상통화 음성 통화" },
-  { id:"m-voice", kind:"module", status:"ready", icon:"🎙️", title:"음성 채팅방", short:"여러 명이 함께 말하는 방. 방장 권한·신고 포함, 음성 서버 사용료 별도.", from:"150만 원", tags:"보이스룸 음성 채팅방 온라인 모임" },
-  { id:"m-auth", kind:"module", status:"ready", icon:"🪪", title:"본인인증 모듈", short:"휴대폰 본인인증으로 실명·성인 확인, 1인 1계정.", from:"20만 원", tags:"본인인증 성인 실명 인증" },
-  { id:"m-shop", kind:"module", status:"soon", icon:"🛍️", title:"상품 · 주문 모듈", short:"상품·옵션·재고, 장바구니, 주문·결제, 배송 상태 알림, 판매자 화면.", from:"200만 원", tags:"쇼핑 상품 주문 배송 굿즈 커머스 판매" },
-  { id:"m-trade", kind:"module", status:"soon", icon:"🔁", title:"회원 간 거래", short:"회원끼리 사고팔기·교환·양도 게시판, 거래 상태, 신고 연동.", from:"150만 원", tags:"중고 교환 양도 거래 중개 굿즈" },
-  { id:"m-i18n", kind:"module", status:"soon", icon:"🌏", title:"다국어 · 번역 채팅", short:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", from:"80만 원", tags:"다국어 번역 해외 일본 영어 글로벌" },
-  { id:"m-workspace", kind:"module", status:"soon", icon:"🗂️", title:"학습 워크스페이스", short:"반·조별 공간, 과제 내기·제출·피드백, 자료 공유, 선생님 화면.", from:"150만 원", tags:"학습 워크스페이스 과제 제출 피드백 조별 반 선생님 학원 교육 LMS" },
-  { id:"m-learndata", kind:"module", status:"soon", icon:"🧾", title:"학습 기록 · 데이터", short:"문제별 정답·오답·소요 시간 서버 저장, 학생·반 리포트, CSV 내보내기.", from:"100만 원", tags:"학습 데이터 기록 분석 리포트 내보내기 CSV 교육" },
-  { id:"m-admin", kind:"module", status:"ready", img:["feat/join"], title:"관리자 화면", short:"가입 승인, 회원 관리, 기간 정지, 신고 확인, 사용량.", from:"템플릿 포함", tags:"관리자 운영 신고 정지 회원" },
-  { id:"m-map", kind:"module", status:"ready", img:["feat/gps"], title:"지도 · GPS 기록", short:"경로 기록, 구간 기록, 고도 정보.", from:"30만 원", tags:"지도 GPS 위치 경로 러닝" },
-  { id:"m-chart", kind:"module", status:"ready", img:["feat/trend"], title:"그래프 · 리포트", short:"기록 그래프, 추세, 주간·월간 리포트.", from:"30만 원", tags:"그래프 통계 리포트 차트" },
-  { id:"m-ai", kind:"module", status:"ready", icon:"✨", title:"AI 대화 · 교정", short:"AI 대화, 문장 교정, 음성 대화, 맞춤 추천. AI 사용료 별도.", from:"문의", tags:"AI 인공지능 교정 대화 추천" },
-  { id:"m-branch", kind:"module", status:"ready", icon:"🏢", title:"다지점 관리", short:"지점마다 별도 공간, 본사에서 한 화면으로 관리.", from:"문의", tags:"지점 프랜차이즈 본사 기업 B2B" },
-
-  { id:"s-store", kind:"service", status:"ready", icon:"📱", title:"스토어 출시 대행", short:"Android·iOS 빌드, 구매자 계정에 등록, 심사 대응.", from:"70만 원", tags:"스토어 출시 구글 애플 iOS Android" },
-  { id:"s-care", kind:"service", status:"ready", icon:"🧰", title:"월 유지보수", short:"오류 대응과 작은 수정. 월 단위 계약.", from:"월 20만 원", tags:"유지보수 관리 수정" },
+// ① 모듈 — 기능 설명은 이 한 곳에서만. status: ready(바로 가능) / soon(준비 중 · 사전 상담)
+const GROUPS = [
+  { name:"사람 · 커뮤니티", mods:[
+    { id:"members", img:["members"], icon:"👥", title:"회원 · 가입", text:"자유 가입 또는 승인제, 프로필, 회원 목록.", status:"ready" },
+    { id:"roles", img:["roles"], icon:"🔑", title:"직원 역할", text:"대표·관리자·강사마다 보이는 화면이 달라요.", status:"ready" },
+    { id:"community", img:["community","chat"], icon:"📣", title:"공지 · 게시판 · 채팅", text:"공지, 게시판, 1:1 대화, 단체 채팅, 읽음 표시.", status:"ready" },
+    { id:"match", img:["match"], icon:"💞", title:"회원 추천 · 연결", text:"조건이 맞는 회원 추천, 서로 좋아요하면 대화가 열려요.", status:"ready" },
+    { id:"verify", icon:"🪪", title:"본인인증", text:"휴대폰 본인인증으로 실명·성인 확인, 1인 1계정.", status:"ready" },
+    { id:"safety", icon:"🛡️", title:"신고 · 차단 · 정지", text:"근거가 붙는 신고, 차단, 운영자 기간 정지.", status:"ready" },
+    { id:"call", icon:"📞", title:"영상 · 음성 통화", text:"1:1 영상·음성 통화.", status:"ready" },
+    { id:"voice", icon:"🎙️", title:"음성 채팅방", text:"여러 명이 함께 말하는 방, 방장 권한. 음성 서버 사용료 별도.", status:"ready" },
+  ]},
+  { name:"일정 · 출석", mods:[
+    { id:"events", img:["events"], icon:"🗓️", title:"모임 · 일정", text:"모임 올리기, 참가 신청·수락·대기. 정확한 장소는 참가자에게만.", status:"ready" },
+    { id:"booking", img:["booking"], icon:"📅", title:"수업 예약 · 이용권", text:"주간 시간표·정원, 빈자리가 나면 대기자 자동 예약, 횟수·기간 이용권.", status:"ready" },
+    { id:"checkin", img:["checkin"], icon:"✅", title:"QR 출석", text:"입구 QR을 찍거나 직원이 명단에서 체크.", status:"ready" },
+    { id:"tournament", img:["tournament"], icon:"🏆", title:"대회 · 리그", text:"토너먼트·리그·조별 대진, 결과 입력, 공개 순위표 링크.", status:"ready" },
+  ]},
+  { name:"돈", mods:[
+    { id:"pay", img:["pay"], icon:"💳", title:"회원 결제", text:"한 명 또는 전체 청구, 결제 링크, 미납 확인, 환불. 결제되면 이용권 자동 발급.", status:"ready" },
+    { id:"iap", icon:"🛒", title:"인앱결제", text:"스토어 앱 안의 구독과 포인트 충전.", status:"ready" },
+    { id:"stripe", icon:"🌍", title:"해외 카드 결제", text:"Stripe 계정으로 해외 카드 결제.", status:"soon" },
+    { id:"shop", icon:"🛍️", title:"상품 · 주문", text:"상품·옵션·재고, 장바구니, 주문·결제, 배송 상태 알림.", status:"soon" },
+    { id:"trade", icon:"🔁", title:"회원 간 거래", text:"회원끼리 사고팔기·교환·양도, 거래 상태, 신고 연동.", status:"soon" },
+  ]},
+  { name:"기록 · 학습", mods:[
+    { id:"records", img:["records"], icon:"📈", title:"기록 · 그래프", text:"사람마다 회차별 수치 기록, 추세 그래프, 목표 대비 점수.", status:"ready" },
+    { id:"share", img:["share"], icon:"🔗", title:"공유 리포트 링크", text:"학부모·고객에게 늘 최신 기록이 보이는 개인 링크.", status:"ready" },
+    { id:"quiz", img:["quiz"], icon:"📝", title:"문제은행 · 진단", text:"문제은행, 자동 채점, 개념별 약점 표, 맞춤 시험지 인쇄.", status:"ready" },
+    { id:"gps", img:["gps"], icon:"🗺️", title:"지도 · GPS 기록", text:"경로·구간 기록, 고도.", status:"ready" },
+  ]},
+  { name:"AI", mods:[
+    { id:"aitutor", img:["aitutor"], icon:"🤖", title:"AI 대화 · 교정", text:"글·음성 대화와 문장 교정, 14개 언어. AI 사용료 별도.", status:"ready" },
+    { id:"photo", img:["photo"], icon:"📷", title:"사진으로 힌트", text:"문제를 찍으면 AI가 읽고 답 대신 단계별 힌트.", status:"ready" },
+    { id:"i18n", icon:"🌏", title:"다국어 · 번역 채팅", text:"화면 언어 전환, 메시지 자동 번역. 번역 사용료 별도.", status:"soon" },
+  ]},
+  { name:"운영", mods:[
+    { id:"admin", img:["admin"], icon:"🧭", title:"관리자 화면", text:"회원·사용량·설정, 내 이름·로고·색.", status:"ready" },
+    { id:"push", icon:"🔔", title:"알림", text:"스토어 앱 없이 휴대폰 알림, 자동 또는 직접 보내기.", status:"ready" },
+    { id:"install", img:["install"], icon:"📲", title:"설치 링크 · QR", text:"링크 하나로 내 아이콘 그대로 홈 화면에 설치.", status:"ready" },
+    { id:"branch", icon:"🏢", title:"다지점 관리", text:"지점마다 따로, 본사는 한 화면에서.", status:"ready" },
+  ]},
 ];
 
-const grid = document.getElementById("grid");
-const productSel = document.getElementById("product");
-let filter = "template", query = "";
+// ② 완성된 서비스 예시 — 모듈 id만 적는다(설명은 GROUPS에서). 가격은 여기 한 곳.
+const EXAMPLES = [
+  { id:"gym", icon:"🏋️", title:"헬스장 · PT 앱", who:"헬스장, 필라테스, 요가, PT 스튜디오", mods:["booking","checkin","pay","push","admin"], price:"월 29,000원", unit:"부터 · 월 구독", demo:"gym" },
+  { id:"academy", icon:"📚", title:"학원 학습 진단 앱", who:"학원, 공부방, 교습소", mods:["members","quiz","photo","records","share"], price:"월 69,000원", unit:"부터 · 월 구독", demo:"academy" },
+  { id:"club", icon:"🏃", title:"동호회 · 크루 운영 앱", who:"러닝 크루, 동호회, 아마추어 리그", mods:["members","events","community","push","admin"], price:"90만 원", unit:"부터", demo:"club" },
+  { id:"sports", icon:"🥇", title:"체대입시 · 유소년 스포츠 앱", who:"체대입시 학원, 태권도, 유소년 클럽", mods:["records","share","checkin","tournament","roles"], price:"문의", unit:"", demo:"sports" },
+  { id:"match", icon:"💬", title:"회원 연결 · 대화 앱", who:"조건이 맞는 사람끼리 이어 주는 서비스", mods:["members","match","community","verify","safety"], price:"350만 원", unit:"부터", demo:"match" },
+  { id:"market", icon:"🤝", title:"커뮤니티 + 거래 서비스", who:"팬 마켓, 클래스 마켓, 해외 교류 같은 아이디어 사업", mods:["members","community","match","pay","shop","trade"], price:"390만 원", unit:"부터" },
+  { id:"lang", icon:"🗣️", title:"AI 언어 학습 앱", who:"어학원, 언어 교환, 외국인 대상 한국어", mods:["aitutor","quiz","records","iap"], price:"문의", unit:"" },
+  { id:"run", icon:"⏱️", title:"운동 · 러닝 기록 앱", who:"러닝·운동 코칭, 개인 트레이너", mods:["records","gps","share","push"], price:"문의", unit:"" },
+];
 
-const statusPill = p => p.status === "soon" ? '<span class="pill soon">준비 중 · 사전 상담</span>' : '<span class="pill ready">바로 가능</span>';
-const kindName = { template:"앱 템플릿", module:"기능 모듈", service:"설치 · 운영" };
+// ③ 데모 — 업종 화면 페이지(/demo/…)와 직접 써 보는 체험 앱
+const DEMOS = [
+  { title:"헬스장 · PT", img:"img/home/demo-gym.jpg", alt:"날짜별 수업과 예약·대기 버튼", scenes:"/demo/gym" },
+  { title:"동호회 · 크루", img:"img/home/demo-club.jpg", alt:"정모 일정과 참가 인원", scenes:"/demo/club", live:DEMO+"demo-club" },
+  { title:"체대입시 · 유소년", img:"img/home/demo-sports.jpg", alt:"종목 기록 추세와 목표선", scenes:"/demo/sports" },
+  { title:"학원 학습 진단", img:"img/home/demo-academy.jpg", alt:"학생별 개념 숙달 점수 표", scenes:"/demo/academy", live:"/demo/academy-try", liveLabel:"샘플로 눌러 보기" },
+];
 
-function render(){
-  const q = query.trim().toLowerCase();
-  const list = PRODUCTS.filter(p => (q || filter === "all" || p.kind === filter) &&
-    (!q || (p.title + " " + p.short + " " + (p.tags||"")).toLowerCase().includes(q)));
-  grid.innerHTML = list.map(p => `
-    <button class="item" data-id="${p.id}" aria-label="${p.title} 자세히">
-      ${p.img ? `<div class="thumb${p.img[0].startsWith("feat/") ? " feat" : ""}"><img src="img/${p.img[0]}.jpg" alt="" loading="lazy"></div>` : `<div class="thumb mod" aria-hidden="true">${p.icon||"🧩"}</div>`}
-      <div class="body">
-        <div class="meta"><span class="pill">${kindName[p.kind]}</span>${statusPill(p)}${p.scenes||p.demo?'<span class="pill demo">'+(p.scenes?'화면':'데모')+'</span>':''}</div>
-        <h3>${p.title}</h3>
-        <p>${p.short}</p>
-        <div class="price">${/[0-9]/.test(p.from) && !p.from.startsWith("월") && p.from !== "템플릿 포함" ? p.from + ' <small>부터</small>' : p.from}</div>
-      </div>
-    </button>`).join("");
-  document.getElementById("empty").style.display = list.length ? "none" : "block";
+const ALL = GROUPS.flatMap(g => g.mods);
+const byId = Object.fromEntries(ALL.map(m => [m.id, m]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" })[c]);
+
+// 첫 화면 그림: 예시 셋을 돌아가며 — 같은 모듈 판에서 다른 조합이 다른 앱이 된다
+const HERO_TILES = ["booking","community","checkin","tournament","pay","aitutor","quiz","records","events"];
+const HERO_APPS = [
+  { name:"모아 피트니스 앱", mods:["booking","checkin","pay","records"] },
+  { name:"한빛 수학학원 앱", mods:["quiz","records","aitutor","community"] },
+  { name:"새벽 러닝크루 앱", mods:["events","community","tournament","records"] },
+];
+document.getElementById("tiles").innerHTML = HERO_TILES.map(id => `<div class="tile" data-id="${id}"><i>${byId[id].icon}</i>${esc(byId[id].title.split(" · ")[0])}</div>`).join("");
+let heroAt = 0;
+function showHero(){
+  const a = HERO_APPS[heroAt];
+  document.querySelectorAll(".tile").forEach(t => t.classList.toggle("on", a.mods.includes(t.dataset.id)));
+  document.getElementById("appName").textContent = a.name;
+  document.getElementById("appMods").textContent = a.mods.map(id => byId[id].title.split(" · ")[0]).join(" + ") + ", 우리 이름으로";
 }
+showHero();
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { heroAt = (heroAt + 1) % HERO_APPS.length; showHero(); }, 5000);
 
+const tagOf = s => s === "soon" ? '<span class="tag soon">준비 중</span>' : "";
+document.getElementById("groups").innerHTML = GROUPS.map(g => `
+  <div class="group"><h3>${esc(g.name)}</h3><div class="mods">
+    ${g.mods.map(m => `
+      <button class="mod" type="button" data-id="${m.id}" aria-pressed="false">
+        <div class="top"><h4>${m.icon} ${esc(m.title)}</h4>${tagOf(m.status)}</div>
+        <p>${esc(m.text)}</p>
+        <span class="add">${m.img ? "화면 보기" : "자세히"}</span>
+      </button>`).join("")}
+  </div></div>`).join("");
 
+document.getElementById("examplesGrid").innerHTML = EXAMPLES.map(e => `
+  <div class="ex">
+    <div class="head"><h4>${e.icon} ${esc(e.title)}</h4></div>
+    <div class="who">${esc(e.who)}</div>
+    <div class="chips">${e.mods.map(id => `<span class="${byId[id].status}">${byId[id].icon} ${esc(byId[id].title)}</span>`).join("")}</div>
+    <div class="meta"><span><b>${esc(e.price)}</b> <small>${esc(e.unit)}</small></span>
+      <button type="button" class="go" data-ex="${e.id}">이 구성으로 문의 →</button></div>
+  </div>`).join("");
 
-document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => {
-  filter = c.dataset.f;
-  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x === c ? "true" : "false"));
-  render();
-}));
-document.querySelectorAll("[data-jump]").forEach(a => a.addEventListener("click", () => {
-  document.querySelector(`.chip[data-f="${a.dataset.jump}"]`).click();
-}));
-document.getElementById("q").addEventListener("input", e => { query = e.target.value; render(); });
+document.getElementById("demoGrid").innerHTML = DEMOS.map(d => `
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <a class="demo" href="${d.scenes}">
+      <div class="shot"><img src="${d.img}" alt="${esc(d.alt)}" loading="lazy"></div>
+      <div class="body"><h4>${esc(d.title)}</h4><span class="more">화면 보기 →</span></div>
+    </a>
+    ${d.live ? `<a class="live" href="${d.live}"${d.live.startsWith("http") ? ' target="_blank" rel="noopener"' : ""}>${esc(d.liveLabel || "직접 써 보기 ↗")}</a>` : ""}
+  </div>`).join("");
+document.getElementById("tryMatch").href = DEMO + "demo-date";
 
-const dialog = document.getElementById("detail");
-grid.addEventListener("click", e => {
-  const card = e.target.closest(".item"); if (!card) return;
-  const p = PRODUCTS.find(x => x.id === card.dataset.id);
-  document.getElementById("dMeta").innerHTML = `<span class="pill">${kindName[p.kind]}</span>${statusPill(p)}`;
-  document.getElementById("dTitle").textContent = p.title;
-  document.getElementById("dDesc").textContent = p.short;
-  document.getElementById("dFeat").innerHTML = (p.feat||[]).map(f => `<li>${f}</li>`).join("");
-  document.getElementById("dTiers").innerHTML = (p.tiers&&p.tiers.length ? p.tiers : [["가격", p.kind==="template" ? "구성에 따라 달라요" : "", p.from]])
-    .map(t => `<div class="tier"><div><b>${t[0]}</b>${t[1]}</div><strong>${t[2]}</strong></div>`).join("");
-  document.getElementById("dShots").innerHTML = p.img ? p.img.map(i => `<img src="img/${i}.jpg" alt="${p.title} 화면">`).join("") : `<div class="thumb mod" style="border-radius:12px" aria-hidden="true">${p.icon||"🧩"}</div>`;
-  document.getElementById("dActions").innerHTML =
-    `<button class="btn" id="askThis">이 상품 문의하기</button>` + scenesBtn(p.scenes, "btn ghost") +
-    (p.demo ? `<a class="btn ghost" href="${p.demo}" target="_blank" rel="noopener">데모 써 보기 ↗</a>` : "");
-  document.getElementById("askThis").onclick = () => { productSel.value = p.title; dialog.close(); document.getElementById("contact").scrollIntoView(); document.querySelector('[name="contact"]').focus({preventScroll:true}); };
-  dialog.showModal();
+// 고른 모듈 → 아래 줄 → 문의창에 채움
+const picked = new Set();
+function updatePicked(){
+  document.querySelectorAll(".mod").forEach(b => b.setAttribute("aria-pressed", picked.has(b.dataset.id) ? "true" : "false"));
+  document.getElementById("pickedN").textContent = picked.size;
+  document.getElementById("pickedList").textContent = picked.size ? "· " + [...picked].map(id => byId[id].title).join(", ") : "";
+  document.getElementById("picked").classList.toggle("show", picked.size > 0);
+}
+// 모듈 카드 → 기능 화면 창(담기·빼기는 창에서)
+const modDlg = document.getElementById("modDlg");
+let openId = null;
+function openMod(id){
+  const m = byId[id]; openId = id;
+  document.getElementById("mdTitle").textContent = m.icon + " " + m.title;
+  document.getElementById("mdText").textContent = m.text;
+  document.getElementById("mdTag").innerHTML = tagOf(m.status);
+  document.querySelector(".mdsheet").classList.toggle("text", !m.img);
+  document.getElementById("mdShots").innerHTML = m.img
+    ? m.img.map(i => `<img src="img/mod/${i}.jpg" alt="${esc(m.title)} 화면">`).join("")
+    : `<div class="noshot">${m.status === "soon" ? "준비 중인 모듈이에요. 문의하시면 진행 상황과 일정을 알려드려요." : "이 모듈 화면은 문의하시면 데모로 보여 드려요."}</div>`;
+  syncPickBtn(); modDlg.showModal();
+}
+function syncPickBtn(){
+  const on = picked.has(openId), b = document.getElementById("mdPick");
+  b.textContent = on ? "✓ 담았어요 · 빼기" : "이 모듈 담기";
+  b.className = on ? "btn ghost" : "btn";
+}
+document.getElementById("groups").addEventListener("click", e => {
+  const b = e.target.closest(".mod"); if (b) openMod(b.dataset.id);
 });
-document.getElementById("closeDetail").onclick = () => dialog.close();
-dialog.addEventListener("click", e => { if (e.target === dialog) dialog.close(); });
+document.getElementById("mdPick").addEventListener("click", () => {
+  picked.has(openId) ? picked.delete(openId) : picked.add(openId);
+  updatePicked(); syncPickBtn();
+});
+document.getElementById("mdClose").addEventListener("click", () => modDlg.close());
+modDlg.addEventListener("click", e => { if (e.target === modDlg) modDlg.close(); });
+const productSel = document.getElementById("product"), msg = document.getElementById("message");
+const OWN = "내가 고른 모듈";
+productSel.innerHTML += [...EXAMPLES.map(e => e.title), OWN, "내 아이디어", "기타 · 맞춤 제작"].map(t => `<option>${esc(t)}</option>`).join("");
+function fillModules(ids){
+  msg.value = "모듈: " + ids.map(id => byId[id].title).join(", ") + "\n\n" + msg.value.replace(/^모듈: .*\n*/, "");
+}
+function goContact(){
+  document.getElementById("contact").scrollIntoView();
+  document.querySelector('[name="contact"]').focus({ preventScroll:true });
+}
+document.getElementById("pickedGo").addEventListener("click", () => { productSel.value = OWN; fillModules([...picked]); });
+document.getElementById("examplesGrid").addEventListener("click", e => {
+  const b = e.target.closest("[data-ex]"); if (!b) return;
+  const ex = EXAMPLES.find(x => x.id === b.dataset.ex);
+  productSel.value = ex.title; fillModules(ex.mods); goContact();
+});
 
 // 문의 보내기 → /api/inquiry 에 저장
 const form = document.getElementById("ask"), statusEl = document.getElementById("status"), sendBtn = document.getElementById("send");
@@ -469,25 +523,13 @@ form.addEventListener("submit", async e => {
     const res = await fetch("/api/inquiry", { method:"POST", headers:{ "Content-Type":"application/json" }, body: JSON.stringify(body) });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw new Error(data.error || "SERVER");
-    form.reset(); show("ok", "문의가 접수됐어요. 남겨 주신 연락처로 답변드릴게요.");
+    form.reset(); picked.clear(); updatePicked();
+    show("ok", "문의가 접수됐어요. 남겨 주신 연락처로 답변드릴게요.");
   } catch (err) {
     show("err", ERR[err.message] || "보내지 못했어요. 잠시 후 다시 시도해 주세요.");
   } finally { sendBtn.disabled = false; }
 });
 function show(kind, text){ statusEl.className = "status " + kind; statusEl.textContent = text; }
-
-const ALL_ASK = [...PRODUCTS.map(p => p.title), "내 아이디어", "기타 · 맞춤 제작"];
-
-document.addEventListener("click", e => {
-  const b = e.target.closest("[data-ask]"); if (!b) return;
-  productSel.value = b.dataset.ask;
-  document.getElementById("contact").scrollIntoView();
-  document.querySelector('[name="contact"]').focus({ preventScroll: true });
-});
-
-productSel.innerHTML += ALL_ASK.map(t => `<option value="${t}">${t}</option>`).join("");
-
-render();
 </script>
 </body>
 </html>
